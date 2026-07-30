@@ -1,0 +1,9 @@
+replicaCount: 2
+
+image:
+  repository: banking-app
+  tag: latest
+
+service:
+  type: ClusterIP
+  port: 80
