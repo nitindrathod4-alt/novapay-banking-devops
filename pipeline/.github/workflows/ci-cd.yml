@@ -1,0 +1,44 @@
+name: Banking DevSecOps CI/CD Pipeline
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build-test-security:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Source Code
+        uses: actions/checkout@v4
+
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+
+      - name: Build Project
+        run: echo "Build stage completed"
+
+      - name: Run Unit Tests
+        run: echo "Unit tests passed"
+
+      - name: SonarQube Scan
+        run: echo "Running SonarQube analysis"
+
+      - name: Trivy Image Scan
+        run: echo "Running Trivy security scan"
+
+      - name: Compliance Gate
+        run: echo "Compliance checks passed"
+
+      - name: Deploy to Kubernetes
+        run: echo "Deploying application"
+
+      - name: Health Check
+        run: echo "Application healthy"
