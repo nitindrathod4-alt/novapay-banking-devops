@@ -1,0 +1,25 @@
+{
+  "title": "NovaPay DevOps Dashboard",
+  "timezone": "browser",
+  "schemaVersion": 39,
+  "version": 1,
+  "refresh": "30s",
+  "panels": [
+    {
+      "title": "CPU Usage",
+      "type": "timeseries"
+    },
+    {
+      "title": "Memory Usage",
+      "type": "timeseries"
+    },
+    {
+      "title": "Pod Status",
+      "type": "stat"
+    },
+    {
+      "title": "Deployment Success Rate",
+      "type": "gauge"
+    }
+  ]
+}
