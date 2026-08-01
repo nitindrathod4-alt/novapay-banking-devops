@@ -1,4 +1,27 @@
+import { useEffect, useState } from "react";
+import api from "../services/api";
+
 function BalanceCard() {
+  const [balance, setBalance] = useState(0);
+  const [user, setUser] = useState({
+    name: "Loading...",
+  });
+
+  useEffect(() => {
+    loadBalance();
+  }, []);
+
+  const loadBalance = async () => {
+    try {
+      const res = await api.get("/transactions/balance");
+
+      setBalance(res.data.balance);
+      setUser(res.data.user);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
   return (
     <div
       style={{
@@ -13,7 +36,7 @@ function BalanceCard() {
       <h3>Available Balance</h3>
 
       <h1 style={{ margin: "15px 0" }}>
-        ₹ 1,25,000.00
+        ₹ {balance.toLocaleString("en-IN")}
       </h1>
 
       <div
@@ -24,13 +47,13 @@ function BalanceCard() {
         }}
       >
         <div>
-          <small>Card Holder</small>
-          <h3>Nitin Rathod</h3>
+          <small>Account Holder</small>
+          <h3>{user.name}</h3>
         </div>
 
         <div>
-          <small>Valid Thru</small>
-          <h3>12/30</h3>
+          <small>Username</small>
+          <h3>{user.username}</h3>
         </div>
       </div>
 

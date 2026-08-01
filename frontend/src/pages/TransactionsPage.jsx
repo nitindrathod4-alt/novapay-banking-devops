@@ -1,12 +1,23 @@
+import { useEffect, useState } from "react";
 import Sidebar from "../components/Sidebar";
+import api from "../services/api";
 
 function TransactionsPage() {
-  const transactions = [
-    { id: 1, name: "Amazon", amount: "-₹2,450", status: "Success" },
-    { id: 2, name: "Salary", amount: "+₹45,000", status: "Success" },
-    { id: 3, name: "Electricity Bill", amount: "-₹1,200", status: "Success" },
-    { id: 4, name: "Netflix", amount: "-₹649", status: "Success" },
-  ];
+  const [transactions, setTransactions] = useState([]);
+
+  useEffect(() => {
+    loadTransactions();
+  }, []);
+
+  const loadTransactions = async () => {
+    try {
+      const res = await api.get("/transactions/history");
+      setTransactions(res.data.transactions);
+    } catch (err) {
+      console.error(err);
+      alert("Failed to load transactions");
+    }
+  };
 
   return (
     <div style={{ display: "flex" }}>
@@ -15,25 +26,42 @@ function TransactionsPage() {
       <div style={{ flex: 1, padding: "30px" }}>
         <h1>📜 Transaction History</h1>
 
-        <table border="1" cellPadding="10" style={{ width: "100%", borderCollapse: "collapse" }}>
+        <table
+          border="1"
+          cellPadding="10"
+          style={{
+            width: "100%",
+            borderCollapse: "collapse",
+          }}
+        >
           <thead>
             <tr>
               <th>ID</th>
-              <th>Description</th>
+              <th>Type</th>
               <th>Amount</th>
               <th>Status</th>
+              <th>Date</th>
             </tr>
           </thead>
 
           <tbody>
             {transactions.map((t) => (
-              <tr key={t.id}>
-                <td>{t.id}</td>
-                <td>{t.name}</td>
-                <td>{t.amount}</td>
+              <tr key={t._id}>
+                <td>{t._id.slice(-6)}</td>
+                <td>{t.type}</td>
+                <td>₹{t.amount}</td>
                 <td>{t.status}</td>
+                <td>{new Date(t.createdAt).toLocaleString()}</td>
               </tr>
             ))}
+
+            {transactions.length === 0 && (
+              <tr>
+                <td colSpan="5" style={{ textAlign: "center" }}>
+                  No Transactions Found
+                </td>
+              </tr>
+            )}
           </tbody>
         </table>
       </div>
