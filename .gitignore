@@ -3,3 +3,7 @@
 dist
 build
 .vite
+backend/backend.log
+node_modules/
+.env
+dist/
