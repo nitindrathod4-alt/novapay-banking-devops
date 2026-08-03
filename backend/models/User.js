@@ -65,6 +65,32 @@ const userSchema = new mongoose.Schema(
       default: Date.now,
     },
 
+    aadhaarNumber: {
+      type: String,
+      default: "",
+    },
+
+    panNumber: {
+      type: String,
+      default: "",
+    },
+
+    kycStatus: {
+      type: String,
+      enum: ["Pending", "Verified", "Rejected"],
+      default: "Pending",
+    },
+
+    aadhaarDocument: {
+      type: String,
+      default: "",
+    },
+
+    panDocument: {
+      type: String,
+      default: "",
+    },
+
     photo: {
       type: String,
       default: "",

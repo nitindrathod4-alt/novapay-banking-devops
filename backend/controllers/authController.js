@@ -41,6 +41,9 @@ exports.register = async (req, res) => {
         accountType: user.accountType,
         accountStatus: user.status,
         accountOpenDate: user.accountOpenDate,
+        aadhaarNumber: user.aadhaarNumber,
+        panNumber: user.panNumber,
+        kycStatus: user.kycStatus,
       },
     });
   } catch (err) {
@@ -102,6 +105,9 @@ exports.login = async (req, res) => {
         accountType: user.accountType,
         accountStatus: user.status,
         accountOpenDate: user.accountOpenDate,
+        aadhaarNumber: user.aadhaarNumber,
+        panNumber: user.panNumber,
+        kycStatus: user.kycStatus,
       },
     });
   } catch (err) {
