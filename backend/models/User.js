@@ -45,8 +45,24 @@ const userSchema = new mongoose.Schema(
 
     status: {
       type: String,
-      enum: ["Active", "Blocked"],
+      enum: ["Active", "Frozen", "Closed"],
       default: "Active",
+    },
+
+    branchName: {
+      type: String,
+      default: "Pune Main Branch",
+    },
+
+    accountType: {
+      type: String,
+      enum: ["Savings", "Current"],
+      default: "Savings",
+    },
+
+    accountOpenDate: {
+      type: Date,
+      default: Date.now,
     },
 
     photo: {

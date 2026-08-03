@@ -4,7 +4,7 @@ const Transaction = require("../models/Transaction");
 exports.balance = async (req, res) => {
   try {
     const user = await User.findById(req.user.id).select(
-      "name username balance accountNumber ifsc status createdAt"
+      "name username balance accountNumber ifsc status branchName accountType accountOpenDate photo createdAt"
     );
 
     res.json({

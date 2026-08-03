@@ -35,6 +35,12 @@ exports.register = async (req, res) => {
         username: user.username,
         role: user.role,
         balance: user.balance,
+        accountNumber: user.accountNumber,
+        ifsc: user.ifsc,
+        branchName: user.branchName,
+        accountType: user.accountType,
+        accountStatus: user.status,
+        accountOpenDate: user.accountOpenDate,
       },
     });
   } catch (err) {
@@ -90,6 +96,12 @@ exports.login = async (req, res) => {
         username: user.username,
         role: user.role,
         balance: user.balance,
+        accountNumber: user.accountNumber,
+        ifsc: user.ifsc,
+        branchName: user.branchName,
+        accountType: user.accountType,
+        accountStatus: user.status,
+        accountOpenDate: user.accountOpenDate,
       },
     });
   } catch (err) {
