@@ -22,6 +22,7 @@ exports.register = async (req, res) => {
       name,
       username,
       password: hashedPassword,
+      role: "user",
       balance: 10000,
     });
 
@@ -32,6 +33,7 @@ exports.register = async (req, res) => {
         id: user._id,
         name: user.name,
         username: user.username,
+        role: user.role,
         balance: user.balance,
       },
     });
@@ -70,6 +72,7 @@ exports.login = async (req, res) => {
       {
         id: user._id,
         username: user.username,
+        role: user.role,
       },
       process.env.JWT_SECRET,
       {
@@ -85,6 +88,7 @@ exports.login = async (req, res) => {
         id: user._id,
         name: user.name,
         username: user.username,
+        role: user.role,
         balance: user.balance,
       },
     });

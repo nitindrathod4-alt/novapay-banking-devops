@@ -1,23 +1,53 @@
 function Navbar() {
+
+  const user = JSON.parse(localStorage.getItem("user"));
+
+  const logout = () => {
+    localStorage.removeItem("token");
+    localStorage.removeItem("user");
+    window.location.href = "/";
+  };
+
   return (
-    <header
+    <div
       style={{
         background: "#1e3a8a",
         color: "white",
-        padding: "18px 30px",
+        padding: "15px 30px",
         display: "flex",
         justifyContent: "space-between",
-        alignItems: "center"
+        alignItems: "center",
       }}
     >
       <h2>🏦 NovaPay Banking</h2>
 
-      <div style={{ fontSize: "22px" }}>
-        🔔
-        <span style={{ marginLeft: "15px" }}>💬</span>
-        <span style={{ marginLeft: "15px" }}>👤 Nitin</span>
+      <div
+        style={{
+          display: "flex",
+          alignItems: "center",
+          gap: "20px",
+        }}
+      >
+        <span>
+          🔔 💬 👤 {user?.name}
+        </span>
+
+        <button
+          onClick={logout}
+          style={{
+            background: "#dc2626",
+            color: "white",
+            border: "none",
+            padding: "10px 18px",
+            borderRadius: "8px",
+            cursor: "pointer",
+            fontWeight: "bold",
+          }}
+        >
+          🚪 Logout
+        </button>
       </div>
-    </header>
+    </div>
   );
 }
 

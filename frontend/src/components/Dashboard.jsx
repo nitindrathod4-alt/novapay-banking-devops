@@ -20,7 +20,9 @@ function Dashboard() {
         </h1>
 
         <BalanceCard />
+
         <QuickActions />
+
         <TransactionList />
       </div>
     </>

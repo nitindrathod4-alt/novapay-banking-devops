@@ -2,9 +2,11 @@ import { useEffect, useState } from "react";
 import api from "../services/api";
 
 function BalanceCard() {
-  const [balance, setBalance] = useState(0);
+
   const [user, setUser] = useState({
-    name: "Loading...",
+    name: "",
+    username: "",
+    balance: 0,
   });
 
   useEffect(() => {
@@ -13,53 +15,60 @@ function BalanceCard() {
 
   const loadBalance = async () => {
     try {
+
       const res = await api.get("/transactions/balance");
 
-      setBalance(res.data.balance);
       setUser(res.data.user);
+
+      localStorage.setItem(
+        "user",
+        JSON.stringify(res.data.user)
+      );
+
     } catch (err) {
-      console.error(err);
+      console.log(err);
     }
   };
 
   return (
     <div
       style={{
-        background: "linear-gradient(135deg, #2563eb, #1e40af)",
+        background: "#2563eb",
         color: "white",
+        padding: "30px",
         borderRadius: "15px",
-        padding: "25px",
         marginBottom: "25px",
-        boxShadow: "0 8px 20px rgba(0,0,0,0.15)"
+        boxShadow: "0 8px 20px rgba(0,0,0,0.2)",
       }}
     >
-      <h3>Available Balance</h3>
+      <h2>Available Balance</h2>
 
-      <h1 style={{ margin: "15px 0" }}>
-        ₹ {balance.toLocaleString("en-IN")}
-      </h1>
-
-      <div
+      <h1
         style={{
-          display: "flex",
-          justifyContent: "space-between",
-          marginTop: "25px"
+          fontSize: "42px",
+          margin: "15px 0",
         }}
       >
-        <div>
-          <small>Account Holder</small>
-          <h3>{user.name}</h3>
-        </div>
+        ₹ {user.balance}
+      </h1>
 
-        <div>
-          <small>Username</small>
-          <h3>{user.username}</h3>
-        </div>
-      </div>
+      <hr
+        style={{
+          border: "1px solid rgba(255,255,255,0.3)",
+        }}
+      />
 
-      <h2 style={{ marginTop: "20px", letterSpacing: "3px" }}>
-        **** **** **** 2456
-      </h2>
+      <p>
+        <strong>Account Holder:</strong> {user.name}
+      </p>
+
+      <p>
+        <strong>Username:</strong> {user.username}
+      </p>
+
+      <p>
+        <strong>Account Status:</strong> ✅ Active
+      </p>
     </div>
   );
 }

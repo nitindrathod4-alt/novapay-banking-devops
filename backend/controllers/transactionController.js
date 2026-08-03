@@ -3,7 +3,9 @@ const Transaction = require("../models/Transaction");
 
 exports.balance = async (req, res) => {
   try {
-    const user = await User.findById(req.user.id).select("name username balance");
+    const user = await User.findById(req.user.id).select(
+      "name username balance accountNumber ifsc status createdAt"
+    );
 
     res.json({
       success: true,
@@ -175,3 +177,136 @@ exports.history = async (req, res) => {
     });
   }
 };
+
+exports.allTransactions = async (req, res) => {
+  try {
+    const transactions = await Transaction.find()
+      .populate("sender", "name username")
+      .populate("receiver", "name username")
+      .sort({ createdAt: -1 });
+
+    res.json({
+      success: true,
+      transactions,
+    });
+
+  } catch (err) {
+    res.status(500).json({
+      success: false,
+      message: err.message,
+    });
+  }
+};
+
+
+// ================= FILTER TRANSACTIONS =================
+
+exports.filterTransactions = async (req, res) => {
+  try {
+    const { type, username, from, to } = req.query;
+
+    let filter = {};
+
+    if (type) {
+      filter.type = type;
+    }
+
+    if (username) {
+      filter.username = {
+        $regex: username,
+        $options: "i",
+      };
+    }
+
+    if (from || to) {
+      filter.createdAt = {};
+
+      if (from) {
+        filter.createdAt.$gte = new Date(from);
+      }
+
+      if (to) {
+        filter.createdAt.$lte = new Date(to);
+      }
+    }
+
+    const transactions = await Transaction.find(filter)
+      .sort({ createdAt: -1 });
+
+    res.json({
+      success: true,
+      transactions,
+    });
+
+  } catch (err) {
+    res.status(500).json({
+      success: false,
+      message: err.message,
+    });
+  }
+};
+
+
+// ================= EXPORT TRANSACTIONS EXCEL =================
+
+const ExcelJS = require("exceljs");
+
+exports.exportTransactions = async (req, res) => {
+
+  try {
+
+    const transactions = await Transaction.find()
+      .populate("sender", "username")
+      .populate("receiver", "username");
+
+    const workbook = new ExcelJS.Workbook();
+
+    const sheet = workbook.addWorksheet("Transactions");
+
+    sheet.columns = [
+      { header: "Sender", key: "sender", width: 20 },
+      { header: "Receiver", key: "receiver", width: 20 },
+      { header: "Type", key: "type", width: 15 },
+      { header: "Amount", key: "amount", width: 15 },
+      { header: "Status", key: "status", width: 15 },
+      { header: "Date", key: "date", width: 25 },
+    ];
+
+    transactions.forEach((t) => {
+
+      sheet.addRow({
+        sender: t.sender?.username || "-",
+        receiver: t.receiver?.username || "-",
+        type: t.type,
+        amount: t.amount,
+        status: t.status,
+        date: t.createdAt,
+      });
+
+    });
+
+    res.setHeader(
+      "Content-Type",
+      "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+    );
+
+    res.setHeader(
+      "Content-Disposition",
+      "attachment; filename=NovaPay-Transactions.xlsx"
+    );
+
+    await workbook.xlsx.write(res);
+
+    res.end();
+
+  } catch (err) {
+
+    res.status(500).json({
+      success: false,
+      message: err.message,
+    });
+
+  }
+
+};
+
