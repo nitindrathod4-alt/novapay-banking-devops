@@ -1,150 +1,430 @@
-\# Project 1A – DevOps \& Cloud Engineer
+# 🏦 NovaPay Banking Application
 
+## 📌 Project Overview
 
+NovaPay is a full-stack digital banking application developed to provide secure and efficient banking services through a modern web platform.
 
-\## Zero-Downtime CI/CD Pipeline with Compliance Gates for Banking Applications
+This application allows users to manage their accounts, perform transactions, view transaction history, complete KYC verification, raise support tickets, recharge mobile services, and pay bills.
 
+The project also includes a complete Admin Panel to manage users, transactions, KYC requests, support tickets, and application activities.
 
+This project demonstrates Full Stack Development along with DevOps practices including Docker containerization, Linux deployment, GitHub version control, and cloud-ready architecture.
 
-\### Candidate Information
+---
 
+# 🚀 Features
 
+## 👤 User Features
 
-| Field | Details |
+- User Registration and Login
+- JWT Authentication
+- Secure User Dashboard
+- Account Balance Management
+- Deposit Money
+- Withdraw Money
+- Money Transfer
+- Transaction History
+- Profile Management
+- Profile Photo Upload
+- KYC Verification
+- Support Ticket System
+- Mobile Recharge
+- Electricity Bill Payment
+- Receipt Generation
 
-|-------|---------|
 
-| Name | Nitin Rathod |
+## 👨‍💼 Admin Features
 
-| Project | Project 1A – DevOps \& Cloud Engineer |
+- Admin Dashboard
+- User Management
+- View All Users
+- View All Transactions
+- Transaction Filtering
+- Export Transactions to Excel
+- Edit User Details
+- Reset User Password
+- Deposit Management
+- Withdraw Management
+- KYC Request Management
+- Support Ticket Management
+- Analytics Dashboard
 
-| Organization | ZeTheta Algorithms Pvt. Ltd. |
 
-| Duration | 15 Days |
+---
 
-| Domain | DevOps, Cloud \& DevSecOps |
+# 🏗️ Application Architecture
 
-| Repository | Project1A-DevOps-CloudEngineer-Nitin-Rathod |
+            User
+             |
+             |
+      React Frontend
+             |
+             |
+      REST API Layer
+             |
+             |
+    Node.js + Express Backend
+             |
+             |
+         MongoDB Database
 
 
+---
 
-\---
+# 🛠️ Technology Stack
 
+## Frontend
 
+- React.js
+- Vite
+- JavaScript
+- CSS
 
-\# Project Overview
 
+## Backend
 
+- Node.js
+- Express.js
+- MongoDB
+- Mongoose
+- JWT Authentication
 
-This project focuses on designing and documenting a production-grade, zero-downtime DevSecOps CI/CD pipeline for NovaPay Digital Bank.
 
+## DevOps
 
+- Linux
+- Docker
+- Docker Compose
+- Git
+- GitHub
+- AWS Cloud
 
-The objective is to build a secure, scalable, and compliant CI/CD architecture for a banking application by integrating DevOps, Kubernetes, cloud infrastructure, security scanning, automated compliance, deployment strategies, rollback mechanisms, and observability.
 
+---
 
+# 📂 Project Structure
 
-\---
+NovaPay-Banking-Application
 
+│
+├── backend
+│
+│ ├── controllers
+│ ├── models
+│ ├── routes
+│ ├── middleware
+│ └── server.js
+│
+│
+└── frontend
+│
+├── components
+├── pages
+├── services
+└── App.jsx
 
 
-\# Technologies
+---
 
+# ⚙️ Installation & Setup
 
+## Clone Repository
+https://github.com/nitindrathod4-alt/bank-original-repo.git
 
-\- Git \& GitHub
 
-\- GitHub Actions
 
-\- Docker
+## Backend Setup
 
-\- Kubernetes
+cd backend
 
-\- Helm
+npm install
 
-\- Terraform
+npm start
 
-\- ArgoCD
 
-\- SonarQube
 
-\- Trivy
+Backend runs on:
 
-\- OWASP ZAP
 
-\- OPA / Kyverno
+http://localhost:5000
 
-\- Prometheus
 
-\- Grafana
 
+## Frontend Setup
 
 
-\---
+cd frontend
 
+npm install
 
+npm run dev
 
-\# Repository Structure
 
 
+Frontend runs on:
 
-```text
 
-docs/
+http://localhost:5173
 
-pipeline/
 
-dashboards/
 
-runbooks/
+---
 
-evidence/
+# 🐳 Docker Deployment
 
-```
+Build Docker containers:
 
 
+docker compose build
 
-\---
 
 
+Run Application:
 
-\# Deliverables
 
+docker compose up -d
 
 
-\- Pipeline Architecture
 
-\- Blue-Green Deployment
+Check running containers:
 
-\- Canary Deployment
 
-\- Compliance Gates
+docker ps
 
-\- Zero-Downtime Database Migration
 
-\- Environment Promotion Workflow
 
-\- Automated Rollback Strategy
+---
 
-\- Incident Runbook \& Playbook
+# 🔐 Security Features
 
-\- Observability Dashboard
+- JWT Based Authentication
+- Role Based Access Control
+- Password Protection
+- Protected APIs
+- User/Admin Authorization
+- Secure Backend Routes
 
-\- DORA Metrics
 
+---
 
+# 📊 Admin Monitoring
 
-\---
+Admin can monitor:
 
+- Total Users
+- Transactions
+- Money Flow
+- KYC Requests
+- Support Tickets
+- User Activities
 
 
-\# Project Status
+---
 
+# 🎯 Future Enhancements
 
+- Payment Gateway Integration
+- Email Notifications
+- SMS Alerts
+- Kubernetes Deployment
+- CI/CD Pipeline Automation
+- Prometheus & Grafana Monitoring
 
-✅ Day 1 – Repository Setup Completed
 
+---
 
+# 👨‍💻 Author
 
-🚧 Research \& Documentation in Progress
+## Nitin Rathod
 
+DevOps / Cloud Engineer
+
+
+### Skills
+
+- Linux
+- AWS Cloud
+- Docker
+- Kubernetes
+- Terraform
+- CI/CD
+- React.js
+- Node.js
+
+
+---
+
+# ⭐ Project Status
+
+✅ Completed
+
+NovaPay is a complete fintech banking application built with modern Full Stack and DevOps technolo
+
+
+
+
+---
+
+# 🌐 Deployment Architecture
+
+
+Developer
+|
+|
+GitHub Repository
+|
+|
+Docker Build
+|
+|
+Docker Compose
+|
+|
+Application Containers
+|
+|
+Frontend + Backend + Database
+
+
+---
+
+# 🔄 Application Workflow
+
+1. User opens NovaPay application
+2. User authentication is handled using JWT
+3. Frontend communicates with backend through REST APIs
+4. Backend processes business logic
+5. Data is stored securely in MongoDB
+6. Admin manages users and transactions through Admin Panel
+
+
+---
+
+# 🔌 API Modules
+
+## Authentication APIs
+
+- User Login
+- User Registration
+- JWT Token Generation
+
+
+## Transaction APIs
+
+- Deposit
+- Withdraw
+- Transfer
+- Transaction History
+
+
+## User Management APIs
+
+- Create User
+- Update User
+- Delete User
+- User Profile
+
+
+## Support APIs
+
+- Create Ticket
+- Admin Reply
+- Ticket Status Tracking
+
+
+## Payment APIs
+
+- Mobile Recharge
+- Bill Payment
+- Receipt Generation
+
+
+---
+
+# 📸 Application Screenshots
+
+Add screenshots of:
+
+- Login Page
+- User Dashboard
+- Admin Dashboard
+- Transaction History
+- User Management
+- KYC Module
+
+
+---
+
+# 📈 Key Highlights
+
+✅ Full Stack Banking Application
+
+✅ Secure Authentication System
+
+✅ Role Based User/Admin Access
+
+✅ Complete Transaction Management
+
+✅ Admin Monitoring System
+
+✅ Dockerized Application
+
+✅ Cloud Ready Architecture
+
+
+---
+
+# 🧪 Testing
+
+Application testing includes:
+
+- API Testing
+- User Authentication Testing
+- Transaction Flow Testing
+- Admin Feature Testing
+- UI Testing
+
+
+---
+
+# 🐳 Docker Containers
+
+Application runs using containers:
+
+
+Frontend Container
+|
+|
+Backend Container
+|
+|
+MongoDB Container
+
+
+
+---
+
+# 📚 Learning Outcomes
+
+Through this project I gained practical experience in:
+
+- Building Full Stack Applications
+- REST API Development
+- Authentication Implementation
+- Database Design
+- Docker Deployment
+- Linux Server Management
+- GitHub Repository Management
+
+
+---
+
+# 🤝 Contribution
+
+This project is developed and maintained by:
+
+**Nitin Rathod**
+
+For learning, improvement and future enhancements.
+
+---
