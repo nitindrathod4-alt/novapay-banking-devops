@@ -1,3 +1,4 @@
+import BackButton from "../components/BackButton";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import api from "../services/api";
@@ -74,7 +75,9 @@ function EditUserPage() {
         minHeight: "100vh",
       }}
     >
-      <h1>✏️ Edit User</h1>
+      <BackButton />
+
+<h1>✏️ Edit User</h1>
 
       <form
         onSubmit={saveUser}

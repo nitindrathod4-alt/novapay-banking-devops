@@ -323,3 +323,85 @@ exports.exportTransactions = async (req, res) => {
 
 };
 
+
+
+// ================= FIND USER BY MOBILE NUMBER =================
+
+exports.findUserByMobile = async (req,res)=>{
+  try {
+
+    const { mobileNumber } = req.params;
+
+    const user = await User.findOne({
+      mobileNumber
+    }).select("-password");
+
+    if(!user){
+      return res.status(404).json({
+        success:false,
+        message:"User not found"
+      });
+    }
+
+    res.json({
+      success:true,
+      user:{
+        name:user.name,
+        username:user.username,
+        mobileNumber:user.mobileNumber,
+        accountNumber:user.accountNumber,
+        bankName:"NovaPay Bank",
+        balance:user.balance
+      }
+    });
+
+  } catch(err){
+
+    res.status(500).json({
+      success:false,
+      message:err.message
+    });
+
+  }
+};
+
+
+// ================= FIND USER BY MOBILE NUMBER =================
+
+exports.findUserByMobile = async (req,res)=>{
+  try {
+
+    const { mobileNumber } = req.params;
+
+    const user = await User.findOne({
+      mobileNumber
+    }).select("-password");
+
+    if(!user){
+      return res.status(404).json({
+        success:false,
+        message:"User not found"
+      });
+    }
+
+    res.json({
+      success:true,
+      user:{
+        name:user.name,
+        username:user.username,
+        mobileNumber:user.mobileNumber,
+        accountNumber:user.accountNumber,
+        bankName:"NovaPay Bank",
+        balance:user.balance
+      }
+    });
+
+  } catch(err){
+
+    res.status(500).json({
+      success:false,
+      message:err.message
+    });
+
+  }
+};

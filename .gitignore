@@ -7,3 +7,4 @@ backend/backend.log
 node_modules/
 .env
 dist/
+backend/uploads/

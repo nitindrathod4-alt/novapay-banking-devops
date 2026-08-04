@@ -1,3 +1,4 @@
+import AdminProfilePage from "./pages/AdminProfilePage";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { useState } from "react";
 
@@ -58,6 +59,7 @@ function AppContent() {
         <Route path="/withdraw" element={<WithdrawPage />} />
         <Route path="/admin/transactions" element={<TransactionsAdminPage />} />
         <Route path="/admin/analytics" element={<AnalyticsPage />} />
+        <Route path="/admin/profile" element={<AdminProfilePage />} />
         <Route path="/admin/user/:id" element={<UserProfilePage />} />
         <Route path="/admin/reset-password/:id" element={<ResetPasswordPage />} />
         <Route path="/admin/kyc" element={<AdminKyc />} />

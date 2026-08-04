@@ -1,3 +1,4 @@
+import BackButton from "../components/BackButton";
 import { useEffect, useState } from "react";
 import Sidebar from "../components/Sidebar";
 import api from "../services/api";
@@ -28,7 +29,7 @@ function ProfilePage() {
     formData.append("photo", photo);
 
     try {
-      await api.post(`/${user._id}/photo`, formData, {
+      await api.post(`/users/${user._id}/photo`, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
@@ -68,7 +69,9 @@ function ProfilePage() {
 
       <div style={{ flex: 1, padding: "40px" }}>
 
-        <h1>👤 My Profile</h1>
+        <BackButton />
+
+<h1>👤 My Profile</h1>
 
         <div
           style={{

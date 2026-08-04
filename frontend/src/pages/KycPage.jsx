@@ -1,3 +1,4 @@
+import BackButton from "../components/BackButton";
 import { useState } from "react";
 import Sidebar from "../components/Sidebar";
 import api from "../services/api";
@@ -51,7 +52,9 @@ function KycPage() {
       <Sidebar />
 
       <div style={{ flex: 1, padding: "40px" }}>
-        <h1>🪪 KYC Verification</h1>
+        <BackButton />
+
+<h1>🪪 KYC Verification</h1>
 
         <div
           style={{

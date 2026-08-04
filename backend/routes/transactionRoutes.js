@@ -12,6 +12,7 @@ const {
   history,
   allTransactions,
   exportTransactions,
+  findUserByMobile,
 } = require("../controllers/transactionController");
 
 // ================= USER =================
@@ -20,6 +21,7 @@ router.get("/balance", auth, balance);
 router.post("/deposit", auth, deposit);
 router.post("/withdraw", auth, withdraw);
 router.post("/transfer", auth, transfer);
+router.get("/user/mobile/:mobileNumber", auth, findUserByMobile);
 router.get("/history", auth, history);
 
 // ================= ADMIN =================

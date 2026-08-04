@@ -1,3 +1,4 @@
+import BackButton from "../components/BackButton";
 import { useEffect, useState } from "react";
 import api from "../services/api";
 
@@ -111,6 +112,8 @@ background:"#f8fafc",
 minHeight:"100vh"
 }}>
 
+
+<BackButton />
 
 <h1>📜 All Transactions</h1>
 

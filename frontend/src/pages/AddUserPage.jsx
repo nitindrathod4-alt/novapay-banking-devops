@@ -7,6 +7,7 @@ function AddUserPage() {
     name: "",
     username: "",
     password: "",
+    mobileNumber: "",
     balance: "",
   });
 
@@ -32,6 +33,7 @@ function AddUserPage() {
         name: "",
         username: "",
         password: "",
+        mobileNumber: "",
         balance: "",
       });
 
@@ -109,6 +111,19 @@ function AddUserPage() {
           value={form.password}
           onChange={handleChange}
           required
+          style={{
+            width: "100%",
+            padding: "12px",
+            marginBottom: "15px",
+          }}
+        />
+
+        <input
+          type="text"
+          name="mobileNumber"
+          placeholder="Mobile Number"
+          value={form.mobileNumber}
+          onChange={handleChange}
           style={{
             width: "100%",
             padding: "12px",

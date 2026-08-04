@@ -65,6 +65,12 @@ const userSchema = new mongoose.Schema(
       default: Date.now,
     },
 
+    mobileNumber: {
+      type: String,
+      unique: true,
+      default: "",
+    },
+
     aadhaarNumber: {
       type: String,
       default: "",

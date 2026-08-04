@@ -1,3 +1,4 @@
+import BackButton from "../components/BackButton";
 import {useState} from "react";
 import Sidebar from "../components/Sidebar";
 
@@ -23,6 +24,8 @@ minHeight:"100vh"
 }}
 >
 
+
+<BackButton />
 
 <h1>🌍 Travel Booking</h1>
 

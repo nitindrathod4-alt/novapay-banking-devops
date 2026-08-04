@@ -45,6 +45,10 @@ gap:"10px",
 marginTop:"30px"
 }}>
 
+<Link to="/admin/profile" style={menu}>
+👤 My Profile
+</Link>
+
 <Link to="/" style={menu}>
 🏠 Dashboard
 </Link>

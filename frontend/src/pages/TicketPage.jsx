@@ -1,3 +1,4 @@
+import BackButton from "../components/BackButton";
 import {useEffect,useState} from "react";
 import Sidebar from "../components/Sidebar";
 import api from "../services/api";
@@ -83,6 +84,8 @@ minHeight:"100vh"
 }}
 >
 
+
+<BackButton />
 
 <h1>🎫 Support Center</h1>
 

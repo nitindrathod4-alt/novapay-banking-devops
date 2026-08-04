@@ -68,18 +68,12 @@ marginTop:"30px"
 </Link>
 
 
-<Link to="/deposit" style={menu}>
-💰 Deposit
-</Link>
 
 
 <Link to="/mobile-recharge" style={menu}>
 📱 Mobile Recharge
 </Link>
 
-<Link to="/withdraw" style={menu}>
-🏧 Withdraw
-</Link>
 
 
 <Link to="/transactions" style={menu}>

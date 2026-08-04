@@ -70,18 +70,6 @@ to="/transfer"
 />
 
 
-<ActionCard
-icon="💰"
-title="Deposit"
-to="/deposit"
-/>
-
-
-<ActionCard
-icon="🏧"
-title="Withdraw"
-to="/withdraw"
-/>
 
 
 <ActionCard

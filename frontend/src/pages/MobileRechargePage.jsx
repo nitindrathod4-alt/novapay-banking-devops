@@ -1,3 +1,4 @@
+import BackButton from "../components/BackButton";
 import { useState } from "react";
 import Sidebar from "../components/Sidebar";
 import api from "../services/api";
@@ -63,6 +64,8 @@ maxWidth:"500px",
 boxShadow:"0 8px 20px rgba(0,0,0,.08)"
 }}
 >
+
+<BackButton />
 
 <h1>
 📱 Mobile Recharge

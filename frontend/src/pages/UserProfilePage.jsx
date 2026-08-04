@@ -1,3 +1,4 @@
+import BackButton from "../components/BackButton";
 import { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import api from "../services/api";
@@ -41,7 +42,9 @@ function UserProfilePage(){
         ⬅ Back
       </Link>
 
-      <h1>👤 User Profile</h1>
+      <BackButton />
+
+<h1>👤 User Profile</h1>
 
 
       <div style={{
