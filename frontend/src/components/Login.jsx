@@ -55,6 +55,18 @@ function Login({ onLogin }) {
         <button
           onClick={handleLogin}
           disabled={loading}
+          style={{
+            width:"100%",
+            padding:"12px",
+            marginTop:"15px",
+            background:"#2563eb",
+            color:"white",
+            border:"none",
+            borderRadius:"8px",
+            fontSize:"16px",
+            fontWeight:"bold",
+            cursor:"pointer"
+          }}
         >
           {loading ? "Logging in..." : "Login"}
         </button>

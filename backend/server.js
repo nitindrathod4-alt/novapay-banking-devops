@@ -21,13 +21,25 @@ const authRoutes = require("./routes/authRoutes");
 const profileRoutes = require("./routes/profileRoutes");
 const transactionRoutes = require("./routes/transactionRoutes");
 const statementRoutes = require("./routes/statementRoutes");
+const adminKycRoutes = require("./routes/adminKycRoutes");
+const rechargeRoutes = require("./routes/rechargeRoutes");
+const billRoutes = require("./routes/billRoutes");
+const ticketRoutes = require("./routes/ticketRoutes");
+const adminTicketRoutes = require("./routes/adminTicketRoutes");
+const receiptRoutes = require("./routes/receiptRoutes");
 
 // API Routes
-app.use("/api", userRoutes);
+app.use("/api/users", userRoutes);
 app.use("/api/auth", authRoutes);
 app.use("/api/profile", profileRoutes);
 app.use("/api/transactions", transactionRoutes);
 app.use("/api/statement", statementRoutes);
+app.use("/api/admin", adminKycRoutes);
+app.use("/api/recharge", rechargeRoutes);
+app.use("/api/bill", billRoutes);
+app.use("/api/tickets", ticketRoutes);
+app.use("/api/admin-tickets", adminTicketRoutes);
+app.use("/api/receipt", receiptRoutes);
 
 // Home Route
 app.get("/", (req, res) => {

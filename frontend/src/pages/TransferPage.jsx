@@ -56,7 +56,7 @@ function TransferPage() {
           onClick={transferMoney}
           style={{
             padding: "12px 25px",
-            background: "#2563eb",
+            background: "#059669",
             color: "white",
             border: "none",
             borderRadius: "8px",

@@ -41,6 +41,10 @@ exports.deposit = async (req, res) => {
       amount: Number(amount),
       type: "deposit",
       status: "success",
+
+      details:{
+        mode:"Cash Deposit"
+      }
     });
 
     res.json({
@@ -84,6 +88,10 @@ exports.withdraw = async (req, res) => {
       amount: Number(amount),
       type: "withdraw",
       status: "success",
+
+      details:{
+        mode:"Cash Withdrawal"
+      }
     });
 
     res.json({
@@ -139,6 +147,11 @@ exports.transfer = async (req, res) => {
       amount: Number(amount),
       type: "transfer",
       status: "success",
+
+      details:{
+        receiverUsername: receiver.username,
+        receiverName: receiver.name
+      }
     });
 
     res.json({

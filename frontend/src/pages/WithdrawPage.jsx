@@ -1,74 +1,75 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
+import Sidebar from "../components/Sidebar";
 import api from "../services/api";
 
-function WithdrawPage() {
-  const [users, setUsers] = useState([]);
-  const [userId, setUserId] = useState("");
-  const [amount, setAmount] = useState("");
+function WithdrawPage(){
 
-  useEffect(() => {
-    loadUsers();
-  }, []);
+const [amount,setAmount]=useState("");
 
-  const loadUsers = async () => {
-    const res = await api.get("/");
-    setUsers(res.data.users.filter(u => u.role !== "admin"));
-  };
+const withdraw=async()=>{
 
-  const withdraw = async () => {
-    try {
-      await api.post(`/${userId}/withdraw`, {
-        amount: Number(amount),
-      });
+try{
 
-      alert("✅ Withdraw Successful");
-      setAmount("");
-      loadUsers();
-    } catch (err) {
-      alert(err.response?.data?.message || "Withdraw Failed");
-    }
-  };
+const res=await api.post("/transactions/withdraw",{
+amount:Number(amount)
+});
 
-  return (
-    <div style={{ padding: "30px" }}>
-      <h1>🏧 Withdraw Money</h1>
+alert(res.data.message);
+setAmount("");
 
-      <select
-        value={userId}
-        onChange={(e) => setUserId(e.target.value)}
-        style={{ width: "100%", padding: "12px", marginBottom: "20px" }}
-      >
-        <option value="">Select User</option>
-        {users.map((u) => (
-          <option key={u._id} value={u._id}>
-            {u.name} ({u.username}) - ₹{u.balance}
-          </option>
-        ))}
-      </select>
+}catch(err){
 
-      <input
-        type="number"
-        placeholder="Amount"
-        value={amount}
-        onChange={(e) => setAmount(e.target.value)}
-        style={{ width: "100%", padding: "12px", marginBottom: "20px" }}
-      />
+alert(err.response?.data?.message || "Withdraw Failed");
 
-      <button
-        onClick={withdraw}
-        style={{
-          background: "#ea580c",
-          color: "white",
-          padding: "12px 25px",
-          border: "none",
-          borderRadius: "8px",
-          cursor: "pointer",
-        }}
-      >
-        🏧 Withdraw
-      </button>
-    </div>
-  );
+}
+
+};
+
+
+return(
+
+<div style={{display:"flex"}}>
+
+<Sidebar/>
+
+<div style={{flex:1,padding:"30px"}}>
+
+<h1>🏧 Withdraw Money</h1>
+
+
+<input
+type="number"
+placeholder="Enter Amount"
+value={amount}
+onChange={(e)=>setAmount(e.target.value)}
+style={{
+width:"100%",
+padding:"12px",
+marginBottom:"20px"
+}}
+/>
+
+
+<button
+onClick={withdraw}
+style={{
+background:"#dc2626",
+color:"white",
+padding:"12px 25px",
+border:"none",
+borderRadius:"8px"
+}}
+>
+Withdraw
+</button>
+
+
+</div>
+
+</div>
+
+)
+
 }
 
 export default WithdrawPage;

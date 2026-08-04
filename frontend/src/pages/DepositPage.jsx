@@ -1,74 +1,75 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
+import Sidebar from "../components/Sidebar";
 import api from "../services/api";
 
-function DepositPage() {
-  const [users, setUsers] = useState([]);
-  const [userId, setUserId] = useState("");
-  const [amount, setAmount] = useState("");
+function DepositPage(){
 
-  useEffect(() => {
-    loadUsers();
-  }, []);
+const [amount,setAmount]=useState("");
 
-  const loadUsers = async () => {
-    const res = await api.get("/");
-    setUsers(res.data.users.filter(u => u.role !== "admin"));
-  };
+const deposit=async()=>{
 
-  const deposit = async () => {
-    try {
-      await api.post(`/${userId}/deposit`, {
-        amount: Number(amount),
-      });
+try{
 
-      alert("✅ Deposit Successful");
-      setAmount("");
-      loadUsers();
-    } catch (err) {
-      alert(err.response?.data?.message || "Deposit Failed");
-    }
-  };
+const res=await api.post("/transactions/deposit",{
+amount:Number(amount)
+});
 
-  return (
-    <div style={{ padding: "30px" }}>
-      <h1>💰 Deposit Money</h1>
+alert(res.data.message);
+setAmount("");
 
-      <select
-        value={userId}
-        onChange={(e) => setUserId(e.target.value)}
-        style={{ width: "100%", padding: "12px", marginBottom: "20px" }}
-      >
-        <option value="">Select User</option>
-        {users.map((u) => (
-          <option key={u._id} value={u._id}>
-            {u.name} ({u.username}) - ₹{u.balance}
-          </option>
-        ))}
-      </select>
+}catch(err){
 
-      <input
-        type="number"
-        placeholder="Amount"
-        value={amount}
-        onChange={(e) => setAmount(e.target.value)}
-        style={{ width: "100%", padding: "12px", marginBottom: "20px" }}
-      />
+alert(err.response?.data?.message || "Deposit Failed");
 
-      <button
-        onClick={deposit}
-        style={{
-          background: "#16a34a",
-          color: "white",
-          padding: "12px 25px",
-          border: "none",
-          borderRadius: "8px",
-          cursor: "pointer",
-        }}
-      >
-        💰 Deposit
-      </button>
-    </div>
-  );
+}
+
+};
+
+
+return(
+
+<div style={{display:"flex"}}>
+
+<Sidebar/>
+
+<div style={{flex:1,padding:"30px"}}>
+
+<h1>💰 Deposit Money</h1>
+
+
+<input
+type="number"
+placeholder="Enter Amount"
+value={amount}
+onChange={(e)=>setAmount(e.target.value)}
+style={{
+width:"100%",
+padding:"12px",
+marginBottom:"20px"
+}}
+/>
+
+
+<button
+onClick={deposit}
+style={{
+background:"#059669",
+color:"white",
+padding:"12px 25px",
+border:"none",
+borderRadius:"8px"
+}}
+>
+Deposit
+</button>
+
+
+</div>
+
+</div>
+
+)
+
 }
 
 export default DepositPage;

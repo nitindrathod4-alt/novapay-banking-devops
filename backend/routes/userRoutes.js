@@ -5,6 +5,7 @@ const upload = require("../middleware/upload");
 
 const {
   getUsers,
+  createUser,
   deleteUser,
   depositUser,
   withdrawUser,
@@ -12,15 +13,26 @@ const {
   uploadPhoto,
   toggleUserStatus,
   updateUser,
+  getUserProfile,
+  resetPassword,
 } = require("../controllers/userController");
 
 // ================= USERS =================
 
 router.get("/", getUsers);
+router.post("/", createUser);
 
 // ================= ANALYTICS =================
 
 router.get("/analytics", analytics);
+
+// ================= USER PROFILE =================
+
+router.get("/:id", getUserProfile);
+
+// ================= RESET PASSWORD =================
+
+router.put("/:id/password", resetPassword);
 
 // ================= DEPOSIT =================
 

@@ -3,70 +3,276 @@ import Sidebar from "../components/Sidebar";
 import api from "../services/api";
 
 function TransactionsPage() {
-  const [transactions, setTransactions] = useState([]);
 
-  useEffect(() => {
-    loadTransactions();
-  }, []);
+const [transactions,setTransactions]=useState([]);
+const [search,setSearch]=useState("");
+const [filter,setFilter]=useState("all");
 
-  const loadTransactions = async () => {
-    try {
-      const res = await api.get("/transactions/history");
-      setTransactions(res.data.transactions);
-    } catch (err) {
-      console.error(err);
-      alert("Failed to load transactions");
-    }
-  };
 
-  return (
-    <div style={{ display: "flex" }}>
-      <Sidebar />
+useEffect(()=>{
+loadTransactions();
+},[]);
 
-      <div style={{ flex: 1, padding: "30px" }}>
-        <h1>📜 Transaction History</h1>
 
-        <table
-          border="1"
-          cellPadding="10"
-          style={{
-            width: "100%",
-            borderCollapse: "collapse",
-          }}
-        >
-          <thead>
-            <tr>
-              <th>ID</th>
-              <th>Type</th>
-              <th>Amount</th>
-              <th>Status</th>
-              <th>Date</th>
-            </tr>
-          </thead>
+const loadTransactions=async()=>{
 
-          <tbody>
-            {transactions.map((t) => (
-              <tr key={t._id}>
-                <td>{t._id.slice(-6)}</td>
-                <td>{t.type}</td>
-                <td>₹{t.amount}</td>
-                <td>{t.status}</td>
-                <td>{new Date(t.createdAt).toLocaleString()}</td>
-              </tr>
-            ))}
+try{
 
-            {transactions.length === 0 && (
-              <tr>
-                <td colSpan="5" style={{ textAlign: "center" }}>
-                  No Transactions Found
-                </td>
-              </tr>
-            )}
-          </tbody>
-        </table>
-      </div>
-    </div>
-  );
+const res=await api.get("/transactions/history");
+
+setTransactions(res.data.transactions || []);
+
+}catch(err){
+
+console.log(err);
+
 }
+
+};
+
+
+
+const filteredTransactions = transactions.filter((t)=>{
+
+const text =
+(
+t.type +
+JSON.stringify(t.details)
+).toLowerCase();
+
+
+const matchSearch =
+text.includes(search.toLowerCase());
+
+
+const matchFilter =
+filter==="all" ||
+t.type===filter;
+
+
+return matchSearch && matchFilter;
+
+});
+
+
+const downloadReceipt = async(id)=>{
+
+try{
+
+const res = await api.get(`/receipt/${id}`,{
+responseType:"blob"
+});
+
+
+const url = window.URL.createObjectURL(
+new Blob([res.data])
+);
+
+
+const link=document.createElement("a");
+
+link.href=url;
+link.download="NovaPay_Receipt.pdf";
+
+document.body.appendChild(link);
+
+link.click();
+
+link.remove();
+
+
+}catch(err){
+
+alert("Receipt Download Failed");
+
+}
+
+};
+
+
+
+const getTitle=(t)=>{
+
+if(t.type==="transfer")
+return "💸 Money Transfer";
+
+if(t.type==="deposit")
+return "💰 Deposit";
+
+if(t.type==="withdraw")
+return "🏧 Withdraw";
+
+if(t.type==="mobile_recharge")
+return "📱 Mobile Recharge";
+
+if(t.type==="bill_payment")
+return "📄 Bill Payment";
+
+return t.type;
+
+};
+
+
+
+return(
+
+<div style={{display:"flex"}}>
+
+<Sidebar/>
+
+
+<div
+style={{
+flex:1,
+padding:"30px",
+background:"#f8fafc",
+minHeight:"100vh"
+}}
+>
+
+
+<h1>📜 Transaction History</h1>
+
+<div style={{display:"flex",gap:"15px",marginTop:"20px"}}>
+
+<input
+placeholder="🔍 Search Transaction"
+value={search}
+onChange={(e)=>setSearch(e.target.value)}
+style={{
+padding:"12px",
+flex:1,
+borderRadius:"10px",
+border:"1px solid #ddd"
+}}
+/>
+
+<select
+value={filter}
+onChange={(e)=>setFilter(e.target.value)}
+style={{
+padding:"12px",
+borderRadius:"10px"
+}}
+>
+
+<option value="all">All</option>
+<option value="transfer">Transfer</option>
+<option value="deposit">Deposit</option>
+<option value="withdraw">Withdraw</option>
+<option value="mobile_recharge">Mobile Recharge</option>
+<option value="bill_payment">Bill Payment</option>
+
+</select>
+
+</div>
+
+
+
+<table
+style={{
+width:"100%",
+marginTop:"25px",
+borderCollapse:"collapse",
+background:"white"
+}}
+>
+
+<thead>
+<tr>
+<th>Type</th>
+<th>ID</th>
+<th>Mode</th>
+<th>Date</th>
+<th>Amount</th>
+<th>Status</th>
+<th>Receipt</th>
+</tr>
+</thead>
+
+<tbody>
+
+
+{
+transactions.length===0 ?
+
+<p>No Transactions Found</p>
+
+
+:
+
+filteredTransactions.map((t)=>(
+
+<tr key={t._id}>
+
+<td>{getTitle(t)}</td>
+
+<td>{t._id.slice(-6)}</td>
+
+<td>
+{
+t.type==="bill_payment"
+? t.details?.service
+: t.type==="mobile_recharge"
+? t.details?.operator
+: t.details?.mode || "-"
+}
+</td>
+
+
+<td>
+{new Date(t.createdAt).toLocaleString()}
+</td>
+
+
+<td style={{
+fontWeight:"bold",
+color:t.type==="deposit"?"green":"red"
+}}>
+₹ {t.amount}
+</td>
+
+
+<td style={{color:"green"}}>
+✅ {t.status}
+</td>
+
+
+<td>
+<button
+onClick={()=>downloadReceipt(t._id)}
+style={{
+background:"#2563eb",
+color:"white",
+border:"none",
+padding:"8px 12px",
+borderRadius:"8px",
+cursor:"pointer"
+}}
+>
+📄 Receipt
+</button>
+</td>
+
+
+</tr>
+
+))
+}
+
+</tbody>
+
+</table>
+
+
+</div>
+
+</div>
+
+
+);
+
+}
+
 
 export default TransactionsPage;

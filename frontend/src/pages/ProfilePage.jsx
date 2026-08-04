@@ -96,7 +96,7 @@ function ProfilePage() {
                 height: "170px",
                 borderRadius: "50%",
                 objectFit: "cover",
-                border: "5px solid #2563eb",
+                border: "5px solid #059669",
               }}
             />
 

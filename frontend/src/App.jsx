@@ -7,6 +7,9 @@ import DashboardPage from "./pages/DashboardPage";
 import TransferPage from "./pages/TransferPage";
 import TransactionsPage from "./pages/TransactionsPage";
 import ProfilePage from "./pages/ProfilePage";
+import MobileRechargePage from "./pages/MobileRechargePage";
+import BillPaymentPage from "./pages/BillPaymentPage";
+import KycPage from "./pages/KycPage";
 
 import AdminDashboard from "./pages/AdminDashboard";
 import UsersPage from "./pages/UsersPage";
@@ -14,8 +17,16 @@ import AddUserPage from "./pages/AddUserPage";
 import EditUserPage from "./pages/EditUserPage";
 import TransactionsAdminPage from "./pages/TransactionsAdminPage";
 import DepositPage from "./pages/DepositPage";
+import AdminDepositPage from "./pages/AdminDepositPage";
 import WithdrawPage from "./pages/WithdrawPage";
+import AdminWithdrawPage from "./pages/AdminWithdrawPage";
 import AnalyticsPage from "./pages/AnalyticsPage";
+import UserProfilePage from "./pages/UserProfilePage";
+import ResetPasswordPage from "./pages/ResetPasswordPage";
+import AdminKyc from "./pages/AdminKyc";
+import TicketPage from "./pages/TicketPage";
+import TravelBookingPage from "./pages/TravelBookingPage";
+import AdminTicketsPage from "./pages/AdminTicketsPage";
 
 import "./App.css";
 
@@ -41,10 +52,15 @@ function AppContent() {
           path="/admin/edit-user/:id"
           element={<EditUserPage />}
         />
-        <Route path="/admin/deposit" element={<DepositPage />} />
-        <Route path="/admin/withdraw" element={<WithdrawPage />} />
+        <Route path="/admin/deposit" element={<AdminDepositPage />} />
+        <Route path="/deposit" element={<DepositPage />} />
+        <Route path="/admin/withdraw" element={<AdminWithdrawPage />} />
+        <Route path="/withdraw" element={<WithdrawPage />} />
         <Route path="/admin/transactions" element={<TransactionsAdminPage />} />
         <Route path="/admin/analytics" element={<AnalyticsPage />} />
+        <Route path="/admin/user/:id" element={<UserProfilePage />} />
+        <Route path="/admin/reset-password/:id" element={<ResetPasswordPage />} />
+        <Route path="/admin/kyc" element={<AdminKyc />} />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     );
@@ -54,8 +70,16 @@ function AppContent() {
     <Routes>
       <Route path="/" element={<DashboardPage />} />
       <Route path="/transfer" element={<TransferPage />} />
+      <Route path="/deposit" element={<DepositPage />} />
+      <Route path="/withdraw" element={<WithdrawPage />} />
       <Route path="/transactions" element={<TransactionsPage />} />
       <Route path="/profile" element={<ProfilePage />} />
+      <Route path="/mobile-recharge" element={<MobileRechargePage />} />
+      <Route path="/bill-payment" element={<BillPaymentPage />} />
+      <Route path="/kyc" element={<KycPage />} />
+      <Route path="/tickets" element={<TicketPage />} />
+      <Route path="/travel" element={<TravelBookingPage />} />
+      <Route path="/admin-tickets" element={<AdminTicketsPage />} />
       <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
   );

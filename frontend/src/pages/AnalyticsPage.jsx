@@ -15,7 +15,7 @@ function AnalyticsPage() {
   useEffect(() => {
     const load = async () => {
       try {
-        const res = await api.get("/analytics");
+        const res = await api.get("/users/analytics");
         setData(res.data);
       } catch (err) {
         console.error(err);

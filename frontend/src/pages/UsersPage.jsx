@@ -12,7 +12,7 @@ function UsersPage() {
 
   const loadUsers = async () => {
     try {
-      const res = await api.get("/");
+      const res = await api.get("/users");
       setUsers(res.data.users);
     } catch (err) {
       console.log(err);
@@ -23,7 +23,7 @@ function UsersPage() {
     const amount = prompt(`Deposit Amount for ${username}`);
     if (!amount) return;
 
-    await api.post(`/${id}/deposit`, {
+    await api.post(`/users/${id}/deposit`, {
       amount: Number(amount),
     });
 
@@ -34,7 +34,7 @@ function UsersPage() {
     const amount = prompt(`Withdraw Amount from ${username}`);
     if (!amount) return;
 
-    await api.post(`/${id}/withdraw`, {
+    await api.post(`/users/${id}/withdraw`, {
       amount: Number(amount),
     });
 
@@ -44,14 +44,14 @@ function UsersPage() {
   const deleteUser = async (id, username) => {
     if (!window.confirm(`Delete ${username}?`)) return;
 
-    await api.delete(`/${id}`);
+    await api.delete(`/users/${id}`);
 
     loadUsers();
   };
 
   const toggleStatus = async (id) => {
     try {
-      await api.patch(`/users/${id}/status`);
+      await api.patch(`/users/users/${id}/status`);
       loadUsers();
     } catch (err) {
       alert(err.response?.data?.message || "Operation Failed");
@@ -118,16 +118,14 @@ function UsersPage() {
                     </button>{" "}
 
                     <Link to={`/admin/edit-user/${u._id}`}>
-                      <button>✏️ Edit</button>
+                      <button
+style={{background:"#2563eb",color:"white",border:"none",padding:"8px 12px",borderRadius:"8px",fontWeight:"bold",cursor:"pointer"}}
+>
+✏️ Edit
+</button>
                     </Link>{" "}
 
-                    <button
-                      onClick={() => toggleStatus(u._id)}
-                    >
-                      {u.status === "Active"
-                        ? "🚫 Block"
-                        : "🟢 Unblock"}
-                    </button>{" "}
+                    {" "}
 
                     <button
                       onClick={() =>
@@ -135,6 +133,22 @@ function UsersPage() {
                       }
                     >
                       ❌ Delete
+                    </button>{" "}
+
+                    <button
+                      onClick={() =>
+                        window.location.href=`/admin/user/${u._id}`
+                      }
+                    >
+                      👁 View
+                    </button>{" "}
+
+                    <button
+                      onClick={()=>{
+                        window.location.href=`/admin/reset-password/${u._id}`;
+                      }}
+                    >
+                      🔑 Reset Password
                     </button>
                   </>
                 )}

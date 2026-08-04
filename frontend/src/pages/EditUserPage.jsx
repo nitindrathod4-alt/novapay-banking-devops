@@ -19,7 +19,7 @@ function EditUserPage() {
 
   const loadUser = async () => {
     try {
-      const res = await api.get("/");
+      const res = await api.get("/users");
 
       const user = res.data.users.find((u) => u._id === id);
 
@@ -52,7 +52,7 @@ function EditUserPage() {
     e.preventDefault();
 
     try {
-      await api.put(`/users/${id}`, {
+      await api.put(`/users/users/${id}`, {
         ...form,
         balance: Number(form.balance),
       });
@@ -122,7 +122,7 @@ function EditUserPage() {
           style={{ width: "100%", padding: "10px", marginBottom: "20px" }}
         >
           <option value="Active">Active</option>
-          <option value="Blocked">Blocked</option>
+          <option value="Frozen">Frozen</option>
         </select>
 
         <button
