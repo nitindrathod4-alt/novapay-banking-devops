@@ -93,6 +93,13 @@ to="/transactions"
 />
 
 
+<ActionCard
+icon="👤"
+title="My Profile"
+to="/profile"
+/>
+
+
 </div>
 
 );

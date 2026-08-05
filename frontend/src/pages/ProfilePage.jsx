@@ -118,10 +118,7 @@ function ProfilePage() {
             </button>
 
 
-        <div style={{marginTop:"20px",textAlign:"center",fontSize:"13px",color:"#6b7280",borderTop:"1px solid #e5e7eb",paddingTop:"12px"}}>
-          <p style={{margin:0}}>Developed by <strong>Nitin Rathod</strong></p>
-          <p style={{margin:"4px 0 0"}}>DevOps • Cloud Engineer</p>
-        </div>
+        
           </div>
 
           <hr style={{ margin: "30px 0" }} />
@@ -131,6 +128,20 @@ function ProfilePage() {
           <p><strong>💰 Balance:</strong> ₹ {user.balance}</p>
           <p><strong>💳 Account Number:</strong> {user.accountNumber}</p>
           <p><strong>🏦 IFSC:</strong> {user.ifsc}</p>
+
+          <p><strong>💳 Account Type:</strong> {user.accountType || "-"}</p>
+
+          <p><strong>🏢 Branch:</strong> {user.branchName || "-"}</p>
+
+          <p><strong>🔐 KYC Status:</strong> {user.kycStatus || "Pending"}</p>
+
+          <p>
+          <strong>📅 Account Open Date:</strong>
+          {user.accountOpenDate
+          ? new Date(user.accountOpenDate).toLocaleDateString()
+          : "-"}
+          </p>
+
           <p><strong>🟢 Status:</strong> {user.status}</p>
 
           <br />
@@ -151,25 +162,34 @@ function ProfilePage() {
           </button>
 
 
-        <div style={{marginTop:"20px",textAlign:"center",fontSize:"13px",color:"#6b7280",borderTop:"1px solid #e5e7eb",paddingTop:"12px"}}>
-          <p style={{margin:0}}>Developed by <strong>Nitin Rathod</strong></p>
-          <p style={{margin:"4px 0 0"}}>DevOps • Cloud Engineer</p>
-        </div>
+        
         </div>
 
 
-        <div style={{marginTop:"20px",textAlign:"center",fontSize:"13px",color:"#6b7280",borderTop:"1px solid #e5e7eb",paddingTop:"12px"}}>
-          <p style={{margin:0}}>Developed by <strong>Nitin Rathod</strong></p>
-          <p style={{margin:"4px 0 0"}}>DevOps • Cloud Engineer</p>
-        </div>
+        
       </div>
 
-        <div style={{marginTop:"20px",textAlign:"center",fontSize:"13px",color:"#6b7280",borderTop:"1px solid #e5e7eb",paddingTop:"12px"}}>
-          <p style={{margin:0}}>Developed by <strong>Nitin Rathod</strong></p>
-          <p style={{margin:"4px 0 0"}}>DevOps • Cloud Engineer</p>
-        </div>
+        
     </div>
   );
 }
+
+
+<div style={{
+marginTop:"20px",
+textAlign:"center",
+fontSize:"13px",
+color:"#6b7280",
+borderTop:"1px solid #e5e7eb",
+paddingTop:"12px"
+}}>
+<p style={{margin:0}}>
+Developed by <strong>Nitin Rathod</strong>
+</p>
+
+<p style={{margin:"4px 0 0"}}>
+DevOps • Cloud Engineer
+</p>
+</div>
 
 export default ProfilePage;

@@ -177,19 +177,22 @@ style={{
 width:"100%",
 marginTop:"25px",
 borderCollapse:"collapse",
-background:"white"
+background:"white",
+borderRadius:"15px",
+overflow:"hidden",
+boxShadow:"0 8px 20px rgba(0,0,0,0.08)"
 }}
 >
 
 <thead>
 <tr>
-<th>Type</th>
-<th>ID</th>
-<th>Mode</th>
-<th>Date</th>
-<th>Amount</th>
-<th>Status</th>
-<th>Receipt</th>
+<th style={{padding:"15px",textAlign:"center"}}>Type</th>
+<th style={{padding:"15px",textAlign:"center"}}>ID</th>
+<th style={{padding:"15px",textAlign:"center"}}>Mode</th>
+<th style={{padding:"15px",textAlign:"center"}}>Date</th>
+<th style={{padding:"15px",textAlign:"center"}}>Amount</th>
+<th style={{padding:"15px",textAlign:"center"}}>Status</th>
+<th style={{padding:"15px",textAlign:"center"}}>Receipt</th>
 </tr>
 </thead>
 
@@ -206,13 +209,19 @@ transactions.length===0 ?
 
 filteredTransactions.map((t)=>(
 
-<tr key={t._id}>
+<tr
+key={t._id}
+style={{
+borderBottom:"1px solid #e5e7eb",
+textAlign:"center"
+}}
+>
 
-<td>{getTitle(t)}</td>
+<td style={{padding:"15px"}}>{getTitle(t)}</td>
 
-<td>{t._id.slice(-6)}</td>
+<td style={{padding:"15px"}}>{t._id.slice(-6)}</td>
 
-<td>
+<td style={{padding:"15px"}}>
 {
 t.type==="bill_payment"
 ? t.details?.service
@@ -223,12 +232,13 @@ t.type==="bill_payment"
 </td>
 
 
-<td>
+<td style={{padding:"15px"}}>
 {new Date(t.createdAt).toLocaleString()}
 </td>
 
 
 <td style={{
+padding:"15px",
 fontWeight:"bold",
 color:t.type==="deposit"?"green":"red"
 }}>
@@ -236,7 +246,11 @@ color:t.type==="deposit"?"green":"red"
 </td>
 
 
-<td style={{color:"green"}}>
+<td style={{
+padding:"15px",
+color:"green",
+fontWeight:"bold"
+}}>
 ✅ {t.status}
 </td>
 

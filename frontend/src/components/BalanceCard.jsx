@@ -9,6 +9,9 @@ username:"",
 balance:0,
 accountNumber:"",
 accountType:"",
+branchName:"",
+kycStatus:"",
+accountOpenDate:"",
 status:""
 });
 
@@ -157,6 +160,52 @@ Status
 
 <strong style={{color:"#059669"}}>
 🟢 Active
+</strong>
+</div>
+
+
+<div>
+<p style={{color:"#64748b"}}>
+Account Type
+</p>
+
+<strong>
+{user.accountType || "-"}
+</strong>
+</div>
+
+
+<div>
+<p style={{color:"#64748b"}}>
+Branch
+</p>
+
+<strong>
+{user.branchName || "-"}
+</strong>
+</div>
+
+
+<div>
+<p style={{color:"#64748b"}}>
+KYC Status
+</p>
+
+<strong>
+{user.kycStatus || "Pending"}
+</strong>
+</div>
+
+
+<div>
+<p style={{color:"#64748b"}}>
+Account Open Date
+</p>
+
+<strong>
+{user.accountOpenDate
+? new Date(user.accountOpenDate).toLocaleDateString()
+: "-"}
 </strong>
 </div>
 

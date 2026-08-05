@@ -10,6 +10,7 @@ function TransferPage() {
   const [mobileNumber,setMobileNumber] = useState("");
   const [receiver,setReceiver] = useState(null);
   const [amount,setAmount] = useState("");
+  const [confirm,setConfirm] = useState(false);
 
   const searchMobile = async()=> {
     try{
@@ -27,6 +28,21 @@ function TransferPage() {
 
 
   const transferMoney = async()=>{
+
+    if(!amount || Number(amount)<=0){
+      alert("Please enter valid amount");
+      return;
+    }
+
+    if(mode==="username" && !username){
+      alert("Please enter receiver username");
+      return;
+    }
+
+    if(mode==="mobile" && !receiver){
+      alert("Please search receiver first");
+      return;
+    }
 
     try{
 
@@ -211,13 +227,61 @@ onChange={(e)=>setAmount(e.target.value)}
 
 
 <button
-onClick={transferMoney}
+onClick={()=>setConfirm(true)}
 style={sendBtn}
 >
 💸 Send Money
 </button>
 
 
+
+{
+confirm &&
+
+<div
+style={{
+marginTop:"20px",
+padding:"20px",
+background:"#eff6ff",
+borderRadius:"15px"
+}}
+>
+
+<h3>Confirm Transfer</h3>
+
+<p>
+Send ₹ {amount} to {mode==="mobile" ? receiver?.name : username} ?
+</p>
+
+<button
+onClick={()=>{
+setConfirm(false);
+transferMoney();
+}}
+style={sendBtn}
+>
+✅ Confirm Transfer
+</button>
+
+<button
+onClick={()=>setConfirm(false)}
+style={{
+width:"100%",
+marginTop:"10px",
+padding:"12px",
+background:"#dc2626",
+color:"white",
+border:"none",
+borderRadius:"10px",
+cursor:"pointer"
+}}
+>
+❌ Cancel
+</button>
+
+</div>
+
+}
 </div>
 
 
