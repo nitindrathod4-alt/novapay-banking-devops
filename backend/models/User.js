@@ -18,6 +18,15 @@ const userSchema = new mongoose.Schema(
       required: true,
     },
 
+
+    email: {
+      type: String,
+      unique: true,
+      default: "",
+    },
+
+
+
     role: {
       type: String,
       enum: ["user", "admin"],
@@ -101,6 +110,31 @@ const userSchema = new mongoose.Schema(
       type: String,
       default: "",
     },
+
+    
+    resetOTP: {
+      type: String,
+      default: "",
+    },
+
+    resetOTPExpiry: {
+      type: Date,
+    },
+
+    refreshToken: {
+      type: String,
+      default: "",
+    },
+
+    loginAttempts: {
+      type: Number,
+      default: 0,
+    },
+
+    lockUntil: {
+      type: Date,
+    },
+
   },
   {
     timestamps: true,

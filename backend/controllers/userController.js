@@ -254,7 +254,7 @@ exports.uploadPhoto = async (req, res) => {
 
 exports.updateUser = async (req, res) => {
   try {
-    const { name, username, balance, status, mobileNumber } = req.body;
+    const { name, username, balance, status, mobileNumber, email } = req.body;
 
     const user = await User.findById(req.params.id);
 
@@ -270,6 +270,7 @@ exports.updateUser = async (req, res) => {
     if (balance !== undefined) user.balance = Number(balance);
     if (status !== undefined) user.status = status;
     if (mobileNumber !== undefined) user.mobileNumber = mobileNumber;
+    if (email !== undefined) user.email = email;
 
     await user.save();
 
