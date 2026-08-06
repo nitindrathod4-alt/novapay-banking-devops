@@ -35,7 +35,7 @@ return(
 
 <div style={{
 padding:"40px",
-background:"#f1f5f9",
+background:"var(--page-bg)",
 minHeight:"100vh"
 }}>
 
@@ -54,7 +54,7 @@ gap:"25px"
 {/* Profile Card */}
 
 <div style={{
-background:"white",
+background:"var(--card-bg)",
 padding:"25px",
 borderRadius:"18px",
 boxShadow:"0 8px 20px rgba(0,0,0,.1)",
@@ -101,7 +101,7 @@ fontWeight:"bold"
 {/* Details */}
 
 <div style={{
-background:"white",
+background:"var(--card-bg)",
 padding:"30px",
 borderRadius:"18px",
 boxShadow:"0 8px 20px rgba(0,0,0,.1)"

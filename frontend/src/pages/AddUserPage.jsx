@@ -46,7 +46,7 @@ function AddUserPage() {
     <div
       style={{
         minHeight: "100vh",
-        background: "#f3f4f6",
+        background: "var(--page-bg)",
         padding: "40px",
       }}
     >
@@ -69,7 +69,7 @@ function AddUserPage() {
         onSubmit={createUser}
         style={{
           maxWidth: "500px",
-          background: "#fff",
+          background: "var(--card-bg)",
           padding: "30px",
           marginTop: "30px",
           borderRadius: "15px",

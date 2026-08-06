@@ -112,6 +112,26 @@ const userSchema = new mongoose.Schema(
     },
 
     
+    notificationSettings: {
+
+      transactionAlerts: {
+        type: Boolean,
+        default: true,
+      },
+
+      emailAlerts: {
+        type: Boolean,
+        default: true,
+      },
+
+      offers: {
+        type: Boolean,
+        default: false,
+      },
+
+    },
+
+
     resetOTP: {
       type: String,
       default: "",

@@ -64,7 +64,7 @@ function ProfilePage() {
   };
 
   return (
-    <div style={{ display: "flex", background: "#f3f4f6", minHeight: "100vh" }}>
+    <div style={{ display: "flex", background: "var(--page-bg)", minHeight: "100vh" }}>
       <Sidebar />
 
       <div style={{ flex: 1, padding: "40px" }}>
@@ -76,7 +76,7 @@ function ProfilePage() {
         <div
           style={{
             maxWidth: "760px",
-            background: "#fff",
+            background: "var(--card-bg)",
             padding: "35px",
             borderRadius: "18px",
             boxShadow: "0 10px 25px rgba(0,0,0,.12)",

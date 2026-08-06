@@ -17,7 +17,7 @@ return (
 
 <div
 style={{
-background:"#ffffff",
+background:"var(--card-bg)",
 padding:"18px 30px",
 display:"flex",
 justifyContent:"space-between",
@@ -49,7 +49,7 @@ gap:"20px"
 
 <div
 style={{
-background:"#f1f5f9",
+background:"var(--page-bg)",
 padding:"10px 15px",
 borderRadius:"12px",
 color:"#334155",

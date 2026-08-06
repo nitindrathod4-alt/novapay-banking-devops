@@ -10,7 +10,7 @@ const [showForm,setShowForm]=useState(false);
 
 return(
 
-<div style={{display:"flex"}}>
+<div className="layout" style={{display:"flex"}}>
 
 <Sidebar/>
 
@@ -19,7 +19,7 @@ return(
 style={{
 flex:1,
 padding:"30px",
-background:"#f8fafc",
+background:"var(--page-bg)",
 minHeight:"100vh"
 }}
 >
@@ -56,7 +56,7 @@ marginTop:"30px"
 <div
 key={item[1]}
 style={{
-background:"white",
+background:"var(--card-bg)",
 padding:"25px",
 borderRadius:"15px",
 textAlign:"center",
@@ -101,7 +101,7 @@ Book Now
 
 <div
 style={{
-background:"white",
+background:"var(--card-bg)",
 padding:"30px",
 borderRadius:"15px",
 marginTop:"30px"

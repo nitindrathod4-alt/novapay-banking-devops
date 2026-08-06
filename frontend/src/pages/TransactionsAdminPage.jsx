@@ -108,7 +108,7 @@ return(
 
 <div style={{
 padding:"30px",
-background:"#f8fafc",
+background:"var(--page-bg)",
 minHeight:"100vh"
 }}>
 
@@ -195,7 +195,7 @@ transactions.map((t)=>(
 <div
 key={t._id}
 style={{
-background:"white",
+background:"var(--card-bg)",
 padding:"25px",
 borderRadius:"15px",
 marginBottom:"20px",

@@ -71,7 +71,7 @@ function EditUserPage() {
     <div
       style={{
         padding: "40px",
-        background: "#f3f4f6",
+        background: "var(--page-bg)",
         minHeight: "100vh",
       }}
     >
@@ -82,7 +82,7 @@ function EditUserPage() {
       <form
         onSubmit={saveUser}
         style={{
-          background: "#fff",
+          background: "var(--card-bg)",
           padding: "25px",
           maxWidth: "500px",
           borderRadius: "12px",

@@ -57,7 +57,7 @@ alert("Update Failed");
 
 return(
 
-<div style={{display:"flex"}}>
+<div className="layout" style={{display:"flex"}}>
 
 <Sidebar/>
 
@@ -65,7 +65,7 @@ return(
 style={{
 flex:1,
 padding:"30px",
-background:"#f8fafc",
+background:"var(--page-bg)",
 minHeight:"100vh"
 }}
 >
@@ -78,7 +78,7 @@ tickets.map(t=>(
 <div
 key={t._id}
 style={{
-background:"white",
+background:"var(--card-bg)",
 padding:"20px",
 borderRadius:"15px",
 marginTop:"15px"

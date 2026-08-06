@@ -87,7 +87,7 @@ err.response?.data?.message ||
 
 return(
 
-<div style={{display:"flex"}}>
+<div className="layout" style={{display:"flex"}}>
 
 <Sidebar/>
 
@@ -96,7 +96,7 @@ return(
 style={{
 flex:1,
 padding:"30px",
-background:"#f8fafc",
+background:"var(--page-bg)",
 minHeight:"100vh"
 }}
 >
@@ -128,7 +128,7 @@ setProvider("");
 
 }}
 style={{
-background:"white",
+background:"var(--card-bg)",
 padding:"25px",
 borderRadius:"16px",
 textAlign:"center",
@@ -168,7 +168,7 @@ service &&
 
 <div
 style={{
-background:"white",
+background:"var(--card-bg)",
 padding:"30px",
 marginTop:"30px",
 borderRadius:"18px",

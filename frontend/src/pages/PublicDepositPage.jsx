@@ -32,7 +32,7 @@ function PublicDepositPage() {
         width: "400px",
         margin: "80px auto",
         padding: "30px",
-        background: "#fff",
+        background: "var(--card-bg)",
         borderRadius: "12px",
         boxShadow: "0 5px 15px rgba(0,0,0,0.2)"
       }}

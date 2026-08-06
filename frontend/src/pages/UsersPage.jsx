@@ -89,7 +89,7 @@ return(
 
 <div style={{
 padding:"35px",
-background:"#f1f5f9",
+background:"var(--page-bg)",
 minHeight:"100vh"
 }}>
 
@@ -148,7 +148,7 @@ fontSize:"16px"
 
 
 <div style={{
-background:"white",
+background:"var(--card-bg)",
 borderRadius:"18px",
 boxShadow:"0 10px 25px rgba(0,0,0,.1)",
 overflow:"hidden"

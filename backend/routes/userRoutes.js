@@ -16,6 +16,8 @@ const {
   getUserProfile,
   resetPassword,
   changePassword,
+  getNotificationSettings,
+  updateNotificationSettings,
 } = require("../controllers/userController");
 
 // ================= USERS =================
@@ -27,10 +29,6 @@ router.post("/", createUser);
 
 router.get("/analytics", analytics);
 
-// ================= USER PROFILE =================
-
-router.get("/:id", getUserProfile);
-
 // ================= RESET PASSWORD =================
 
 router.put("/:id/password", resetPassword);
@@ -39,6 +37,22 @@ router.put("/:id/password", resetPassword);
 // ================= CHANGE PASSWORD =================
 
 router.put("/change-password", require("../middleware/authMiddleware"), changePassword);
+
+
+// ================= NOTIFICATION SETTINGS =================
+
+router.get(
+"/notification-settings",
+require("../middleware/authMiddleware"),
+getNotificationSettings
+);
+
+
+router.put(
+"/notification-settings",
+require("../middleware/authMiddleware"),
+updateNotificationSettings
+);
 
 // ================= DEPOSIT =================
 
@@ -62,6 +76,10 @@ router.post(
   upload.single("photo"),
   uploadPhoto
 );
+
+// ================= USER PROFILE =================
+
+router.get("/:id", getUserProfile);
 
 // ================= DELETE USER =================
 

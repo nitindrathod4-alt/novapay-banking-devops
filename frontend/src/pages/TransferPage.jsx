@@ -73,20 +73,20 @@ function TransferPage() {
 
 return (
 
-<div style={{display:"flex"}}>
+<div className="layout" style={{display:"flex"}}>
 
 <Sidebar/>
 
 <div style={{
 flex:1,
 padding:"40px",
-background:"#f1f5f9",
+background:"var(--page-bg)",
 minHeight:"100vh"
 }}>
 
 
 <div style={{
-background:"#fff",
+background:"var(--card-bg)",
 maxWidth:"600px",
 padding:"30px",
 borderRadius:"20px",

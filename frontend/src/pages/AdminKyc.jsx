@@ -73,7 +73,7 @@ return(
 
 <div style={{
 minHeight:"100vh",
-background:"#f1f5f9",
+background:"var(--page-bg)",
 padding:"40px"
 }}>
 
@@ -82,7 +82,7 @@ padding:"40px"
 
 
 <div style={{
-background:"#fff",
+background:"var(--card-bg)",
 padding:"30px",
 borderRadius:"20px",
 boxShadow:"0 10px 25px rgba(0,0,0,.1)"

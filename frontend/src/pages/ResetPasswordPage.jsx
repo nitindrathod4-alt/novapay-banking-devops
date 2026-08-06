@@ -42,7 +42,7 @@ function ResetPasswordPage(){
   return(
     <div style={{
       minHeight:"100vh",
-      background:"#f3f4f6",
+      background:"var(--page-bg)",
       padding:"40px"
     }}>
 
@@ -57,7 +57,7 @@ function ResetPasswordPage(){
       <form
         onSubmit={resetPassword}
         style={{
-          background:"#fff",
+          background:"var(--card-bg)",
           padding:"30px",
           maxWidth:"450px",
           borderRadius:"15px",

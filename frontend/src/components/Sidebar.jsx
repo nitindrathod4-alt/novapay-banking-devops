@@ -97,6 +97,11 @@ marginTop:"30px"
 </Link>
 
 
+<Link to="/settings" style={menu}>
+⚙️ Settings
+</Link>
+
+
 <Link to="/kyc" style={menu}>
 🪪 KYC Verification
 </Link>

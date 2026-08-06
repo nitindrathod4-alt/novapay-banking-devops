@@ -117,7 +117,7 @@ return t.type;
 
 return(
 
-<div style={{display:"flex"}}>
+<div className="layout" style={{display:"flex"}}>
 
 <Sidebar/>
 
@@ -126,7 +126,7 @@ return(
 style={{
 flex:1,
 padding:"30px",
-background:"#f8fafc",
+background:"var(--page-bg)",
 minHeight:"100vh"
 }}
 >
@@ -177,7 +177,7 @@ style={{
 width:"100%",
 marginTop:"25px",
 borderCollapse:"collapse",
-background:"white",
+background:"var(--card-bg)",
 borderRadius:"15px",
 overflow:"hidden",
 boxShadow:"0 8px 20px rgba(0,0,0,0.08)"

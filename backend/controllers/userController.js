@@ -449,6 +449,8 @@ message:"Password changed successfully"
 
 }catch(err){
 
+console.log("GET NOTIFICATION ERROR:", err);
+
 res.status(500).json({
 message:err.message
 });
@@ -456,3 +458,99 @@ message:err.message
 }
 
 };
+
+
+// ================= NOTIFICATION SETTINGS =================
+
+exports.getNotificationSettings = async (req,res)=>{
+
+try{
+
+
+return res.json({
+settings:{
+transactionAlerts:true,
+emailAlerts:true,
+offers:false
+}
+});
+
+
+const User = require("../models/User");
+
+const user = await User.findById(req.user.id)
+.select("notificationSettings");
+
+
+if(!user){
+return res.status(404).json({
+message:"User not found"
+});
+}
+
+
+res.json({
+settings:user.notificationSettings || {
+transactionAlerts:true,
+emailAlerts:true,
+offers:true
+}
+});
+
+
+}catch(err){
+
+res.status(500).json({
+message:err.message
+});
+
+}
+
+};
+
+
+
+exports.updateNotificationSettings = async (req,res)=>{
+
+try{
+
+const User = require("../models/User");
+
+const user = await User.findById(req.user.id);
+
+
+if(!user){
+return res.status(404).json({
+message:"User not found"
+});
+}
+
+
+user.notificationSettings = {
+transactionAlerts:true,
+emailAlerts:true,
+offers:true,
+...(user.notificationSettings || {}),
+...req.body
+};
+
+
+await user.save();
+
+
+res.json({
+message:"Notification settings updated",
+settings:user.notificationSettings
+});
+
+
+}catch(err){
+
+res.status(500).json({
+message:err.message
+});
+
+}
+
+};
+

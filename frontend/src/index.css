@@ -136,11 +136,6 @@ white-space:nowrap;
 }
 
 
-button{
-max-width:100%;
-}
-
-
 }
 
 
@@ -200,92 +195,11 @@ margin:0;
 
 
 
-/* Mobile Stability Fix */
-
-html,
-body,
-#root{
-overflow-x:hidden !important;
-width:100% !important;
-}
 
 
-*{
-max-width:100%;
-}
-
-
-img{
-max-width:100%;
-}
-
+/* ===== Final Responsive Layout ===== */
 
 @media(max-width:768px){
-
-div{
-max-width:100%;
-}
-
-
-table{
-width:100% !important;
-}
-
-
-}
-
-
-
-html,body,#root{
-overflow-x:hidden;
-width:100%;
-}
-
-
-@media(max-width:768px){
-
-#root{
-width:100% !important;
-margin:0 !important;
-padding:0 !important;
-}
-
-
-}
-
-
-
-/* ===== NovaPay Mobile Responsive ===== */
-
-
-*{
-box-sizing:border-box;
-}
-
-
-html,
-body,
-#root{
-width:100%;
-max-width:100%;
-overflow-x:hidden;
-}
-
-
-img{
-max-width:100%;
-height:auto;
-}
-
-
-/* Mobile */
-
-@media(max-width:768px){
-
-#root{
-width:100% !important;
-}
-
 
 .sidebar{
 width:100% !important;
@@ -296,61 +210,114 @@ min-height:auto !important;
 .sidebar nav{
 display:grid !important;
 grid-template-columns:repeat(2,1fr);
-gap:8px !important;
-}
-
-
-.sidebar a{
-font-size:13px !important;
-padding:10px !important;
-}
-
-
-h1{
-font-size:26px !important;
-}
-
-
-h2{
-font-size:20px !important;
-}
-
-
-button{
-width:100%;
-}
-
-
-input,
-select{
-width:100% !important;
+gap:10px;
 }
 
 
 table{
 display:block;
 overflow-x:auto;
+}
+
+
+}
+
+
+
+html,
+body,
+#root{
 width:100%;
+max-width:100%;
+overflow-x:hidden;
 }
 
 
+body{
+margin:0;
 }
 
 
-/* Small phones 320px-375px */
-
-@media(max-width:375px){
-
-h1{
-font-size:22px !important;
+html.dark body{
+background:#0f172a;
+color:white;
 }
 
 
-.sidebar nav{
-grid-template-columns:1fr !important;
+
+
+:root{
+--page-bg:#f8fafc;
+--card-bg:#ffffff;
+--text-color:#0f172a;
 }
 
 
+html.dark{
+--page-bg:#0f172a;
+--card-bg:#1e293b;
+--text-color:#ffffff;
 }
 
+
+body{
+background:var(--page-bg);
+color:var(--text-color);
+transition:0.3s;
+}
+
+
+
+
+html.dark{
+--page-bg:#0f172a;
+--card-bg:#1e293b;
+--text-color:#ffffff;
+}
+
+
+html.dark body{
+background:#0f172a !important;
+color:#ffffff !important;
+}
+
+
+html.dark #root{
+background:#0f172a !important;
+}
+
+
+
+/* Global Theme Text Fix */
+
+body{
+color:var(--text-color);
+}
+
+h1,h2,h3,h4,h5,h6,
+p,
+span,
+label{
+color:var(--text-color);
+}
+
+
+/* FINAL DARK MODE FIX */
+
+html{
+--page-bg:#f8fafc;
+--card-bg:#ffffff;
+--text-color:#0f172a;
+}
+
+html.dark{
+--page-bg:#0f172a;
+--card-bg:#1e293b;
+--text-color:#ffffff;
+}
+
+body{
+background:var(--page-bg) !important;
+color:var(--text-color) !important;
+}
 

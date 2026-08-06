@@ -48,7 +48,7 @@ function KycPage() {
 
 
   return (
-    <div style={{ display: "flex", minHeight: "100vh", background: "#f3f4f6" }}>
+    <div style={{ display: "flex", minHeight: "100vh", background: "var(--page-bg)" }}>
       <Sidebar />
 
       <div style={{ flex: 1, padding: "40px" }}>
@@ -58,7 +58,7 @@ function KycPage() {
 
         <div
           style={{
-            background: "#fff",
+            background: "var(--card-bg)",
             padding: "30px",
             borderRadius: "15px",
             maxWidth: "700px",

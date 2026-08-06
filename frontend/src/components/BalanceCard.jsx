@@ -47,7 +47,7 @@ return (
 
 <div
 style={{
-background:"#ffffff",
+background:"var(--card-bg)",
 padding:"30px",
 borderRadius:"20px",
 boxShadow:"0 8px 25px rgba(0,0,0,0.08)",

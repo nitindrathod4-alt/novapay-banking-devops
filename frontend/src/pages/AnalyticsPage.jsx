@@ -192,7 +192,7 @@ loadUsers();
         style={{
           flex: 1,
           padding: "30px",
-          background: "#f3f4f6",
+          background: "var(--page-bg)",
           minHeight: "100vh",
         }}
       >
@@ -208,22 +208,22 @@ marginTop:"30px"
 }}
 >
 
-<div style={{background:"#fff",padding:"20px",borderRadius:"12px"}}>
+<div style={{background:"var(--card-bg)",padding:"20px",borderRadius:"12px"}}>
 <h3>💰 Total Deposits</h3>
 <h2>₹ {stats.deposits.toLocaleString()}</h2>
 </div>
 
-<div style={{background:"#fff",padding:"20px",borderRadius:"12px"}}>
+<div style={{background:"var(--card-bg)",padding:"20px",borderRadius:"12px"}}>
 <h3>🏧 Total Withdrawals</h3>
 <h2>₹ {stats.withdraws.toLocaleString()}</h2>
 </div>
 
-<div style={{background:"#fff",padding:"20px",borderRadius:"12px"}}>
+<div style={{background:"var(--card-bg)",padding:"20px",borderRadius:"12px"}}>
 <h3>🔄 Total Transfers</h3>
 <h2>₹ {stats.transfers.toLocaleString()}</h2>
 </div>
 
-<div style={{background:"#fff",padding:"20px",borderRadius:"12px"}}>
+<div style={{background:"var(--card-bg)",padding:"20px",borderRadius:"12px"}}>
 <h3>📜 Total Transactions</h3>
 <h2>{stats.count}</h2>
 </div>
@@ -233,7 +233,7 @@ marginTop:"30px"
 
         <div
 style={{
-background:"#fff",
+background:"var(--card-bg)",
 padding:"25px",
 borderRadius:"15px",
 marginTop:"30px"
@@ -275,7 +275,7 @@ gap:"15px"
 
 <div
 style={{
-background:"#fff",
+background:"var(--card-bg)",
 padding:"25px",
 borderRadius:"15px",
 marginTop:"30px"
@@ -311,7 +311,7 @@ marginTop:"30px"
 
 <div
 style={{
-background:"#fff",
+background:"var(--card-bg)",
 padding:"25px",
 borderRadius:"15px",
 marginTop:"30px"
@@ -349,7 +349,7 @@ marginTop:"30px"
           >
             <div
               style={{
-                background: "#fff",
+                background: "var(--card-bg)",
                 padding: "20px",
                 borderRadius: "12px",
               }}
@@ -360,7 +360,7 @@ marginTop:"30px"
 
             <div
               style={{
-                background: "#fff",
+                background: "var(--card-bg)",
                 padding: "20px",
                 borderRadius: "12px",
               }}
@@ -371,7 +371,7 @@ marginTop:"30px"
 
             <div
               style={{
-                background: "#fff",
+                background: "var(--card-bg)",
                 padding: "20px",
                 borderRadius: "12px",
               }}
@@ -382,7 +382,7 @@ marginTop:"30px"
 
             <div
               style={{
-                background: "#fff",
+                background: "var(--card-bg)",
                 padding: "20px",
                 borderRadius: "12px",
               }}
@@ -396,7 +396,7 @@ marginTop:"30px"
 
 <div
 style={{
-background:"#fff",
+background:"var(--card-bg)",
 padding:"25px",
 borderRadius:"15px",
 marginTop:"30px"

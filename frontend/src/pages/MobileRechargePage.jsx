@@ -40,7 +40,7 @@ err.response?.data?.message ||
 
 return(
 
-<div style={{display:"flex"}}>
+<div className="layout" style={{display:"flex"}}>
 
 <Sidebar/>
 
@@ -49,7 +49,7 @@ return(
 style={{
 flex:1,
 padding:"30px",
-background:"#f8fafc",
+background:"var(--page-bg)",
 minHeight:"100vh"
 }}
 >
@@ -57,7 +57,7 @@ minHeight:"100vh"
 
 <div
 style={{
-background:"#fff",
+background:"var(--card-bg)",
 padding:"30px",
 borderRadius:"20px",
 maxWidth:"500px",

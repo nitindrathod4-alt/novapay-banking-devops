@@ -68,7 +68,7 @@ return (
 <div
 style={{
 padding:"35px",
-background:"#f8fafc",
+background:"var(--page-bg)",
 minHeight:"100vh"
 }}
 >
@@ -76,7 +76,7 @@ minHeight:"100vh"
 
 <div
 style={{
-background:"#ffffff",
+background:"var(--card-bg)",
 padding:"25px",
 borderRadius:"18px",
 boxShadow:"0 5px 15px rgba(0,0,0,0.06)",
@@ -113,7 +113,7 @@ Manage your NovaPay account securely
 
 <div
 style={{
-background:"#ffffff",
+background:"var(--card-bg)",
 padding:"25px",
 borderRadius:"18px",
 boxShadow:"0 5px 15px rgba(0,0,0,0.06)",
@@ -138,7 +138,7 @@ Total Spent:
 
 <div
 style={{
-background:"#ffffff",
+background:"var(--card-bg)",
 padding:"25px",
 borderRadius:"18px",
 boxShadow:"0 5px 15px rgba(0,0,0,0.06)",

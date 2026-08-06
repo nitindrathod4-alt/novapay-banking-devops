@@ -28,7 +28,7 @@ alert(err.response?.data?.message || "Withdraw Failed");
 
 return(
 
-<div style={{display:"flex"}}>
+<div className="layout" style={{display:"flex"}}>
 
 <Sidebar/>
 

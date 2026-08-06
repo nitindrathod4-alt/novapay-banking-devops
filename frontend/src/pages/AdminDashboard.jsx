@@ -17,7 +17,7 @@ color:"inherit"
 
 <div
 style={{
-background:"#fff",
+background:"var(--card-bg)",
 padding:"25px",
 borderRadius:"18px",
 boxShadow:"0 10px 25px rgba(0,0,0,.08)"
@@ -132,7 +132,7 @@ loadTransactions();
 
 return(
 
-<div style={{display:"flex"}}>
+<div className="layout" style={{display:"flex"}}>
 
 <AdminSidebar />
 
@@ -141,7 +141,7 @@ return(
 style={{
 flex:1,
 padding:"30px",
-background:"#f8fafc",
+background:"var(--page-bg)",
 minHeight:"100vh"
 }}
 >
@@ -149,7 +149,7 @@ minHeight:"100vh"
 
 <div
 style={{
-background:"#fff",
+background:"var(--card-bg)",
 padding:"25px",
 borderRadius:"20px",
 marginBottom:"30px",
@@ -272,7 +272,7 @@ marginTop:"30px"
 >
 
 <div style={{
-background:"#fff",
+background:"var(--card-bg)",
 padding:"20px",
 borderRadius:"15px",
 boxShadow:"0 5px 15px rgba(0,0,0,.08)"
@@ -283,7 +283,7 @@ boxShadow:"0 5px 15px rgba(0,0,0,.08)"
 
 
 <div style={{
-background:"#fff",
+background:"var(--card-bg)",
 padding:"20px",
 borderRadius:"15px",
 boxShadow:"0 5px 15px rgba(0,0,0,.08)"
@@ -294,7 +294,7 @@ boxShadow:"0 5px 15px rgba(0,0,0,.08)"
 
 
 <div style={{
-background:"#fff",
+background:"var(--card-bg)",
 padding:"20px",
 borderRadius:"15px",
 boxShadow:"0 5px 15px rgba(0,0,0,.08)"
@@ -305,7 +305,7 @@ boxShadow:"0 5px 15px rgba(0,0,0,.08)"
 
 
 <div style={{
-background:"#fff",
+background:"var(--card-bg)",
 padding:"20px",
 borderRadius:"15px",
 boxShadow:"0 5px 15px rgba(0,0,0,.08)"
@@ -321,7 +321,7 @@ boxShadow:"0 5px 15px rgba(0,0,0,.08)"
 <div
 style={{
 marginTop:"30px",
-background:"#fff",
+background:"var(--card-bg)",
 padding:"25px",
 borderRadius:"18px",
 boxShadow:"0 10px 25px rgba(0,0,0,.08)"
@@ -364,7 +364,7 @@ borderBottom:"1px solid #eee"
 <div
 style={{
 marginTop:"30px",
-background:"#fff",
+background:"var(--card-bg)",
 padding:"25px",
 borderRadius:"18px",
 boxShadow:"0 10px 25px rgba(0,0,0,.08)"

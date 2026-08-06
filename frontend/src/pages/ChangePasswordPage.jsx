@@ -45,21 +45,21 @@ err.response?.data?.message || "Password change failed"
 
 return(
 
-<div style={{display:"flex"}}>
+<div className="layout" style={{display:"flex"}}>
 
 <Sidebar/>
 
 <div style={{
 flex:1,
 padding:"40px",
-background:"#f3f4f6",
+background:"var(--page-bg)",
 minHeight:"100vh"
 }}>
 
 <BackButton/>
 
 <div style={{
-background:"#fff",
+background:"var(--card-bg)",
 padding:"30px",
 maxWidth:"500px",
 borderRadius:"15px"

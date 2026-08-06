@@ -103,7 +103,7 @@ return (
 
 <div
 style={{
-background:"#fff",
+background:"var(--card-bg)",
 padding:"25px",
 borderRadius:"20px",
 boxShadow:"0 8px 20px rgba(0,0,0,0.06)"

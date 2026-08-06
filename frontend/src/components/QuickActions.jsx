@@ -13,7 +13,7 @@ textDecoration:"none"
 
 <div
 style={{
-background:"#ffffff",
+background:"var(--card-bg)",
 padding:"20px",
 borderRadius:"16px",
 textAlign:"center",
