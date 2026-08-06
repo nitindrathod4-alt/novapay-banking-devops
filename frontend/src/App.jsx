@@ -8,6 +8,7 @@ import DashboardPage from "./pages/DashboardPage";
 import TransferPage from "./pages/TransferPage";
 import TransactionsPage from "./pages/TransactionsPage";
 import ProfilePage from "./pages/ProfilePage";
+import ChangePasswordPage from "./pages/ChangePasswordPage";
 import MobileRechargePage from "./pages/MobileRechargePage";
 import BillPaymentPage from "./pages/BillPaymentPage";
 import KycPage from "./pages/KycPage";
@@ -76,6 +77,7 @@ function AppContent() {
       <Route path="/withdraw" element={<WithdrawPage />} />
       <Route path="/transactions" element={<TransactionsPage />} />
       <Route path="/profile" element={<ProfilePage />} />
+      <Route path="/change-password" element={<ChangePasswordPage />} />
       <Route path="/mobile-recharge" element={<MobileRechargePage />} />
       <Route path="/bill-payment" element={<BillPaymentPage />} />
       <Route path="/kyc" element={<KycPage />} />

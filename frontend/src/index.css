@@ -30,24 +30,7 @@
   }
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --text: #9ca3af;
-    --text-h: #f3f4f6;
-    --bg: #16171d;
-    --border: #2e303a;
-    --code-bg: #1f2028;
-    --accent: #c084fc;
-    --accent-bg: rgba(192, 132, 252, 0.15);
-    --accent-border: rgba(192, 132, 252, 0.5);
-    --social-bg: rgba(47, 48, 58, 0.5);
-    --shadow:
-      rgba(0, 0, 0, 0.4) 0 10px 15px -3px, rgba(0, 0, 0, 0.25) 0 4px 6px -2px;
-  }
 
-  #social .button-icon {
-    filter: invert(1) brightness(2);
-  }
 }
 
 body {
@@ -55,7 +38,7 @@ body {
 }
 
 #root {
-  width: 1126px;
+  width: 100%;
   max-width: 100%;
   margin: 0 auto;
   text-align: center;
@@ -109,3 +92,265 @@ code {
   padding: 4px 8px;
   background: var(--code-bg);
 }
+
+
+/* Mobile Responsive */
+
+@media (max-width:768px){
+
+body{
+overflow-x:hidden;
+}
+
+
+#root{
+width:100%;
+border:none;
+}
+
+
+.sidebar{
+width:100% !important;
+min-height:auto !important;
+padding:15px !important;
+}
+
+
+.sidebar nav{
+display:grid !important;
+grid-template-columns:repeat(2,1fr);
+gap:8px !important;
+margin-top:15px !important;
+}
+
+
+h1{
+font-size:28px !important;
+}
+
+
+table{
+display:block;
+overflow-x:auto;
+white-space:nowrap;
+}
+
+
+button{
+max-width:100%;
+}
+
+
+}
+
+
+
+@media(max-width:768px){
+
+.sidebar{
+width:100% !important;
+min-height:auto !important;
+padding:15px !important;
+}
+
+
+.sidebar h2{
+font-size:24px !important;
+}
+
+
+.sidebar nav{
+display:grid !important;
+grid-template-columns:repeat(2,1fr);
+gap:8px !important;
+}
+
+
+.sidebar a{
+padding:10px !important;
+font-size:14px;
+}
+
+
+}
+
+
+
+*{
+box-sizing:border-box;
+}
+
+
+html,body,#root{
+width:100%;
+max-width:100%;
+overflow-x:hidden;
+}
+
+
+@media(max-width:768px){
+
+#root{
+width:100%;
+margin:0;
+}
+
+
+}
+
+
+
+/* Mobile Stability Fix */
+
+html,
+body,
+#root{
+overflow-x:hidden !important;
+width:100% !important;
+}
+
+
+*{
+max-width:100%;
+}
+
+
+img{
+max-width:100%;
+}
+
+
+@media(max-width:768px){
+
+div{
+max-width:100%;
+}
+
+
+table{
+width:100% !important;
+}
+
+
+}
+
+
+
+html,body,#root{
+overflow-x:hidden;
+width:100%;
+}
+
+
+@media(max-width:768px){
+
+#root{
+width:100% !important;
+margin:0 !important;
+padding:0 !important;
+}
+
+
+}
+
+
+
+/* ===== NovaPay Mobile Responsive ===== */
+
+
+*{
+box-sizing:border-box;
+}
+
+
+html,
+body,
+#root{
+width:100%;
+max-width:100%;
+overflow-x:hidden;
+}
+
+
+img{
+max-width:100%;
+height:auto;
+}
+
+
+/* Mobile */
+
+@media(max-width:768px){
+
+#root{
+width:100% !important;
+}
+
+
+.sidebar{
+width:100% !important;
+min-height:auto !important;
+}
+
+
+.sidebar nav{
+display:grid !important;
+grid-template-columns:repeat(2,1fr);
+gap:8px !important;
+}
+
+
+.sidebar a{
+font-size:13px !important;
+padding:10px !important;
+}
+
+
+h1{
+font-size:26px !important;
+}
+
+
+h2{
+font-size:20px !important;
+}
+
+
+button{
+width:100%;
+}
+
+
+input,
+select{
+width:100% !important;
+}
+
+
+table{
+display:block;
+overflow-x:auto;
+width:100%;
+}
+
+
+}
+
+
+/* Small phones 320px-375px */
+
+@media(max-width:375px){
+
+h1{
+font-size:22px !important;
+}
+
+
+.sidebar nav{
+grid-template-columns:1fr !important;
+}
+
+
+}
+
+

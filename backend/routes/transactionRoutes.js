@@ -13,6 +13,7 @@ const {
   allTransactions,
   exportTransactions,
   findUserByMobile,
+  mySpending,
 } = require("../controllers/transactionController");
 
 // ================= USER =================
@@ -23,6 +24,7 @@ router.post("/withdraw", auth, withdraw);
 router.post("/transfer", auth, transfer);
 router.get("/user/mobile/:mobileNumber", auth, findUserByMobile);
 router.get("/history", auth, history);
+router.get("/my-spending", auth, mySpending);
 
 // ================= ADMIN =================
 

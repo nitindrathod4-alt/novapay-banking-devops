@@ -401,3 +401,58 @@ exports.resetPassword = async (req,res)=>{
 
   }
 };
+
+
+exports.changePassword = async (req,res)=>{
+
+try{
+
+const bcrypt = require("bcryptjs");
+const User = require("../models/User");
+
+
+const user = await User.findById(req.user.id);
+
+if(!user){
+return res.status(404).json({
+message:"User not found"
+});
+}
+
+
+const {oldPassword,newPassword}=req.body;
+
+
+const match = await bcrypt.compare(
+oldPassword,
+user.password
+);
+
+
+if(!match){
+return res.status(400).json({
+message:"Old password incorrect"
+});
+}
+
+
+user.password = await bcrypt.hash(newPassword,10);
+
+await user.save();
+
+
+res.json({
+success:true,
+message:"Password changed successfully"
+});
+
+
+}catch(err){
+
+res.status(500).json({
+message:err.message
+});
+
+}
+
+};

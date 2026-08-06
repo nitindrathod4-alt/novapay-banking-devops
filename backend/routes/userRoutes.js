@@ -15,6 +15,7 @@ const {
   updateUser,
   getUserProfile,
   resetPassword,
+  changePassword,
 } = require("../controllers/userController");
 
 // ================= USERS =================
@@ -33,6 +34,11 @@ router.get("/:id", getUserProfile);
 // ================= RESET PASSWORD =================
 
 router.put("/:id/password", resetPassword);
+
+
+// ================= CHANGE PASSWORD =================
+
+router.put("/change-password", require("../middleware/authMiddleware"), changePassword);
 
 // ================= DEPOSIT =================
 

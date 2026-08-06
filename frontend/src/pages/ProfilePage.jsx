@@ -146,7 +146,26 @@ function ProfilePage() {
 
           <br />
 
-          <button
+          
+<br />
+
+<a
+href="/change-password"
+style={{
+display:"inline-block",
+marginTop:"15px",
+background:"#2563eb",
+color:"white",
+padding:"12px 25px",
+borderRadius:"8px",
+textDecoration:"none"
+}}
+>
+🔐 Change Password
+</a>
+
+
+<button
             onClick={downloadStatement}
             style={{
               background: "green",

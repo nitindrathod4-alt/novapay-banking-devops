@@ -77,6 +77,42 @@ return acc;
 );
 
 
+const spendingStats={
+
+transfer:
+transactions
+.filter(t=>t.type==="transfer")
+.reduce((sum,t)=>sum+t.amount,0),
+
+recharge:
+transactions
+.filter(t=>t.type==="mobile_recharge")
+.reduce((sum,t)=>sum+t.amount,0),
+
+bills:
+transactions
+.filter(t=>t.type==="bill_payment")
+.reduce((sum,t)=>sum+t.amount,0)
+
+};
+
+
+const spendingChart=[
+{
+name:"Transfer",
+amount:spendingStats.transfer
+},
+{
+name:"Recharge",
+amount:spendingStats.recharge
+},
+{
+name:"Bills",
+amount:spendingStats.bills
+}
+];
+
+
 const stats={
 deposits:transactions
 .filter(t=>t.type==="deposit")
@@ -355,6 +391,46 @@ marginTop:"30px"
               <h2>{data.totalTransactions}</h2>
             </div>
           </div>
+
+
+
+<div
+style={{
+background:"#fff",
+padding:"25px",
+borderRadius:"15px",
+marginTop:"30px"
+}}
+>
+
+<h2>💸 User Spending Analytics</h2>
+
+<ResponsiveContainer width="100%" height={300}>
+
+<BarChart data={spendingChart}>
+
+<XAxis dataKey="name"/>
+
+<YAxis/>
+
+<Tooltip/>
+
+<Bar dataKey="amount"/>
+
+</BarChart>
+
+</ResponsiveContainer>
+
+
+<h3>
+Total Spending:
+₹ {(spendingStats.transfer+
+spendingStats.recharge+
+spendingStats.bills).toLocaleString()}
+</h3>
+
+</div>
+
 
 </>
         )}

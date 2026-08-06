@@ -15,6 +15,7 @@ fontWeight:"600"
 return (
 
 <div
+className="sidebar"
 style={{
 width:"250px",
 minHeight:"100vh",

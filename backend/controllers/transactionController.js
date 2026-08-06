@@ -405,3 +405,83 @@ exports.findUserByMobile = async (req,res)=>{
 
   }
 };
+
+
+exports.mySpending = async (req,res)=>{
+
+try{
+
+const Transaction = require("../models/Transaction");
+
+const userId = req.user.id;
+
+
+const transactions = await Transaction.find({
+sender:userId,
+type:{
+$in:[
+"transfer",
+"mobile_recharge",
+"bill_payment",
+"withdraw"
+]
+}
+});
+
+
+const today = new Date();
+
+
+const todaySpent = transactions
+.filter(t=>{
+return new Date(t.createdAt).toDateString() === today.toDateString();
+})
+.reduce((sum,t)=>sum+t.amount,0);
+
+
+const result={
+
+todaySpent,
+
+totalSpent:
+transactions.reduce((sum,t)=>sum+t.amount,0),
+
+breakdown:{
+
+transfer:
+transactions
+.filter(t=>t.type==="transfer")
+.reduce((sum,t)=>sum+t.amount,0),
+
+mobile_recharge:
+transactions
+.filter(t=>t.type==="mobile_recharge")
+.reduce((sum,t)=>sum+t.amount,0),
+
+bill_payment:
+transactions
+.filter(t=>t.type==="bill_payment")
+.reduce((sum,t)=>sum+t.amount,0),
+
+withdraw:
+transactions
+.filter(t=>t.type==="withdraw")
+.reduce((sum,t)=>sum+t.amount,0)
+
+}
+
+};
+
+
+res.json(result);
+
+
+}catch(err){
+
+res.status(500).json({
+message:err.message
+});
+
+}
+
+};
