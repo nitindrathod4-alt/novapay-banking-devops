@@ -1,16 +1,17 @@
 import { useEffect, useState } from "react";
-import Sidebar from "../components/Sidebar";
+import AdminSidebar from "../components/AdminSidebar";
 import api from "../services/api";
 
 import {
-BarChart,
-Bar,
-LineChart,
-Line,
-XAxis,
-YAxis,
-Tooltip,
-ResponsiveContainer
+  BarChart,
+  Bar,
+  LineChart,
+  Line,
+  XAxis,
+  YAxis,
+  Tooltip,
+  ResponsiveContainer,
+  CartesianGrid,
 } from "recharts";
 
 function AnalyticsPage() {
@@ -22,112 +23,8 @@ function AnalyticsPage() {
   });
 
   const [loading, setLoading] = useState(true);
-
-const [transactions,setTransactions]=useState([]);
-
-const [users,setUsers]=useState([]);
-
-const chartData=[
-{
-name:"Deposit",
-amount:transactions
-.filter(t=>t.type==="deposit")
-.reduce((sum,t)=>sum+t.amount,0)
-},
-{
-name:"Withdraw",
-amount:transactions
-.filter(t=>t.type==="withdraw")
-.reduce((sum,t)=>sum+t.amount,0)
-},
-{
-name:"Transfer",
-amount:transactions
-.filter(t=>t.type==="transfer")
-.reduce((sum,t)=>sum+t.amount,0)
-}
-];
-
-
-const kycStats={
-verified:users.filter(u=>u.kycStatus==="Verified").length,
-pending:users.filter(u=>u.kycStatus==="Pending").length,
-rejected:users.filter(u=>u.kycStatus==="Rejected").length
-};
-
-
-const userGrowth = Object.values(
-users.reduce((acc,u)=>{
-
-const date = new Date(u.createdAt)
-.toLocaleDateString();
-
-if(!acc[date]){
-acc[date]={
-date,
-users:0
-};
-}
-
-acc[date].users++;
-
-return acc;
-
-}, {})
-);
-
-
-const spendingStats={
-
-transfer:
-transactions
-.filter(t=>t.type==="transfer")
-.reduce((sum,t)=>sum+t.amount,0),
-
-recharge:
-transactions
-.filter(t=>t.type==="mobile_recharge")
-.reduce((sum,t)=>sum+t.amount,0),
-
-bills:
-transactions
-.filter(t=>t.type==="bill_payment")
-.reduce((sum,t)=>sum+t.amount,0)
-
-};
-
-
-const spendingChart=[
-{
-name:"Transfer",
-amount:spendingStats.transfer
-},
-{
-name:"Recharge",
-amount:spendingStats.recharge
-},
-{
-name:"Bills",
-amount:spendingStats.bills
-}
-];
-
-
-const stats={
-deposits:transactions
-.filter(t=>t.type==="deposit")
-.reduce((sum,t)=>sum+t.amount,0),
-
-withdraws:transactions
-.filter(t=>t.type==="withdraw")
-.reduce((sum,t)=>sum+t.amount,0),
-
-transfers:transactions
-.filter(t=>t.type==="transfer")
-.reduce((sum,t)=>sum+t.amount,0),
-
-count:transactions.length
-};
+  const [transactions, setTransactions] = useState([]);
+  const [users, setUsers] = useState([]);
 
   useEffect(() => {
     const load = async () => {
@@ -141,300 +38,806 @@ count:transactions.length
       }
     };
 
+    const loadTransactions = async () => {
+      try {
+        const res = await api.get("/transactions/all");
+        setTransactions(res.data.transactions || []);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+
+    const loadUsers = async () => {
+      try {
+        const res = await api.get("/users");
+        setUsers(res.data.users || []);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+
     load();
-
-
-const loadTransactions=async()=>{
-
-try{
-
-const res=await api.get("/transactions/all");
-
-setTransactions(res.data.transactions || []);
-
-}catch(err){
-
-console.log(err);
-
-}
-
-};
-
-loadTransactions();
-
-
-const loadUsers=async()=>{
-
-try{
-
-const res=await api.get("/users");
-
-setUsers(res.data.users || []);
-
-}catch(err){
-
-console.log(err);
-
-}
-
-};
-
-
-loadUsers();
-
+    loadTransactions();
+    loadUsers();
   }, []);
 
-  return (
-    <div style={{ display: "flex" }}>
-      <Sidebar />
+  const money = (value) =>
+    `₹ ${Number(value || 0).toLocaleString("en-IN")}`;
 
-      <div
+  const chartData = [
+    {
+      name: "Deposits",
+      amount: transactions
+        .filter((t) => t.type === "deposit")
+        .reduce((sum, t) => sum + Number(t.amount || 0), 0),
+    },
+    {
+      name: "Withdrawals",
+      amount: transactions
+        .filter((t) => t.type === "withdraw")
+        .reduce((sum, t) => sum + Number(t.amount || 0), 0),
+    },
+    {
+      name: "Transfers",
+      amount: transactions
+        .filter((t) => t.type === "transfer")
+        .reduce((sum, t) => sum + Number(t.amount || 0), 0),
+    },
+  ];
+
+  const kycStats = {
+    verified: users.filter((u) => u.kycStatus === "Verified").length,
+    pending: users.filter((u) => u.kycStatus === "Pending").length,
+    rejected: users.filter((u) => u.kycStatus === "Rejected").length,
+  };
+
+  const userGrowth = Object.values(
+    users.reduce((acc, u) => {
+      const date = u.createdAt
+        ? new Date(u.createdAt).toLocaleDateString()
+        : "Unknown";
+
+      if (!acc[date]) {
+        acc[date] = {
+          date,
+          users: 0,
+        };
+      }
+
+      acc[date].users++;
+
+      return acc;
+    }, {})
+  );
+
+  const spendingStats = {
+    transfer: transactions
+      .filter((t) => t.type === "transfer")
+      .reduce((sum, t) => sum + Number(t.amount || 0), 0),
+
+    recharge: transactions
+      .filter((t) => t.type === "mobile_recharge")
+      .reduce((sum, t) => sum + Number(t.amount || 0), 0),
+
+    bills: transactions
+      .filter((t) => t.type === "bill_payment")
+      .reduce((sum, t) => sum + Number(t.amount || 0), 0),
+  };
+
+  const spendingChart = [
+    {
+      name: "Transfer",
+      amount: spendingStats.transfer,
+    },
+    {
+      name: "Recharge",
+      amount: spendingStats.recharge,
+    },
+    {
+      name: "Bills",
+      amount: spendingStats.bills,
+    },
+  ];
+
+  const stats = {
+    deposits: transactions
+      .filter((t) => t.type === "deposit")
+      .reduce((sum, t) => sum + Number(t.amount || 0), 0),
+
+    withdraws: transactions
+      .filter((t) => t.type === "withdraw")
+      .reduce((sum, t) => sum + Number(t.amount || 0), 0),
+
+    transfers: transactions
+      .filter((t) => t.type === "transfer")
+      .reduce((sum, t) => sum + Number(t.amount || 0), 0),
+
+    count: transactions.length,
+  };
+
+  const totalSpending =
+    spendingStats.transfer +
+    spendingStats.recharge +
+    spendingStats.bills;
+
+  const cardStyle = {
+    background: "#ffffff",
+    border: "1px solid #eee4e7",
+    borderRadius: "16px",
+    boxShadow: "0 4px 18px rgba(48, 15, 25, 0.06)",
+  };
+
+  const chartCardStyle = {
+    ...cardStyle,
+    padding: "24px",
+  };
+
+  const chartTooltip = {
+    borderRadius: "10px",
+    border: "1px solid #ead5da",
+    boxShadow: "0 8px 20px rgba(0,0,0,.08)",
+  };
+
+  return (
+    <div
+      style={{
+        display: "flex",
+        minHeight: "100vh",
+        background: "#f7f5f5",
+      }}
+    >
+      <AdminSidebar />
+
+      <main
         style={{
           flex: 1,
-          padding: "30px",
-          background: "var(--page-bg)",
-          minHeight: "100vh",
+          padding: "32px 38px 50px",
+          overflowX: "hidden",
         }}
       >
-        <h1>📊 NovaPay Analytics</h1>
-
-
-<div
-style={{
-display:"grid",
-gridTemplateColumns:"repeat(auto-fit,minmax(220px,1fr))",
-gap:"20px",
-marginTop:"30px"
-}}
->
-
-<div style={{background:"var(--card-bg)",padding:"20px",borderRadius:"12px"}}>
-<h3>💰 Total Deposits</h3>
-<h2>₹ {stats.deposits.toLocaleString()}</h2>
-</div>
-
-<div style={{background:"var(--card-bg)",padding:"20px",borderRadius:"12px"}}>
-<h3>🏧 Total Withdrawals</h3>
-<h2>₹ {stats.withdraws.toLocaleString()}</h2>
-</div>
-
-<div style={{background:"var(--card-bg)",padding:"20px",borderRadius:"12px"}}>
-<h3>🔄 Total Transfers</h3>
-<h2>₹ {stats.transfers.toLocaleString()}</h2>
-</div>
-
-<div style={{background:"var(--card-bg)",padding:"20px",borderRadius:"12px"}}>
-<h3>📜 Total Transactions</h3>
-<h2>{stats.count}</h2>
-</div>
-
-</div>
-
+        {/* HEADER */}
 
         <div
-style={{
-background:"var(--card-bg)",
-padding:"25px",
-borderRadius:"15px",
-marginTop:"30px"
-}}
->
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+            marginBottom: "28px",
+            flexWrap: "wrap",
+            gap: "15px",
+          }}
+        >
+          <div>
+            <div
+              style={{
+                color: "#a30d2d",
+                fontSize: "12px",
+                fontWeight: "800",
+                letterSpacing: "1.5px",
+                textTransform: "uppercase",
+                marginBottom: "7px",
+              }}
+            >
+              NOVAPAY ADMIN
+            </div>
 
-<h2>🔐 KYC Analytics</h2>
+            <h1
+              style={{
+                margin: 0,
+                color: "#171717",
+                fontSize: "30px",
+                fontWeight: "800",
+              }}
+            >
+              Analytics Overview
+            </h1>
 
-<div
-style={{
-display:"grid",
-gridTemplateColumns:"repeat(auto-fit,minmax(200px,1fr))",
-gap:"15px"
-}}
->
-
-<div>
-<h3>✅ Verified</h3>
-<h2>{kycStats.verified}</h2>
-</div>
-
-
-<div>
-<h3>⏳ Pending</h3>
-<h2>{kycStats.pending}</h2>
-</div>
-
-
-<div>
-<h3>❌ Rejected</h3>
-<h2>{kycStats.rejected}</h2>
-</div>
-
-
-</div>
-
-</div>
-
-
-<div
-style={{
-background:"var(--card-bg)",
-padding:"25px",
-borderRadius:"15px",
-marginTop:"30px"
-}}
->
-
-<h2>📈 User Growth</h2>
-
-<ResponsiveContainer width="100%" height={300}>
-
-<LineChart data={userGrowth}>
-
-<XAxis dataKey="date"/>
-
-<YAxis/>
-
-<Tooltip/>
-
-<Line dataKey="users"/>
-
-</LineChart>
-
-</ResponsiveContainer>
-
-</div>
-
-
-{loading ? (
-          <h2>Loading...</h2>
-        ) : (
-
-<>
-
-<div
-style={{
-background:"var(--card-bg)",
-padding:"25px",
-borderRadius:"15px",
-marginTop:"30px"
-}}
->
-
-<h2>📊 Transaction Analysis</h2>
-
-<ResponsiveContainer width="100%" height={300}>
-
-<BarChart data={chartData}>
-
-<XAxis dataKey="name"/>
-
-<YAxis/>
-
-<Tooltip/>
-
-<Bar dataKey="amount"/>
-
-</BarChart>
-
-</ResponsiveContainer>
-
-</div>
-
+            <p
+              style={{
+                margin: "7px 0 0",
+                color: "#777",
+                fontSize: "14px",
+              }}
+            >
+              Monitor customers, transactions and financial activity
+            </p>
+          </div>
 
           <div
             style={{
-              display: "grid",
-              gridTemplateColumns: "repeat(auto-fit,minmax(220px,1fr))",
-              gap: "20px",
-              marginTop: "30px",
+              background: "#a30d2d",
+              color: "#fff",
+              padding: "10px 18px",
+              borderRadius: "9px",
+              fontSize: "13px",
+              fontWeight: "700",
             }}
           >
-            <div
-              style={{
-                background: "var(--card-bg)",
-                padding: "20px",
-                borderRadius: "12px",
-              }}
-            >
-              <h3>👥 Total Users</h3>
-              <h2>{data.totalUsers}</h2>
-            </div>
-
-            <div
-              style={{
-                background: "var(--card-bg)",
-                padding: "20px",
-                borderRadius: "12px",
-              }}
-            >
-              <h3>👨‍💼 Admin Users</h3>
-              <h2>{data.adminUsers}</h2>
-            </div>
-
-            <div
-              style={{
-                background: "var(--card-bg)",
-                padding: "20px",
-                borderRadius: "12px",
-              }}
-            >
-              <h3>💰 Total Balance</h3>
-              <h2>₹ {data.totalBalance}</h2>
-            </div>
-
-            <div
-              style={{
-                background: "var(--card-bg)",
-                padding: "20px",
-                borderRadius: "12px",
-              }}
-            >
-              <h3>📜 Transactions</h3>
-              <h2>{data.totalTransactions}</h2>
-            </div>
+            Live Analytics
           </div>
+        </div>
 
+        {loading ? (
+          <div
+            style={{
+              ...cardStyle,
+              padding: "50px",
+              textAlign: "center",
+              color: "#777",
+            }}
+          >
+            Loading analytics...
+          </div>
+        ) : (
+          <>
+            {/* KPI CARDS */}
 
+            <div
+              style={{
+                display: "grid",
+                gridTemplateColumns:
+                  "repeat(auto-fit, minmax(220px, 1fr))",
+                gap: "18px",
+                marginBottom: "22px",
+              }}
+            >
+              <div style={{ ...cardStyle, padding: "22px" }}>
+                <div
+                  style={{
+                    color: "#777",
+                    fontSize: "13px",
+                    fontWeight: "700",
+                    marginBottom: "12px",
+                  }}
+                >
+                  TOTAL CUSTOMERS
+                </div>
 
-<div
-style={{
-background:"var(--card-bg)",
-padding:"25px",
-borderRadius:"15px",
-marginTop:"30px"
-}}
->
+                <div
+                  style={{
+                    fontSize: "29px",
+                    fontWeight: "800",
+                    color: "#171717",
+                  }}
+                >
+                  {data.totalUsers}
+                </div>
 
-<h2>💸 User Spending Analytics</h2>
+                <div
+                  style={{
+                    marginTop: "8px",
+                    color: "#15803d",
+                    fontSize: "12px",
+                    fontWeight: "700",
+                  }}
+                >
+                  Customer accounts
+                </div>
+              </div>
 
-<ResponsiveContainer width="100%" height={300}>
+              <div style={{ ...cardStyle, padding: "22px" }}>
+                <div
+                  style={{
+                    color: "#777",
+                    fontSize: "13px",
+                    fontWeight: "700",
+                    marginBottom: "12px",
+                  }}
+                >
+                  TOTAL BALANCE
+                </div>
 
-<BarChart data={spendingChart}>
+                <div
+                  style={{
+                    fontSize: "29px",
+                    fontWeight: "800",
+                    color: "#a30d2d",
+                  }}
+                >
+                  {money(data.totalBalance)}
+                </div>
 
-<XAxis dataKey="name"/>
+                <div
+                  style={{
+                    marginTop: "8px",
+                    color: "#777",
+                    fontSize: "12px",
+                  }}
+                >
+                  Customer funds
+                </div>
+              </div>
 
-<YAxis/>
+              <div style={{ ...cardStyle, padding: "22px" }}>
+                <div
+                  style={{
+                    color: "#777",
+                    fontSize: "13px",
+                    fontWeight: "700",
+                    marginBottom: "12px",
+                  }}
+                >
+                  TRANSACTIONS
+                </div>
 
-<Tooltip/>
+                <div
+                  style={{
+                    fontSize: "29px",
+                    fontWeight: "800",
+                    color: "#171717",
+                  }}
+                >
+                  {data.totalTransactions}
+                </div>
 
-<Bar dataKey="amount"/>
+                <div
+                  style={{
+                    marginTop: "8px",
+                    color: "#777",
+                    fontSize: "12px",
+                  }}
+                >
+                  Total processed
+                </div>
+              </div>
 
-</BarChart>
+              <div style={{ ...cardStyle, padding: "22px" }}>
+                <div
+                  style={{
+                    color: "#777",
+                    fontSize: "13px",
+                    fontWeight: "700",
+                    marginBottom: "12px",
+                  }}
+                >
+                  ADMIN USERS
+                </div>
 
-</ResponsiveContainer>
+                <div
+                  style={{
+                    fontSize: "29px",
+                    fontWeight: "800",
+                    color: "#171717",
+                  }}
+                >
+                  {data.adminUsers}
+                </div>
 
+                <div
+                  style={{
+                    marginTop: "8px",
+                    color: "#a30d2d",
+                    fontSize: "12px",
+                    fontWeight: "700",
+                  }}
+                >
+                  Administrative accounts
+                </div>
+              </div>
+            </div>
 
-<h3>
-Total Spending:
-₹ {(spendingStats.transfer+
-spendingStats.recharge+
-spendingStats.bills).toLocaleString()}
-</h3>
+            {/* TRANSACTION SUMMARY */}
 
-</div>
+            <div
+              style={{
+                display: "grid",
+                gridTemplateColumns:
+                  "repeat(auto-fit, minmax(220px, 1fr))",
+                gap: "16px",
+                marginBottom: "22px",
+              }}
+            >
+              <div
+                style={{
+                  ...cardStyle,
+                  padding: "20px",
+                  borderLeft: "4px solid #15803d",
+                }}
+              >
+                <div style={{ color: "#777", fontSize: "13px" }}>
+                  TOTAL DEPOSITS
+                </div>
 
+                <div
+                  style={{
+                    fontSize: "23px",
+                    fontWeight: "800",
+                    marginTop: "8px",
+                  }}
+                >
+                  {money(stats.deposits)}
+                </div>
+              </div>
 
-</>
+              <div
+                style={{
+                  ...cardStyle,
+                  padding: "20px",
+                  borderLeft: "4px solid #b91c1c",
+                }}
+              >
+                <div style={{ color: "#777", fontSize: "13px" }}>
+                  TOTAL WITHDRAWALS
+                </div>
+
+                <div
+                  style={{
+                    fontSize: "23px",
+                    fontWeight: "800",
+                    marginTop: "8px",
+                  }}
+                >
+                  {money(stats.withdraws)}
+                </div>
+              </div>
+
+              <div
+                style={{
+                  ...cardStyle,
+                  padding: "20px",
+                  borderLeft: "4px solid #a30d2d",
+                }}
+              >
+                <div style={{ color: "#777", fontSize: "13px" }}>
+                  TOTAL TRANSFERS
+                </div>
+
+                <div
+                  style={{
+                    fontSize: "23px",
+                    fontWeight: "800",
+                    marginTop: "8px",
+                  }}
+                >
+                  {money(stats.transfers)}
+                </div>
+              </div>
+
+              <div
+                style={{
+                  ...cardStyle,
+                  padding: "20px",
+                  borderLeft: "4px solid #6b7280",
+                }}
+              >
+                <div style={{ color: "#777", fontSize: "13px" }}>
+                  TRANSACTION COUNT
+                </div>
+
+                <div
+                  style={{
+                    fontSize: "23px",
+                    fontWeight: "800",
+                    marginTop: "8px",
+                  }}
+                >
+                  {stats.count}
+                </div>
+              </div>
+            </div>
+
+            {/* CHARTS */}
+
+            <div
+              style={{
+                display: "grid",
+                gridTemplateColumns:
+                  "repeat(auto-fit, minmax(360px, 1fr))",
+                gap: "22px",
+              }}
+            >
+              <div style={chartCardStyle}>
+                <div style={{ marginBottom: "20px" }}>
+                  <div
+                    style={{
+                      color: "#a30d2d",
+                      fontSize: "11px",
+                      fontWeight: "800",
+                      letterSpacing: "1px",
+                    }}
+                  >
+                    CUSTOMER ACTIVITY
+                  </div>
+
+                  <h2
+                    style={{
+                      margin: "6px 0 0",
+                      fontSize: "20px",
+                      color: "#171717",
+                    }}
+                  >
+                    User Growth
+                  </h2>
+                </div>
+
+                <ResponsiveContainer width="100%" height={280}>
+                  <LineChart data={userGrowth}>
+                    <CartesianGrid
+                      strokeDasharray="3 3"
+                      vertical={false}
+                    />
+
+                    <XAxis
+                      dataKey="date"
+                      tick={{ fontSize: 11 }}
+                    />
+
+                    <YAxis
+                      allowDecimals={false}
+                      tick={{ fontSize: 11 }}
+                    />
+
+                    <Tooltip contentStyle={chartTooltip} />
+
+                    <Line
+                      type="monotone"
+                      dataKey="users"
+                      stroke="#a30d2d"
+                      strokeWidth={3}
+                      dot={{ r: 4 }}
+                    />
+                  </LineChart>
+                </ResponsiveContainer>
+              </div>
+
+              <div style={chartCardStyle}>
+                <div style={{ marginBottom: "20px" }}>
+                  <div
+                    style={{
+                      color: "#a30d2d",
+                      fontSize: "11px",
+                      fontWeight: "800",
+                      letterSpacing: "1px",
+                    }}
+                  >
+                    FINANCIAL ACTIVITY
+                  </div>
+
+                  <h2
+                    style={{
+                      margin: "6px 0 0",
+                      fontSize: "20px",
+                      color: "#171717",
+                    }}
+                  >
+                    Transaction Analysis
+                  </h2>
+                </div>
+
+                <ResponsiveContainer width="100%" height={280}>
+                  <BarChart data={chartData}>
+                    <CartesianGrid
+                      strokeDasharray="3 3"
+                      vertical={false}
+                    />
+
+                    <XAxis
+                      dataKey="name"
+                      tick={{ fontSize: 11 }}
+                    />
+
+                    <YAxis tick={{ fontSize: 11 }} />
+
+                    <Tooltip contentStyle={chartTooltip} />
+
+                    <Bar
+                      dataKey="amount"
+                      fill="#a30d2d"
+                      radius={[6, 6, 0, 0]}
+                    />
+                  </BarChart>
+                </ResponsiveContainer>
+              </div>
+            </div>
+
+            {/* KYC */}
+
+            <div
+              style={{
+                ...chartCardStyle,
+                marginTop: "22px",
+              }}
+            >
+              <div style={{ marginBottom: "20px" }}>
+                <div
+                  style={{
+                    color: "#a30d2d",
+                    fontSize: "11px",
+                    fontWeight: "800",
+                    letterSpacing: "1px",
+                  }}
+                >
+                  COMPLIANCE
+                </div>
+
+                <h2
+                  style={{
+                    margin: "6px 0 0",
+                    fontSize: "20px",
+                  }}
+                >
+                  KYC Overview
+                </h2>
+              </div>
+
+              <div
+                style={{
+                  display: "grid",
+                  gridTemplateColumns:
+                    "repeat(auto-fit, minmax(180px, 1fr))",
+                  gap: "15px",
+                }}
+              >
+                <div
+                  style={{
+                    background: "#f0fdf4",
+                    border: "1px solid #bbf7d0",
+                    padding: "20px",
+                    borderRadius: "12px",
+                  }}
+                >
+                  <div
+                    style={{
+                      color: "#15803d",
+                      fontSize: "13px",
+                      fontWeight: "700",
+                    }}
+                  >
+                    VERIFIED
+                  </div>
+
+                  <div
+                    style={{
+                      fontSize: "28px",
+                      fontWeight: "800",
+                      marginTop: "7px",
+                      color: "#166534",
+                    }}
+                  >
+                    {kycStats.verified}
+                  </div>
+                </div>
+
+                <div
+                  style={{
+                    background: "#fffbeb",
+                    border: "1px solid #fde68a",
+                    padding: "20px",
+                    borderRadius: "12px",
+                  }}
+                >
+                  <div
+                    style={{
+                      color: "#92400e",
+                      fontSize: "13px",
+                      fontWeight: "700",
+                    }}
+                  >
+                    PENDING
+                  </div>
+
+                  <div
+                    style={{
+                      fontSize: "28px",
+                      fontWeight: "800",
+                      marginTop: "7px",
+                      color: "#92400e",
+                    }}
+                  >
+                    {kycStats.pending}
+                  </div>
+                </div>
+
+                <div
+                  style={{
+                    background: "#fef2f2",
+                    border: "1px solid #fecaca",
+                    padding: "20px",
+                    borderRadius: "12px",
+                  }}
+                >
+                  <div
+                    style={{
+                      color: "#b91c1c",
+                      fontSize: "13px",
+                      fontWeight: "700",
+                    }}
+                  >
+                    REJECTED
+                  </div>
+
+                  <div
+                    style={{
+                      fontSize: "28px",
+                      fontWeight: "800",
+                      marginTop: "7px",
+                      color: "#b91c1c",
+                    }}
+                  >
+                    {kycStats.rejected}
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* SPENDING */}
+
+            <div
+              style={{
+                ...chartCardStyle,
+                marginTop: "22px",
+              }}
+            >
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  alignItems: "flex-end",
+                  marginBottom: "20px",
+                  flexWrap: "wrap",
+                  gap: "10px",
+                }}
+              >
+                <div>
+                  <div
+                    style={{
+                      color: "#a30d2d",
+                      fontSize: "11px",
+                      fontWeight: "800",
+                      letterSpacing: "1px",
+                    }}
+                  >
+                    CUSTOMER SPENDING
+                  </div>
+
+                  <h2
+                    style={{
+                      margin: "6px 0 0",
+                      fontSize: "20px",
+                    }}
+                  >
+                    Spending Analytics
+                  </h2>
+                </div>
+
+                <div
+                  style={{
+                    color: "#a30d2d",
+                    fontSize: "18px",
+                    fontWeight: "800",
+                  }}
+                >
+                  {money(totalSpending)}
+                </div>
+              </div>
+
+              <ResponsiveContainer width="100%" height={280}>
+                <BarChart data={spendingChart}>
+                  <CartesianGrid
+                    strokeDasharray="3 3"
+                    vertical={false}
+                  />
+
+                  <XAxis
+                    dataKey="name"
+                    tick={{ fontSize: 11 }}
+                  />
+
+                  <YAxis tick={{ fontSize: 11 }} />
+
+                  <Tooltip contentStyle={chartTooltip} />
+
+                  <Bar
+                    dataKey="amount"
+                    fill="#6b7280"
+                    radius={[6, 6, 0, 0]}
+                  />
+                </BarChart>
+              </ResponsiveContainer>
+            </div>
+          </>
         )}
-      </div>
+      </main>
     </div>
   );
 }

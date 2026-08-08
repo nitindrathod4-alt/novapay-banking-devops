@@ -48,24 +48,66 @@ function AppContent() {
     return (
       <Routes>
         <Route path="/" element={<AdminDashboard />} />
+
         <Route path="/admin/users" element={<UsersPage />} />
+
         <Route path="/admin/add-user" element={<AddUserPage />} />
 
         <Route
           path="/admin/edit-user/:id"
           element={<EditUserPage />}
         />
-        <Route path="/admin/deposit" element={<AdminDepositPage />} />
-        <Route path="/deposit" element={<DepositPage />} />
-        <Route path="/admin/withdraw" element={<AdminWithdrawPage />} />
-        <Route path="/withdraw" element={<WithdrawPage />} />
-        <Route path="/admin/transactions" element={<TransactionsAdminPage />} />
-        <Route path="/admin/analytics" element={<AnalyticsPage />} />
-        <Route path="/admin/profile" element={<AdminProfilePage />} />
-        <Route path="/admin/user/:id" element={<UserProfilePage />} />
-        <Route path="/admin/reset-password/:id" element={<ResetPasswordPage />} />
-        <Route path="/admin/kyc" element={<AdminKyc />} />
-        <Route path="*" element={<Navigate to="/" replace />} />
+
+        <Route
+          path="/admin/deposit"
+          element={<AdminDepositPage />}
+        />
+
+        <Route
+          path="/admin/withdraw"
+          element={<AdminWithdrawPage />}
+        />
+
+        <Route
+          path="/admin/transactions"
+          element={<TransactionsAdminPage />}
+        />
+
+        <Route
+          path="/admin/analytics"
+          element={<AnalyticsPage />}
+        />
+
+        <Route
+          path="/admin/profile"
+          element={<AdminProfilePage />}
+        />
+
+        <Route
+          path="/admin/user/:id"
+          element={<UserProfilePage />}
+        />
+
+        <Route
+          path="/admin/reset-password/:id"
+          element={<ResetPasswordPage />}
+        />
+
+        <Route
+          path="/admin/kyc"
+          element={<AdminKyc />}
+        />
+
+        {/* ADMIN SUPPORT TICKETS */}
+        <Route
+          path="/admin-tickets"
+          element={<AdminTicketsPage />}
+        />
+
+        <Route
+          path="*"
+          element={<Navigate to="/" replace />}
+        />
       </Routes>
     );
   }
@@ -73,20 +115,47 @@ function AppContent() {
   return (
     <Routes>
       <Route path="/" element={<DashboardPage />} />
+
       <Route path="/transfer" element={<TransferPage />} />
+
       <Route path="/deposit" element={<DepositPage />} />
+
       <Route path="/withdraw" element={<WithdrawPage />} />
+
       <Route path="/transactions" element={<TransactionsPage />} />
+
       <Route path="/profile" element={<ProfilePage />} />
+
       <Route path="/settings" element={<SettingsPage />} />
-      <Route path="/change-password" element={<ChangePasswordPage />} />
-      <Route path="/mobile-recharge" element={<MobileRechargePage />} />
-      <Route path="/bill-payment" element={<BillPaymentPage />} />
+
+      <Route
+        path="/change-password"
+        element={<ChangePasswordPage />}
+      />
+
+      <Route
+        path="/mobile-recharge"
+        element={<MobileRechargePage />}
+      />
+
+      <Route
+        path="/bill-payment"
+        element={<BillPaymentPage />}
+      />
+
       <Route path="/kyc" element={<KycPage />} />
+
       <Route path="/tickets" element={<TicketPage />} />
-      <Route path="/travel" element={<TravelBookingPage />} />
-      <Route path="/admin-tickets" element={<AdminTicketsPage />} />
-      <Route path="*" element={<Navigate to="/" replace />} />
+
+      <Route
+        path="/travel"
+        element={<TravelBookingPage />}
+      />
+
+      <Route
+        path="*"
+        element={<Navigate to="/" replace />}
+      />
     </Routes>
   );
 }

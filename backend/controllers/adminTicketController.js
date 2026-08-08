@@ -1,64 +1,60 @@
 const Ticket = require("../models/Ticket");
 
 
-exports.allTickets = async(req,res)=>{
+// GET ALL TICKETS
+exports.allTickets = async (req, res) => {
+  try {
+    const tickets = await Ticket.find()
+      .populate("user", "name username")
+      .sort({ createdAt: -1 });
 
-try{
+    res.json({
+      success: true,
+      tickets,
+    });
 
-const tickets = await Ticket.find()
-.populate("user","name username")
-.sort({createdAt:-1});
-
-
-res.json({
-success:true,
-tickets
-});
-
-
-}catch(err){
-
-res.status(500).json({
-message:err.message
-});
-
-}
-
+  } catch (err) {
+    res.status(500).json({
+      success: false,
+      message: err.message,
+    });
+  }
 };
 
 
+// UPDATE / REPLY TICKET
+exports.updateTicket = async (req, res) => {
+  try {
+    const { status, reply } = req.body;
 
-exports.updateTicket = async(req,res)=>{
+    const ticket = await Ticket.findByIdAndUpdate(
+      req.params.id,
+      {
+        ...(status && { status }),
+        ...(reply !== undefined && { reply }),
+      },
+      {
+        new: true,
+      }
+    ).populate("user", "name username");
 
-try{
+    if (!ticket) {
+      return res.status(404).json({
+        success: false,
+        message: "Ticket not found",
+      });
+    }
 
-const {status,reply}=req.body;
+    res.json({
+      success: true,
+      message: "Ticket updated successfully",
+      ticket,
+    });
 
-
-const ticket = await Ticket.findByIdAndUpdate(
-req.params.id,
-{
-status,
-reply
-},
-{
-new:true
-}
-);
-
-
-res.json({
-success:true,
-ticket
-});
-
-
-}catch(err){
-
-res.status(500).json({
-message:err.message
-});
-
-}
-
+  } catch (err) {
+    res.status(500).json({
+      success: false,
+      message: err.message,
+    });
+  }
 };

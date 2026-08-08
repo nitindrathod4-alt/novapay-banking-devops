@@ -227,6 +227,20 @@ try{
 
 const {username,newPassword}=req.body;
 
+if(!username || !newPassword){
+return res.status(400).json({
+success:false,
+message:"Username and new password are required"
+});
+}
+
+if(newPassword.length < 8){
+return res.status(400).json({
+success:false,
+message:"Password must be at least 8 characters"
+});
+}
+
 const user=await User.findOne({username});
 
 if(!user){
@@ -236,10 +250,19 @@ message:"User not found"
 });
 }
 
+// OTP must have been verified and must still be within its validity window
+if(!user.resetOTP || !user.resetOTPExpiry || user.resetOTPExpiry < Date.now()){
+return res.status(400).json({
+success:false,
+message:"Please verify the OTP first"
+});
+}
+
 const bcrypt=require("bcryptjs");
 
 user.password=await bcrypt.hash(newPassword,10);
 
+// OTP becomes unusable after password reset
 user.resetOTP="";
 user.resetOTPExpiry=null;
 
@@ -261,8 +284,9 @@ message:err.message
 };
 
 
-
 // ================= REFRESH TOKEN =================
+
+
 
 exports.refreshToken = async (req,res)=>{
 

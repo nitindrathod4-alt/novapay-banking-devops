@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 180">
+  <defs>
+    <linearGradient id="shield" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#c52b4d"/>
+      <stop offset="1" stop-color="#74112b"/>
+    </linearGradient>
+    <linearGradient id="gold" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#ffe9a8"/>
+      <stop offset=".5" stop-color="#d9a936"/>
+      <stop offset="1" stop-color="#fff0b5"/>
+    </linearGradient>
+  </defs>
+
+  <rect x="8" y="8" width="164" height="164" rx="38"
+        fill="url(#shield)" stroke="#f2c75c" stroke-width="4"/>
+
+  <path d="M90 28 L145 48 L138 108
+           C130 135 110 151 90 158
+           C70 151 50 135 42 108
+           L35 48 Z"
+        fill="none" stroke="url(#gold)" stroke-width="5"/>
+
+  <text x="48" y="105"
+        font-family="Arial, sans-serif"
+        font-size="64"
+        font-weight="900"
+        fill="#fff">N</text>
+
+  <text x="91" y="125"
+        font-family="Arial, sans-serif"
+        font-size="60"
+        font-weight="900"
+        fill="url(#gold)">P</text>
+
+  <text x="205" y="105"
+        font-family="Arial, sans-serif"
+        font-size="72"
+        font-weight="900"
+        letter-spacing="-3"
+        fill="#ffffff">NOVA</text>
+
+  <text x="470" y="105"
+        font-family="Arial, sans-serif"
+        font-size="72"
+        font-weight="900"
+        letter-spacing="-3"
+        fill="#ffd36a">PAY</text>
+
+  <text x="207" y="137"
+        font-family="Arial, sans-serif"
+        font-size="17"
+        font-weight="700"
+        letter-spacing="5"
+        fill="#ffd9e0">DIGITAL BANKING</text>
+</svg>

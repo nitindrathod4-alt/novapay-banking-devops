@@ -1,219 +1,109 @@
-import { useEffect, useState } from "react";
-import api from "../services/api";
+import { Link } from "react-router-dom";
 
-function TransactionList() {
-
-const [transactions,setTransactions]=useState([]);
-
-
-useEffect(()=>{
-loadTransactions();
-},[]);
-
-
-const loadTransactions=async()=>{
-
-try{
-
-const res=await api.get("/transactions/history");
-
-setTransactions(res.data.transactions || []);
-
-}catch(err){
-
-console.log(err);
-
-}
-
-};
-
-
-const currentUser =
-JSON.parse(localStorage.getItem("user"))?.username;
-
-
-
-const getTitle=(t)=>{
-
-if(t.type==="deposit") return "Deposit";
-
-if(t.type==="withdraw") return "Withdraw";
-
-
-if(t.type==="transfer"){
-
-if(t.sender?.username===currentUser)
-return `Transfer to ${t.receiver?.username || "-"}`;
-
-return `Transfer from ${t.sender?.username || "-"}`;
-
-}
-
-
-return t.type;
-
-};
-
-
-
-const getAmount=(t)=>{
-
-if(t.type==="deposit")
-return {
-text:`+ ₹${t.amount}`,
-color:"#059669"
-};
-
-
-if(t.type==="withdraw")
-return {
-text:`- ₹${t.amount}`,
-color:"#dc2626"
-};
-
-
-if(t.type==="transfer"){
-
-if(t.sender?.username===currentUser)
-
-return {
-text:`- ₹${t.amount}`,
-color:"#059669"
-};
-
-
-return {
-text:`+ ₹${t.amount}`,
-color:"#059669"
-};
-
-}
-
-
-return {
-text:`₹${t.amount}`,
-color:"#334155"
-};
-
-};
-
-
-
-return (
-
-<div
-style={{
-background:"var(--card-bg)",
-padding:"25px",
-borderRadius:"20px",
-boxShadow:"0 8px 20px rgba(0,0,0,0.06)"
-}}
->
-
-
-<h2
-style={{
-color:"#0f172a",
-marginBottom:"20px"
-}}
->
-📜 Recent Transactions
-</h2>
-
-
-
-{
-transactions.length===0 ?
-
-<p style={{color:"#64748b"}}>
-No Transactions Found
-</p>
-
-
-:
-
-<div>
-
-{
-transactions.map(t=>{
-
-
-const amount=getAmount(t);
-
+function TransactionList(){
 
 return(
 
-<div
-key={t._id}
+<Link
+to="/transactions"
 style={{
-display:"flex",
-justifyContent:"space-between",
-alignItems:"center",
-padding:"15px",
-borderBottom:"1px solid #e2e8f0"
+textDecoration:"none",
+color:"inherit"
 }}
 >
+
+<div
+style={{
+background:"#ffffff",
+borderRadius:"20px",
+padding:"22px",
+border:"1px solid #e9edf2",
+boxShadow:"0 8px 25px rgba(15,23,42,0.06)",
+cursor:"pointer",
+display:"flex",
+alignItems:"center",
+justifyContent:"space-between",
+transition:"all 0.2s ease"
+}}
+onMouseEnter={(e)=>{
+e.currentTarget.style.transform="translateY(-3px)";
+e.currentTarget.style.boxShadow="0 12px 30px rgba(15,23,42,0.10)";
+}}
+onMouseLeave={(e)=>{
+e.currentTarget.style.transform="translateY(0)";
+e.currentTarget.style.boxShadow="0 8px 25px rgba(15,23,42,0.06)";
+}}
+>
+
+<div
+style={{
+display:"flex",
+alignItems:"center",
+gap:"15px"
+}}
+>
+
+<div
+style={{
+width:"52px",
+height:"52px",
+borderRadius:"15px",
+background:"#fff1f2",
+display:"flex",
+alignItems:"center",
+justifyContent:"center",
+fontSize:"25px"
+}}
+>
+📜
+</div>
 
 
 <div>
 
-<h4
+<h2
 style={{
 margin:0,
-color:"#0f172a"
+fontSize:"18px",
+fontWeight:"750",
+color:"#111827"
 }}
 >
-{t.type==="deposit"?"💰":
-t.type==="withdraw"?"🏧":"💸"}
-{" "}
-{getTitle(t)}
-</h4>
-
+Recent Transactions
+</h2>
 
 <p
 style={{
 margin:"5px 0 0",
-color:"#64748b",
-fontSize:"13px"
+fontSize:"12px",
+color:"#94a3b8"
 }}
 >
-{new Date(t.createdAt).toLocaleDateString()}
+View your recent banking activity
 </p>
 
+</div>
 
 </div>
 
 
-
-<strong
+<div
 style={{
-color:amount.color,
-fontSize:"18px"
+fontSize:"22px",
+color:"#9b1c31",
+fontWeight:"700"
 }}
 >
-{amount.text}
-</strong>
+→
+</div>
 
 
 </div>
 
-
-)
-
-})
-
-}
-
-</div>
-
-}
-
-
-</div>
+</Link>
 
 );
 
 }
-
 
 export default TransactionList;

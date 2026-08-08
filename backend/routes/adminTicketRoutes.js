@@ -2,16 +2,16 @@ const express = require("express");
 const router = express.Router();
 
 const {
-allTickets,
-updateTicket
+  allTickets,
+  updateTicket,
 } = require("../controllers/adminTicketController");
 
 const auth = require("../middleware/authMiddleware");
+const admin = require("../middleware/adminMiddleware");
 
+// ADMIN ONLY
+router.get("/", auth, admin, allTickets);
 
-router.get("/", auth, allTickets);
-
-router.put("/:id", auth, updateTicket);
-
+router.put("/:id", auth, admin, updateTicket);
 
 module.exports = router;

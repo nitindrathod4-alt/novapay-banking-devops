@@ -1,93 +1,193 @@
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
-function AdminSidebar(){
+function AdminSidebar() {
+  const menuStyle = {
+    textDecoration: "none",
+    padding: "13px 15px",
+    borderRadius: "14px",
+    display: "flex",
+    alignItems: "center",
+    gap: "14px",
+    fontWeight: "600",
+    fontSize: "15px",
+    color: "#dbe4f0",
+    transition: "0.2s",
+  };
 
-const menu={
-color:"#e2e8f0",
-textDecoration:"none",
-padding:"12px 15px",
-borderRadius:"10px",
-display:"block",
-fontWeight:"600"
-};
+  const items = [
+    ["/admin/profile", "👤", "My Profile"],
+    ["/admin/dashboard", "🏠", "Dashboard"],
+    ["/admin/users", "👥", "Users"],
+    ["/admin/add-user", "➕", "Add User"],
+    ["/admin/deposit", "💰", "Deposit"],
+    ["/admin/withdraw", "🏧", "Withdraw"],
+    ["/admin/transactions", "📜", "Transactions"],
+    ["/admin/kyc", "🪪", "KYC"],
+    ["/admin/analytics", "📊", "Analytics"],
+    ["/admin-tickets", "🎫", "Support Tickets"],
+  ];
 
-return(
+  const logout = () => {
+    localStorage.clear();
+    window.location.href = "/";
+  };
 
-<div
-style={{
-width:"250px",
-minHeight:"100vh",
-background:"#0f172a",
-padding:"25px 15px",
-boxSizing:"border-box"
-}}
->
+  return (
+    <aside
+      style={{
+        width: "260px",
+        minHeight: "100vh",
+        background: "#111827",
+        padding: "28px 15px",
+        boxSizing: "border-box",
+        flexShrink: 0,
+        display: "flex",
+        flexDirection: "column",
+        position: "sticky",
+        top: 0,
+        alignSelf: "flex-start",
+      }}
+    >
+      {/* LOGO */}
+      <div style={{ paddingLeft: "8px", marginBottom: "28px" }}>
+        <div
+          style={{
+            fontSize: "32px",
+            fontWeight: "900",
+            letterSpacing: "-1.5px",
+            lineHeight: "1",
+          }}
+        >
+          <span style={{ color: "#ffffff" }}>NOVA</span>
+          <span style={{ color: "#b91c3c" }}>PAY</span>
+        </div>
 
-<h2 style={{
-color:"white",
-textAlign:"center"
-}}>
-🏦 NovaPay
-</h2>
+        <div
+          style={{
+            color: "#94a3b8",
+            fontSize: "14px",
+            marginTop: "9px",
+          }}
+        >
+          Admin Console
+        </div>
+      </div>
 
-<p style={{
-color:"#94a3b8",
-textAlign:"center"
-}}>
-Admin Panel
-</p>
+      {/* DIVIDER */}
+      <div
+        style={{
+          height: "1px",
+          background: "#293344",
+          margin: "0 7px 25px",
+        }}
+      />
 
+      {/* SECTION */}
+      <div
+        style={{
+          color: "#94a3b8",
+          fontSize: "12px",
+          fontWeight: "800",
+          letterSpacing: "1.5px",
+          paddingLeft: "8px",
+          marginBottom: "12px",
+        }}
+      >
+        ADMINISTRATION
+      </div>
 
-<div style={{
-display:"flex",
-flexDirection:"column",
-gap:"10px",
-marginTop:"30px"
-}}>
+      {/* MENU */}
+      <nav
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          gap: "6px",
+        }}
+      >
+        {items.map(([path, icon, label]) => (
+          <NavLink
+            key={path}
+            to={path}
+            style={({ isActive }) => ({
+              ...menuStyle,
+              color: isActive ? "#ffffff" : "#dbe4f0",
+              background: isActive ? "#b91c3c" : "transparent",
+              boxShadow: isActive
+                ? "0 6px 18px rgba(185,30,60,.25)"
+                : "none",
+            })}
+          >
+            <span
+              style={{
+                width: "27px",
+                fontSize: "19px",
+                display: "flex",
+                justifyContent: "center",
+              }}
+            >
+              {icon}
+            </span>
 
-<Link to="/admin/profile" style={menu}>
-👤 My Profile
-</Link>
+            <span>{label}</span>
+          </NavLink>
+        ))}
+      </nav>
 
-<Link to="/" style={menu}>
-🏠 Dashboard
-</Link>
+      {/* SPACER */}
+      <div style={{ flex: 1 }} />
 
-<Link to="/admin/users" style={menu}>
-👥 Users
-</Link>
+      {/* ADMIN STATUS */}
+      <div
+        style={{
+          margin: "20px 4px 12px",
+          padding: "12px",
+          borderRadius: "12px",
+          background: "#172033",
+          border: "1px solid #263247",
+        }}
+      >
+        <div
+          style={{
+            color: "#94a3b8",
+            fontSize: "11px",
+            fontWeight: "700",
+            marginBottom: "5px",
+          }}
+        >
+          ADMIN ACCESS
+        </div>
 
-<Link to="/admin/add-user" style={menu}>
-➕ Add User
-</Link>
+        <div
+          style={{
+            color: "#22c55e",
+            fontSize: "13px",
+            fontWeight: "700",
+          }}
+        >
+          ● System Active
+        </div>
+      </div>
 
-<Link to="/admin/deposit" style={menu}>
-💰 Deposit
-</Link>
-
-<Link to="/admin/withdraw" style={menu}>
-🏧 Withdraw
-</Link>
-
-<Link to="/admin/transactions" style={menu}>
-📜 Transactions
-</Link>
-
-<Link to="/admin/kyc" style={menu}>
-🪪 KYC
-</Link>
-
-<Link to="/admin/analytics" style={menu}>
-📊 Analytics
-</Link>
-
-</div>
-
-
-</div>
-
-);
-
+      {/* LOGOUT */}
+      <button
+        onClick={logout}
+        style={{
+          width: "100%",
+          padding: "13px 15px",
+          border: "1px solid #334155",
+          borderRadius: "12px",
+          background: "transparent",
+          color: "#e2e8f0",
+          fontSize: "15px",
+          fontWeight: "600",
+          textAlign: "left",
+          cursor: "pointer",
+        }}
+      >
+        🚪 Logout
+      </button>
+    </aside>
+  );
 }
 
 export default AdminSidebar;

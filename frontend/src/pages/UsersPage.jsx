@@ -1,415 +1,528 @@
-import { useEffect,useState } from "react";
-import {Link} from "react-router-dom";
+import { useEffect, useState } from "react";
 import api from "../services/api";
 
-function UsersPage(){
-
-const thStyle={
-padding:"10px",
-textAlign:"center",
-verticalAlign:"middle",
-background:"#0f172a",
-color:"white"
-};
-
-const tdStyle={
-padding:"10px",
-textAlign:"center",
-verticalAlign:"middle"
-};
-
-const userTdStyle={
-padding:"10px",
-textAlign:"left",
-verticalAlign:"middle",
-display:"table-cell"
-};
-
-const [users,setUsers]=useState([]);
-const [search,setSearch]=useState("");
-
-useEffect(()=>{
-loadUsers();
-},[]);
-
-
-const loadUsers=async()=>{
-const res=await api.get("/users");
-setUsers(res.data.users);
-};
-
-
-const deleteUser=async(id,name)=>{
-if(!window.confirm(`Delete ${name}?`)) return;
-
-await api.delete(`/users/${id}`);
-loadUsers();
-};
-
-
-const toggleStatus=async(id)=>{
-await api.patch(`/users/users/${id}/status`);
-loadUsers();
-};
-
-
-const deposit=async(id,name)=>{
-let amount=prompt(`Deposit amount for ${name}`);
-
-if(!amount)return;
-
-await api.post(`/users/${id}/deposit`,{
-amount:Number(amount)
-});
-
-loadUsers();
-};
-
-
-const withdraw=async(id,name)=>{
-let amount=prompt(`Withdraw amount for ${name}`);
-
-if(!amount)return;
-
-await api.post(`/users/${id}/withdraw`,{
-amount:Number(amount)
-});
-
-loadUsers();
-};
-
-
-const filtered=users.filter(u=>
-u.name.toLowerCase().includes(search.toLowerCase()) ||
-u.username.toLowerCase().includes(search.toLowerCase())
-);
-
-
-return(
-
-<div style={{
-padding:"35px",
-background:"var(--page-bg)",
-minHeight:"100vh"
-}}>
-
-
-<h1>👥 User Management</h1>
-
-
-<div style={{
-display:"grid",
-gridTemplateColumns:"repeat(3,1fr)",
-gap:"20px",
-margin:"25px 0"
-}}>
-
-
-<div className="card">
-<h3>Total Users</h3>
-<h2>{users.length}</h2>
-</div>
-
-
-<div className="card">
-<h3>Active Users</h3>
-<h2>
-{users.filter(u=>u.status==="Active").length}
-</h2>
-</div>
-
-
-<div className="card">
-<h3>Total Balance</h3>
-<h2>
-₹ {users.reduce((a,b)=>a+b.balance,0).toLocaleString()}
-</h2>
-</div>
-
-
-</div>
-
-
-
-<input
-placeholder="🔍 Search User..."
-value={search}
-onChange={e=>setSearch(e.target.value)}
-style={{
-width:"100%",
-padding:"14px",
-borderRadius:"12px",
-border:"1px solid #ddd",
-marginBottom:"25px",
-fontSize:"16px"
-}}
-/>
-
-
-
-<div style={{
-background:"var(--card-bg)",
-borderRadius:"18px",
-boxShadow:"0 10px 25px rgba(0,0,0,.1)",
-overflow:"hidden"
-}}>
-
-
-<table style={{
-width:"100%",
-borderCollapse:"collapse",
-tableLayout:"fixed"
-}}>
-
-
-<thead>
-
-<tr style={{
-background:"#0f172a",
-color:"white"
-}}>
-
-<th style={{width:"90px",...thStyle}}>Photo</th>
-<th style={{
-width:"220px",
-...thStyle,
-textAlign:"left",
-paddingLeft:"20px"
-}}>
-User
-</th>
-<th style={{width:"120px",...thStyle}}>Role</th>
-<th style={{width:"150px",...thStyle}}>Balance</th>
-<th style={{width:"120px",...thStyle}}>Status</th>
-<th style={{width:"140px",...thStyle}}>KYC</th>
-<th style={{width:"180px",...thStyle}}>Actions</th>
-
-</tr>
-
-</thead>
-
-
-<tbody>
-
-{filtered.map(u=>(
-
-<tr key={u._id}
-style={{
-borderBottom:"1px solid #eee"
-}}
->
-
-
-<td style={{
-padding:"10px",
-textAlign:"center",
-verticalAlign:"middle"
-}}>
-
-<img
-src={
-u.photo
-? `http://13.203.173.169:5000${u.photo}`
-:`https://ui-avatars.com/api/?name=${u.name}`
-}
-onError={(e)=>{
-e.target.src=`https://ui-avatars.com/api/?name=${u.name}`
-}}
-style={{
-width:"55px",
-height:"55px",
-borderRadius:"50%",
-objectFit:"cover"
-}}
-/>
-
-</td>
-
-
-<td style={userTdStyle}>
-<div style={{
-textAlign:"left"
-}}>
-<b style={{
-fontSize:"16px"
-}}>
-{u.name}
-</b>
-
-<br/>
-
-<span style={{
-color:"#64748b",
-fontSize:"14px"
-}}>
-👤 {u.username}
-</span>
-</div>
-</td>
-
-
-<td style={tdStyle}>
-
-<span style={{
-padding:"6px 14px",
-borderRadius:"20px",
-fontWeight:"bold",
-background:u.role==="admin"?"#dbeafe":"#f1f5f9",
-color:u.role==="admin"?"#1d4ed8":"#334155"
-}}>
-{u.role==="admin" ? "🛡 ADMIN" : "👤 USER"}
-</span>
-
-</td>
-
-
-<td style={tdStyle}>
-<b>
-₹ {u.balance.toLocaleString()}
-</b>
-</td>
-
-
-<td style={tdStyle}>
-
-<span style={{
-padding:"6px 14px",
-borderRadius:"20px",
-background:u.status==="Active"?"#dcfce7":"#fee2e2",
-color:u.status==="Active"?"green":"red",
-fontWeight:"bold"
-}}>
-{u.status}
-</span>
-
-</td>
-
-
-<td style={tdStyle}>
-
-<span style={{
-padding:"6px 14px",
-borderRadius:"20px",
-fontWeight:"bold",
-background:
-u.kycStatus==="Verified"
-?"#dcfce7"
-:
-u.kycStatus==="Rejected"
-?"#fee2e2"
-:"#fef3c7",
-
-color:
-u.kycStatus==="Verified"
-?"green"
-:
-u.kycStatus==="Rejected"
-?"red"
-:"#92400e"
-}}>
-
-{
-u.kycStatus==="Verified"
-?"✅ Verified"
-:
-u.kycStatus==="Rejected"
-?"❌ Rejected"
-:"⏳ Pending"
-}
-
-</span>
-
-</td>
-
-
-<td style={tdStyle}>
-
-
-<select
-onChange={(e)=>{
-
-const action=e.target.value;
-
-if(action==="deposit")
-deposit(u._id,u.username);
-
-if(action==="withdraw")
-withdraw(u._id,u.username);
-
-if(action==="view")
-window.location.href=`/admin/user/${u._id}`;
-
-if(action==="delete")
-deleteUser(u._id,u.username);
-
-if(action==="lock")
-toggleStatus(u._id);
-
-if(action==="edit")
-window.location.href=`/admin/edit-user/${u._id}`;
-
-e.target.value="";
-
-}}
-
-style={{
-padding:"8px",
-borderRadius:"8px",
-cursor:"pointer",
-fontWeight:"bold"
-}}
-
-defaultValue=""
->
-
-<option value="">⚙ Actions</option>
-
-<option value="view">
-👁 View Profile
-</option>
-
-<option value="deposit">
-💰 Deposit
-</option>
-
-<option value="withdraw">
-🏧 Withdraw
-</option>
-
-<option value="edit">
-✏️ Edit User
-</option>
-
-<option value="delete">
-🗑 Delete User
-</option>
-
-<option value="lock">
-🔒 Block / Unblock
-</option>
-
-</select>
-
-
-</td>
-
-
-</tr>
-
-))}
-
-
-</tbody>
-
-</table>
-
-</div>
-
-
-</div>
-
-)
-
+function UsersPage() {
+  const [users, setUsers] = useState([]);
+  const [search, setSearch] = useState("");
+
+  useEffect(() => {
+    loadUsers();
+  }, []);
+
+  const loadUsers = async () => {
+    try {
+      const res = await api.get("/users");
+      setUsers(res.data.users || []);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const deleteUser = async (id, name) => {
+    if (!window.confirm(`Delete ${name}?`)) return;
+
+    try {
+      await api.delete(`/users/${id}`);
+      loadUsers();
+    } catch (err) {
+      console.log(err);
+      alert("Delete failed");
+    }
+  };
+
+  const filtered = users.filter((u) => {
+    const name = (u.name || "").toLowerCase();
+    const username = (u.username || "").toLowerCase();
+    const query = search.toLowerCase();
+
+    return name.includes(query) || username.includes(query);
+  });
+
+  const badge = (background, color) => ({
+    display: "inline-flex",
+    alignItems: "center",
+    justifyContent: "center",
+    padding: "6px 12px",
+    borderRadius: "20px",
+    background,
+    color,
+    fontSize: "12px",
+    fontWeight: "800",
+    whiteSpace: "nowrap",
+  });
+
+  const actionItemStyle = {
+    display: "block",
+    width: "100%",
+    padding: "11px 14px",
+    border: "none",
+    background: "#ffffff",
+    color: "#374151",
+    textAlign: "left",
+    fontSize: "13px",
+    fontWeight: "700",
+    cursor: "pointer",
+  };
+
+  const thStyle = {
+    padding: "14px 16px",
+    textAlign: "left",
+    color: "#ffffff",
+    background: "#a30d2d",
+    fontSize: "12px",
+    fontWeight: "800",
+    textTransform: "uppercase",
+    letterSpacing: "0.4px",
+  };
+
+  const tdStyle = {
+    padding: "15px 16px",
+    verticalAlign: "middle",
+  };
+
+  return (
+    <div
+      style={{
+        padding: "35px",
+        background: "#f8f8f8",
+        minHeight: "100vh",
+      }}
+    >
+      {/* PAGE HEADER */}
+
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+          marginBottom: "25px",
+        }}
+      >
+        <div>
+          <div
+            style={{
+              fontSize: "26px",
+              fontWeight: "900",
+              color: "#171717",
+            }}
+          >
+            User Management
+          </div>
+
+          <div
+            style={{
+              marginTop: "6px",
+              color: "#6b7280",
+              fontSize: "14px",
+            }}
+          >
+            Manage customers and account information
+          </div>
+        </div>
+      </div>
+
+      {/* SUMMARY CARDS */}
+
+      <div
+        style={{
+          display: "grid",
+          gridTemplateColumns: "repeat(3, 1fr)",
+          gap: "20px",
+          marginBottom: "25px",
+        }}
+      >
+        <div
+          style={{
+            background: "#ffffff",
+            borderRadius: "14px",
+            padding: "22px",
+            border: "1px solid #eeeeee",
+          }}
+        >
+          <div
+            style={{
+              color: "#6b7280",
+              fontSize: "13px",
+              fontWeight: "700",
+            }}
+          >
+            TOTAL USERS
+          </div>
+
+          <div
+            style={{
+              marginTop: "8px",
+              fontSize: "28px",
+              fontWeight: "900",
+              color: "#171717",
+            }}
+          >
+            {users.length}
+          </div>
+        </div>
+
+        <div
+          style={{
+            background: "#ffffff",
+            borderRadius: "14px",
+            padding: "22px",
+            border: "1px solid #eeeeee",
+          }}
+        >
+          <div
+            style={{
+              color: "#6b7280",
+              fontSize: "13px",
+              fontWeight: "700",
+            }}
+          >
+            ACTIVE USERS
+          </div>
+
+          <div
+            style={{
+              marginTop: "8px",
+              fontSize: "28px",
+              fontWeight: "900",
+              color: "#15803d",
+            }}
+          >
+            {users.filter((u) => u.status === "Active").length}
+          </div>
+        </div>
+
+        <div
+          style={{
+            background: "#ffffff",
+            borderRadius: "14px",
+            padding: "22px",
+            border: "1px solid #eeeeee",
+          }}
+        >
+          <div
+            style={{
+              color: "#6b7280",
+              fontSize: "13px",
+              fontWeight: "700",
+            }}
+          >
+            TOTAL BALANCE
+          </div>
+
+          <div
+            style={{
+              marginTop: "8px",
+              fontSize: "28px",
+              fontWeight: "900",
+              color: "#a30d2d",
+            }}
+          >
+            ₹
+            {users
+              .reduce((total, user) => total + Number(user.balance || 0), 0)
+              .toLocaleString("en-IN")}
+          </div>
+        </div>
+      </div>
+
+      {/* SEARCH */}
+
+      <div
+        style={{
+          background: "#ffffff",
+          padding: "18px",
+          borderRadius: "14px",
+          border: "1px solid #eeeeee",
+          marginBottom: "20px",
+        }}
+      >
+        <input
+          placeholder="🔍 Search customer by name or username..."
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+          style={{
+            width: "100%",
+            boxSizing: "border-box",
+            padding: "13px 15px",
+            borderRadius: "9px",
+            border: "1px solid #d1d5db",
+            outline: "none",
+            fontSize: "14px",
+          }}
+        />
+      </div>
+
+      {/* TABLE */}
+
+      <div
+        style={{
+          background: "#ffffff",
+          borderRadius: "14px",
+          border: "1px solid #eeeeee",
+          overflow: "visible",
+        }}
+      >
+        <table
+          style={{
+            width: "100%",
+            borderCollapse: "collapse",
+          }}
+        >
+          <thead>
+            <tr>
+              <th style={{ ...thStyle, width: "70px" }}>Photo</th>
+              <th style={thStyle}>Customer</th>
+              <th style={thStyle}>Role</th>
+              <th style={thStyle}>Balance</th>
+              <th style={thStyle}>Status</th>
+              <th style={thStyle}>KYC</th>
+              <th style={{ ...thStyle, width: "150px" }}>Actions</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            {filtered.length === 0 ? (
+              <tr>
+                <td
+                  colSpan="7"
+                  style={{
+                    padding: "60px",
+                    textAlign: "center",
+                    color: "#6b7280",
+                  }}
+                >
+                  No customers found
+                </td>
+              </tr>
+            ) : (
+              filtered.map((u) => (
+                <tr
+                  key={u._id}
+                  style={{
+                    borderBottom: "1px solid #eeeeee",
+                  }}
+                >
+                  {/* PHOTO */}
+
+                  <td style={tdStyle}>
+                    <img
+                      src={
+                        u.photo
+                          ? `http://13.203.173.169:5000${u.photo}`
+                          : `https://ui-avatars.com/api/?name=${encodeURIComponent(
+                              u.name || "User"
+                            )}&background=a30d2d&color=fff`
+                      }
+                      onError={(e) => {
+                        e.target.src = `https://ui-avatars.com/api/?name=${encodeURIComponent(
+                          u.name || "User"
+                        )}&background=a30d2d&color=fff`;
+                      }}
+                      style={{
+                        width: "46px",
+                        height: "46px",
+                        borderRadius: "50%",
+                        objectFit: "cover",
+                        border: "2px solid #f1d5dc",
+                      }}
+                    />
+                  </td>
+
+                  {/* CUSTOMER */}
+
+                  <td style={tdStyle}>
+                    <div
+                      style={{
+                        display: "flex",
+                        alignItems: "center",
+                        gap: "13px",
+                      }}
+                    >
+                      <div>
+                        <div
+                          style={{
+                            fontWeight: "800",
+                            color: "#171717",
+                            fontSize: "14px",
+                          }}
+                        >
+                          {u.name}
+                        </div>
+
+                        <div
+                          style={{
+                            color: "#6b7280",
+                            fontSize: "12px",
+                            marginTop: "4px",
+                          }}
+                        >
+                          @{u.username}
+                        </div>
+                      </div>
+                    </div>
+                  </td>
+
+                  {/* ROLE */}
+
+                  <td style={tdStyle}>
+                    <span
+                      style={
+                        u.role === "admin"
+                          ? badge("#fce7ec", "#a30d2d")
+                          : badge("#f3f4f6", "#374151")
+                      }
+                    >
+                      {u.role === "admin" ? "ADMIN" : "CUSTOMER"}
+                    </span>
+                  </td>
+
+                  {/* BALANCE */}
+
+                  <td
+                    style={{
+                      ...tdStyle,
+                      fontWeight: "800",
+                      color: "#171717",
+                    }}
+                  >
+                    ₹
+                    {Number(u.balance || 0).toLocaleString("en-IN")}
+                  </td>
+
+                  {/* STATUS */}
+
+                  <td style={tdStyle}>
+                    <span
+                      style={
+                        u.status === "Active"
+                          ? badge("#dcfce7", "#15803d")
+                          : badge("#fee2e2", "#b91c1c")
+                      }
+                    >
+                      <span
+                        style={{
+                          width: "6px",
+                          height: "6px",
+                          borderRadius: "50%",
+                          background:
+                            u.status === "Active"
+                              ? "#16a34a"
+                              : "#dc2626",
+                          marginRight: "7px",
+                        }}
+                      />
+                      {u.status}
+                    </span>
+                  </td>
+
+                  {/* KYC */}
+
+                  <td style={tdStyle}>
+                    <span
+                      style={
+                        u.kycStatus === "Verified"
+                          ? badge("#dcfce7", "#15803d")
+                          : u.kycStatus === "Rejected"
+                          ? badge("#fee2e2", "#b91c1c")
+                          : badge("#fef3c7", "#92400e")
+                      }
+                    >
+                      {u.kycStatus === "Verified"
+                        ? "✓ Verified"
+                        : u.kycStatus === "Rejected"
+                        ? "✕ Rejected"
+                        : "• Pending"}
+                    </span>
+                  </td>
+
+                  {/* ACTIONS */}
+
+                  <td style={tdStyle}>
+                    <div
+                      style={{
+                        position: "relative",
+                        display: "inline-block",
+                      }}
+                    >
+                      <button
+                        onClick={(e) => {
+                          const menu = e.currentTarget.nextElementSibling;
+
+                          menu.style.display =
+                            menu.style.display === "block"
+                              ? "none"
+                              : "block";
+                        }}
+                        style={{
+                          padding: "9px 14px",
+                          borderRadius: "8px",
+                          border: "1px solid #e5b8c3",
+                          background: "#ffffff",
+                          color: "#a30d2d",
+                          fontWeight: "800",
+                          cursor: "pointer",
+                          fontSize: "13px",
+                          minWidth: "115px",
+                        }}
+                      >
+                        Actions ▾
+                      </button>
+
+                      <div
+                        style={{
+                          display: "none",
+                          position: "absolute",
+                          right: 0,
+                          top: "42px",
+                          width: "180px",
+                          background: "#ffffff",
+                          border: "1px solid #ead5da",
+                          borderRadius: "10px",
+                          boxShadow: "0 10px 25px rgba(0,0,0,.15)",
+                          zIndex: 1000,
+                          overflow: "hidden",
+                        }}
+                      >
+                        <button
+                          onClick={() => {
+                            window.location.href = `/admin/user/${u._id}`;
+                          }}
+                          style={actionItemStyle}
+                        >
+                          👁 View Profile
+                        </button>
+
+                        <button
+                          onClick={() => {
+                            window.location.href = `/admin/edit-user/${u._id}`;
+                          }}
+                          style={actionItemStyle}
+                        >
+                          ✏️ Edit User
+                        </button>
+
+                        <button
+                          onClick={() => {
+                            deleteUser(u._id, u.username);
+                          }}
+                          style={{
+                            ...actionItemStyle,
+                            color: "#b91c1c",
+                          }}
+                        >
+                          🗑 Delete User
+                        </button>
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+              ))
+            )}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  );
 }
 
 export default UsersPage;

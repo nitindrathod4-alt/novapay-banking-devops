@@ -1,52 +1,50 @@
 
 const bcrypt = require("bcryptjs");
+const User = require("../models/User");
 // ================= CREATE USER =================
 
 exports.createUser = async (req, res) => {
   try {
-
-    const { name, username, password, balance } = req.body;
+    const { name, username, password, email, balance } = req.body;
 
     const existingUser = await User.findOne({ username });
 
     if (existingUser) {
       return res.status(400).json({
-        success:false,
-        message:"Username already exists"
+        success: false,
+        message: "Username already exists"
       });
     }
 
     const user = await User.create({
       name,
       username,
+      email,
       password: await bcrypt.hash(password, 10),
       balance: Number(balance) || 10000
     });
 
     res.json({
-      success:true,
-      message:"User Created Successfully",
-      user:{
-        id:user._id,
-        name:user.name,
-        username:user.username,
-        accountNumber:user.accountNumber,
-        balance:user.balance,
-        status:user.status
+      success: true,
+      message: "User Created Successfully",
+      user: {
+        id: user._id,
+        name: user.name,
+        username: user.username,
+        email: user.email,
+        accountNumber: user.accountNumber,
+        balance: user.balance,
+        status: user.status
       }
     });
 
-  } catch(err) {
-
+  } catch (err) {
     res.status(500).json({
-      success:false,
-      message:err.message
+      success: false,
+      message: err.message
     });
-
   }
 };
-
-const User = require("../models/User");
 
 exports.getUsers = async (req, res) => {
   try {

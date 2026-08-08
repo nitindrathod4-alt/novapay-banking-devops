@@ -27,6 +27,8 @@ const billRoutes = require("./routes/billRoutes");
 const ticketRoutes = require("./routes/ticketRoutes");
 const adminTicketRoutes = require("./routes/adminTicketRoutes");
 const receiptRoutes = require("./routes/receiptRoutes");
+const bookingRoutes = require("./routes/bookingRoutes");
+const withdrawalRoutes = require("./routes/withdrawalRoutes");
 
 // API Routes
 app.use("/api/users", userRoutes);
@@ -40,6 +42,8 @@ app.use("/api/bill", billRoutes);
 app.use("/api/tickets", ticketRoutes);
 app.use("/api/admin-tickets", adminTicketRoutes);
 app.use("/api/receipt", receiptRoutes);
+app.use("/api/withdrawals", withdrawalRoutes);
+app.use("/api/bookings", bookingRoutes);
 
 // Home Route
 app.get("/", (req, res) => {
