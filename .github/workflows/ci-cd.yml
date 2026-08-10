@@ -188,3 +188,4 @@ jobs:
           echo "===== SERVICES ====="
           kubectl get svc
 # NovaPay CI/CD
+# trigger
