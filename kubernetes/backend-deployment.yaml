@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: novapay-backend
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: novapay-backend
+  template:
+    metadata:
+      labels:
+        app: novapay-backend
+    spec:
+      containers:
+        - name: backend
+          image: nitindrathod/novapay-backend:latest
+          ports:
+            - containerPort: 5000
+          env:
+            - name: PORT
+              value: "5000"

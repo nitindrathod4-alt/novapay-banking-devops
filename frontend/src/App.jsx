@@ -34,7 +34,7 @@ import AdminTicketsPage from "./pages/AdminTicketsPage";
 import "./App.css";
 
 function AppContent() {
-  const user = JSON.parse(localStorage.getItem("user"));
+  const user = JSON.parse(localStorage.getItem("user") === "undefined" ? "{}" : (localStorage.getItem("user") || "{}"));
 
   const [loggedIn, setLoggedIn] = useState(
     !!localStorage.getItem("token")

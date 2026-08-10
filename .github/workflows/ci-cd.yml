@@ -12,7 +12,7 @@ jobs:
 
   frontend-ci:
     name: Frontend CI
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
 
     steps:
       - name: Checkout Source Code
@@ -36,7 +36,7 @@ jobs:
 
   backend-ci:
     name: Backend CI
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
 
     steps:
       - name: Checkout Source Code
@@ -69,7 +69,7 @@ jobs:
 
   docker-build:
     name: Docker Build and Security Scan
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
 
     needs:
       - frontend-ci
@@ -121,7 +121,7 @@ jobs:
 
   ci-success:
     name: CI Success
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
 
     needs:
       - frontend-ci
@@ -139,3 +139,51 @@ jobs:
           echo "Trivy security scan: PASS"
           echo "Docker Hub push: PASS"
           echo "======================================"
+
+
+  deploy:
+    name: Deploy to Minikube
+    runs-on: self-hosted
+
+    needs:
+      - ci-success
+
+    steps:
+      - name: Checkout Source Code
+        uses: actions/checkout@v4
+
+      - name: Check Kubernetes
+        run: |
+          kubectl get nodes
+          kubectl get pods
+
+      - name: Update Backend Image
+        run: |
+          kubectl set image deployment/novapay-backend \
+            backend=nitindrathod/novapay-backend:latest
+
+      - name: Update Frontend Image
+        run: |
+          kubectl set image deployment/novapay-frontend \
+            frontend=nitindrathod/novapay-frontend:latest
+
+      - name: Restart Deployments
+        run: |
+          kubectl rollout restart deployment/novapay-backend
+          kubectl rollout restart deployment/novapay-frontend
+
+      - name: Wait for Backend
+        run: |
+          kubectl rollout status deployment/novapay-backend --timeout=180s
+
+      - name: Wait for Frontend
+        run: |
+          kubectl rollout status deployment/novapay-frontend --timeout=180s
+
+      - name: Verify Deployment
+        run: |
+          echo "===== PODS ====="
+          kubectl get pods
+
+          echo "===== SERVICES ====="
+          kubectl get svc

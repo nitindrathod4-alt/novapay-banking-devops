@@ -17,7 +17,7 @@ import Navbar from "./Navbar";
 
 function Dashboard(){
 
-const user = JSON.parse(localStorage.getItem("user") || "{}");
+const user = JSON.parse(localStorage.getItem("user") === "undefined" ? "{}" : (localStorage.getItem("user") || "{}"));
 const userName = user.name || user.username || "User";
 
 const [spending,setSpending]=useState({

@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 function Navbar() {
 
 const user =
-JSON.parse(localStorage.getItem("user")) || {};
+JSON.parse(localStorage.getItem("user") === "undefined" ? "{}" : (localStorage.getItem("user") || "{}")) || {};
 
 const logout = () => {
 
