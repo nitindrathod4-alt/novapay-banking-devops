@@ -56,15 +56,15 @@ loadSpending();
 const spendingChart=[
 {
 name:"Transfer",
-amount:spending.breakdown.transfer
+amount:spending.breakdown?.transfer || 0
 },
 {
 name:"Recharge",
-amount:spending.breakdown.mobile_recharge
+amount:spending.breakdown?.mobile_recharge || 0
 },
 {
 name:"Bills",
-amount:spending.breakdown.bill_payment
+amount:spending.breakdown?.bill_payment || 0
 }
 ];
 
