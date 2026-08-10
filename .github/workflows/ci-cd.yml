@@ -80,10 +80,10 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Build Backend Docker Image
-        run: docker build -t nitindrathod/novapay-backend:latest ./backend
+        run: docker build -t nitindrathod/novapay-backend:${{ github.sha }} ./backend
 
       - name: Build Frontend Docker Image
-        run: docker build -t nitindrathod/novapay-frontend:latest ./frontend
+        run: docker build -t nitindrathod/novapay-frontend:${{ github.sha }} ./frontend
 
       - name: Verify Docker Images
         run: docker images | grep novapay
@@ -91,7 +91,7 @@ jobs:
       - name: Scan Backend Image with Trivy
         uses: aquasecurity/trivy-action@v0.36.0
         with:
-          image-ref: nitindrathod/novapay-backend:latest
+          image-ref: nitindrathod/novapay-backend:${{ github.sha }}
           format: table
           exit-code: "0"
           ignore-unfixed: true
@@ -100,7 +100,7 @@ jobs:
       - name: Scan Frontend Image with Trivy
         uses: aquasecurity/trivy-action@v0.36.0
         with:
-          image-ref: nitindrathod/novapay-frontend:latest
+          image-ref: nitindrathod/novapay-frontend:${{ github.sha }}
           format: table
           exit-code: "0"
           ignore-unfixed: true
@@ -113,10 +113,10 @@ jobs:
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
       - name: Push Backend Image
-        run: docker push nitindrathod/novapay-backend:latest
+        run: docker push nitindrathod/novapay-backend:${{ github.sha }}
 
       - name: Push Frontend Image
-        run: docker push nitindrathod/novapay-frontend:latest
+        run: docker push nitindrathod/novapay-frontend:${{ github.sha }}
 
 
   ci-success:
@@ -160,12 +160,12 @@ jobs:
       - name: Update Backend Image
         run: |
           kubectl set image deployment/novapay-backend \
-            backend=nitindrathod/novapay-backend:latest
+            backend=nitindrathod/novapay-backend:${{ github.sha }}
 
       - name: Update Frontend Image
         run: |
           kubectl set image deployment/novapay-frontend \
-            frontend=nitindrathod/novapay-frontend:latest
+            frontend=nitindrathod/novapay-frontend:${{ github.sha }}
 
       - name: Restart Deployments
         run: |
