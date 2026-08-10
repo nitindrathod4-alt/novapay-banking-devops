@@ -71,7 +71,7 @@ jobs:
       - name: Verify Docker Images
         run: docker images | grep novapay
       - name: Scan Backend Image with Trivy
-        uses: aquasecurity/trivy-action@0.28.0
+        uses: aquasecurity/trivy-action@v0.36.0
         with:
           image-ref: novapay-backend:ci
           format: table
@@ -79,7 +79,7 @@ jobs:
           ignore-unfixed: true
           severity: CRITICAL,HIGH
       - name: Scan Frontend Image with Trivy
-        uses: aquasecurity/trivy-action@0.28.0
+        uses: aquasecurity/trivy-action@v0.36.0
         with:
           image-ref: novapay-frontend:ci
           format: table
