@@ -1,431 +1,320 @@
-# 🏦 NovaPay — Digital Banking & Cloud-Native DevSecOps Platform
+# 🏦 NovaPay — Digital Banking & DevSecOps Platform
 
-> A full-stack digital banking application backed by a production-style AWS
-> architecture (S3, CloudFront, ALB, Auto Scaling) and a fully automated
-> DevSecOps CI/CD pipeline using GitHub Actions, Docker, Trivy, Docker Hub,
-> Kubernetes and Minikube.
+> A full-stack digital banking application engineered as a cloud-native DevOps project, combining a React frontend, Node.js/Express backend, MongoDB, Docker, Kubernetes, GitHub Actions, Trivy and AWS infrastructure.
 
-![Status](https://img.shields.io/badge/status-completed-brightgreen)
-![Stack](https://img.shields.io/badge/stack-MERN-blue)
+![Status](https://img.shields.io/badge/status-active-brightgreen)
+![Frontend](https://img.shields.io/badge/frontend-React%20%2B%20Vite-61DAFB)
+![Backend](https://img.shields.io/badge/backend-Node.js%20%2B%20Express-339933)
 ![CI/CD](https://img.shields.io/badge/CI%2FCD-GitHub%20Actions-2088FF)
-![Security](https://img.shields.io/badge/security-Trivy%20scanned-critical)
-![Cloud](https://img.shields.io/badge/cloud-AWS-orange)
+![Security](https://img.shields.io/badge/security-Trivy-1904DA)
+![Cloud](https://img.shields.io/badge/cloud-AWS-FF9900)
 
 ---
 
-## 📌 Project Overview
+## 🎯 What is NovaPay?
 
-NovaPay is a full-stack digital banking application designed to provide
-secure and efficient banking services through a modern web platform. It is
-built to demonstrate not just application development, but a complete,
-production-style **cloud and DevSecOps engineering workflow** — from a user
-clicking a button in the browser, all the way down to a highly available,
-auto-scaling backend and a security-scanned container pipeline.
+NovaPay is a digital banking application with separate **user** and **admin** workflows. The application includes authentication, account operations, money movement, KYC, support tickets, bill payment, recharge, receipts and administrative analytics.
 
-The application provides separate **User** and **Admin** functionality.
-Users can manage accounts, perform transactions, complete KYC verification,
-raise support tickets, recharge mobile services and pay electricity bills.
-The Admin Panel provides centralized management of users, transactions,
-deposits, withdrawals, KYC requests, support tickets and analytics.
+The project is also a practical DevOps showcase: source code is validated through GitHub Actions, container images are built and scanned with Trivy, images are pushed to Docker Hub, and the deployment workflow updates Kubernetes workloads on a self-hosted runner.
 
 ---
 
-## 🚀 Features
+## ✨ Application Features
 
-### 👤 User Features
+### 👤 User
 
-- User Registration and Login
-- JWT Authentication
-- Secure User Dashboard
-- Account Balance Management
-- Deposit Money
-- Withdraw Money
-- Money Transfer
-- Transaction History
-- Profile Management
-- Profile Photo Upload
-- KYC Verification
-- Support Ticket System
-- Mobile Recharge
-- Electricity Bill Payment
-- Receipt Generation
-- Password Management
+- Registration and JWT authentication
+- Account dashboard and balance
+- Deposits and withdrawals
+- Money transfers
+- Transaction history
+- Profile management and photo upload
+- KYC verification
+- Support tickets
+- Mobile recharge
+- Electricity bill payment
+- Receipts and statements
+- Password management
+- Travel/booking workflow
 
-### 👨‍💼 Admin Features
+### 🛡️ Admin
 
-- Admin Dashboard
-- User Management (Add / Edit / View All Users)
-- View All Transactions with Filtering & Export
-- Deposit Management
-- Withdrawal Management
-- KYC Verification
-- Support Ticket Management
-- Analytics Dashboard
-- Admin Profile & Password Management
+- Admin dashboard
+- User management
+- Deposit and withdrawal management
+- KYC review
+- Transaction administration
+- Support ticket management
+- Analytics
+- Admin profile management
 
 ---
 
-## ☁️ Cloud Architecture (AWS)
-
-NovaPay is designed to run on a scalable, highly-available AWS architecture
-rather than a single server. Every request from the user's browser passes
-through the following layers:
+## 🏗️ Architecture
 
 ```text
-                        ┌───────────────────────────┐
-                        │        User / Browser      │
-                        └──────────────┬──────────────┘
-                                       │
-                                       ▼
-                        ┌───────────────────────────┐
-                        │      Amazon CloudFront      │
-                        │   (Global CDN + Edge Cache) │
-                        └──────────────┬──────────────┘
-                       ┌────────────────┴────────────────┐
-                       │                                  │
-                       ▼                                  ▼
-             ┌──────────────────┐             ┌───────────────────────┐
-             │     Amazon S3      │             │  Application Load     │
-             │  (Static Assets:   │             │  Balancer (ALB)        │
-             │  frontend build,   │             │  Distributes traffic   │
-             │  images, receipts) │             │  across instances      │
-             └──────────────────┘             └───────────┬────────────┘
-                                                            │
-                                                            ▼
-                                          ┌────────────────────────────────┐
-                                          │      Auto Scaling Group          │
-                                          │   (EKS / Minikube node pool)     │
-                                          │  ┌───────────┐  ┌────────────┐   │
-                                          │  │ Frontend   │  │ Backend    │   │
-                                          │  │ Pods       │  │ Pods       │   │
-                                          │  │ (React)    │  │ (Node/Exp) │   │
-                                          │  └───────────┘  └────────────┘   │
-                                          └────────────────┬─────────────────┘
-                                                            │
-                                                            ▼
-                                                 ┌────────────────────┐
-                                                 │      MongoDB         │
-                                                 │  (Primary datastore) │
-                                                 └────────────────────┘
+                         ┌─────────────────────┐
+                         │       Browser       │
+                         └──────────┬──────────┘
+                                    │
+                                    ▼
+                         ┌─────────────────────┐
+                         │   React + Vite      │
+                         │     Frontend        │
+                         └──────────┬──────────┘
+                                    │ REST API
+                                    ▼
+                         ┌─────────────────────┐
+                         │ Node.js + Express   │
+                         │      Backend        │
+                         └──────────┬──────────┘
+                                    │
+                                    ▼
+                         ┌─────────────────────┐
+                         │ MongoDB + Mongoose  │
+                         └─────────────────────┘
+
+        DevOps path
+        ─────────────────────────────────────────────────────
+        GitHub → GitHub Actions → Build → Trivy → Docker Hub
+                                      │
+                                      ▼
+                              Self-hosted Runner
+                                      │
+                                      ▼
+                              Kubernetes / Minikube
 ```
 
-### 🔎 Why each service is used
-
-| Service | Role in NovaPay | Why it matters |
-|---|---|---|
-| **Amazon S3** | Stores static frontend build files, user profile photos, and generated receipts | Durable, cheap, highly available object storage — decouples static content from compute |
-| **Amazon CloudFront** | CDN in front of S3 and the ALB | Caches content at edge locations close to users, reduces latency, reduces load on backend, adds HTTPS/TLS termination |
-| **Application Load Balancer (ALB)** | Entry point for dynamic API traffic | Distributes requests across multiple healthy backend instances, does health checks, enables zero-downtime deployments |
-| **Auto Scaling Group** | Scales frontend/backend pods or EC2 instances up and down | Handles traffic spikes (e.g. salary day, festive offers) automatically without manual intervention, keeps cost low during idle hours |
-| **MongoDB** | Primary database | Stores users, transactions, KYC data, tickets |
-
-### Traffic flow, step by step
-
-1. **User → CloudFront** — every request (static or dynamic) first hits CloudFront.
-2. **CloudFront → S3** — if the request is for a static asset (JS/CSS bundle, image, receipt PDF) and it's cached at the edge, CloudFront serves it directly without touching the backend.
-3. **CloudFront → ALB** — if the request is a dynamic API call, CloudFront forwards it to the Application Load Balancer.
-4. **ALB → Auto Scaling Group** — the ALB picks a healthy instance/pod from the Auto Scaling group using round-robin / least-connections and health checks.
-5. **Auto Scaling Group → MongoDB** — the backend pod processes the request and reads/writes to MongoDB.
-6. **Scaling in action** — if CPU/memory or request count crosses a threshold, the Auto Scaling Group automatically launches more frontend/backend pods (or EC2 instances); when traffic drops, it scales back down.
-
----
-
-## 🏗️ Application Architecture (App Layer)
-
-```text
-User
-  │
-  ▼
-React.js Frontend  ──►  Amazon CloudFront + S3 (static hosting)
-  │
-  ▼
-REST APIs
-  │
-  ▼
-Node.js + Express  ──►  Application Load Balancer + Auto Scaling Group
-  │
-  ▼
-MongoDB
-```
+The repository also contains Terraform definitions for AWS networking, IAM, security groups and EKS, plus Helm templates and Kubernetes manifests. The current GitHub Actions deployment job targets the Kubernetes cluster available to the self-hosted runner.
 
 ---
 
 ## 🔄 DevSecOps CI/CD Pipeline
 
 ```text
-Git Push
-   │
-   ▼
-Frontend CI
-   │
-   ▼
-Backend CI
-   │
-   ▼
-Docker Build
-   │
-   ▼
-Trivy Security Scan
-   │
-   ▼
-Docker Hub Push
-   │
-   ▼
-CI Success
-   │
-   ▼
-Self-Hosted GitHub Runner
-   │
-   ▼
-Deploy to Minikube / EKS
-   │
-   ▼
-Rollout Verification
+Developer Push / Pull Request
+            │
+            ▼
+      Frontend CI
+   npm ci + npm run build
+            │
+            ▼
+       Backend CI
+   npm ci + syntax checks
+            │
+            ▼
+     Docker Build
+   Frontend + Backend
+            │
+            ▼
+       Trivy Scan
+     HIGH / CRITICAL
+            │
+            ▼
+      Docker Hub Push
+            │
+            ▼
+    CI Success Gate
+            │
+            ▼
+   Self-hosted Runner
+            │
+            ▼
+      Kubernetes
+   Image update + rollout
+            │
+            ▼
+     Deployment Verify
 ```
 
-### Pipeline Result
+### Pipeline implemented in `.github/workflows/ci-cd.yml`
 
-- Frontend CI — ✅
-- Backend CI — ✅
-- Docker Build — ✅
-- Trivy Security Scan — ✅
-- Docker Hub Push — ✅
-- CI Success — ✅
-- Self-Hosted Runner — ✅
-- Deploy to Minikube — ✅
-- Rollout Verification — ✅
+- Frontend build with Node.js 20
+- Backend dependency installation and syntax validation
+- Docker image builds for frontend and backend
+- Trivy vulnerability scans
+- Docker Hub authentication using GitHub Secrets
+- Commit-SHA image tags for traceability
+- Kubernetes image updates
+- Deployment restart and rollout verification
+- Pod and service verification
 
-### Live run — actual pipeline output
-
-![NovaPay CI/CD pipeline — all stages passed](docs/pipeline-success.png)
-
-All 5 stages (Frontend CI, Backend CI, Docker Build and Security Scan, CI
-Success, Deploy to Minikube) completed successfully in 3m 1s on a push to
-`main`.
+> **Security note:** the current Trivy workflow uses `exit-code: 0`, so scan findings are reported without automatically failing the job. This is intentional documentation of the current implementation, not a claim that the scan is a blocking security gate.
 
 ---
 
-## 🔐 DevSecOps
+## 🐳 Containerization
 
-Trivy is integrated into the CI/CD workflow to scan Docker images for
-security vulnerabilities **before** deployment, so a vulnerable image never
-reaches production.
+Two application images are built by CI:
 
 ```text
-Docker Build
-     │
-     ▼
-Trivy Scan
-     │
-     ▼
-Security Validation
-     │
-     ▼
-Docker Hub Push
-     │
-     ▼
-Kubernetes Deployment
+nitindrathod/novapay-frontend:<commit-sha>
+nitindrathod/novapay-backend:<commit-sha>
+```
+
+Both applications have their own Dockerfile and can also be run together with Docker Compose.
+
+```bash
+docker compose build
+docker compose up -d
+docker compose ps
+docker compose down
 ```
 
 ---
 
-## 🐳 Docker
+## ☸️ Kubernetes
 
-Separate Docker images are used for the frontend and backend:
+The repository contains Kubernetes manifests for the frontend and backend and a Helm chart under `pipeline/helm`.
 
-```text
-nitindrathod/novapay-frontend
-nitindrathod/novapay-backend
-```
-
-Images are tagged using the GitHub commit SHA in the CI/CD workflow, so
-every deployment is traceable back to an exact commit.
-
----
-
-## ☸️ Kubernetes & Minikube
-
-NovaPay is deployed using Kubernetes on Minikube (locally / on EC2), with
-the same manifests portable to Amazon EKS behind the ALB + Auto Scaling
-architecture described above.
-
-### Deployments
-
-```text
-novapay-frontend
-novapay-backend
-```
-
-### Useful Commands
+Useful commands:
 
 ```bash
 kubectl get nodes
 kubectl get pods
 kubectl get deployments
-kubectl get svc
+kubectl get services
 ```
 
-### Start Minikube
+For Minikube:
 
 ```bash
 minikube start --driver=docker
-```
-
-### Check Minikube
-
-```bash
 minikube status
 ```
 
----
-
-## 🤖 Self-Hosted GitHub Actions Runner
-
-The deployment job uses a self-hosted GitHub Actions runner:
-
-```yaml
-deploy:
-  name: Deploy to Minikube
-  runs-on: self-hosted
-```
-
-The runner operates in the EC2 environment where Minikube is running,
-allowing the CI/CD workflow to communicate directly with the Kubernetes
-cluster.
+The CI/CD workflow updates the running deployments with the commit-specific Docker images and waits for rollout completion.
 
 ---
 
-## 🔄 Automated Kubernetes Deployment
+## ☁️ AWS & Infrastructure as Code
 
-Backend image update:
+Terraform configuration is maintained under `pipeline/terraform` and includes:
 
-```bash
-kubectl set image deployment/novapay-backend backend=nitindrathod/novapay-backend:<commit-sha>
-```
+- VPC networking
+- Security groups
+- IAM
+- EKS
+- Terraform provider/version configuration
+- Variables and outputs
 
-Frontend image update:
+The repository therefore demonstrates both **application deployment** and **cloud infrastructure automation** rather than treating Kubernetes as an isolated tool.
 
-```bash
-kubectl set image deployment/novapay-frontend frontend=nitindrathod/novapay-frontend:<commit-sha>
-```
+---
 
-Rollout verification:
+## 🔐 Security & Policy
 
-```bash
-kubectl rollout status deployment/novapay-backend --timeout=180s
-kubectl rollout status deployment/novapay-frontend --timeout=180s
+The DevOps implementation includes:
+
+- Trivy container image scanning
+- Kubernetes policy definitions
+- Kyverno label policy
+- Rego policies for privileged containers
+- Rego policy for resource requirements
+- Rego policy for image tag controls
+- JWT-based application authentication
+- Role-based user/admin authorization
+- Protected backend routes
+
+---
+
+## 📊 Observability & Operations
+
+The repository includes an observability area with a Grafana dashboard definition and operational documentation covering:
+
+- Pipeline architecture
+- Deployment strategies
+- Compliance gates
+- Database migration
+- Environment promotion
+- Rollback specification
+- Runbook/playbook
+- Observability
+
+Evidence screenshots are maintained separately under `evidence/screenshots`.
+
+---
+
+## 📂 Repository Structure
+
+```text
+novapay-banking-devops/
+│
+├── .github/workflows/
+│   └── ci-cd.yml                 # GitHub Actions pipeline
+│
+├── backend/
+│   ├── config/                   # Database configuration
+│   ├── controllers/              # Business/API controllers
+│   ├── middleware/               # Auth, admin and upload middleware
+│   ├── models/                   # MongoDB models
+│   ├── routes/                   # API routes
+│   ├── utils/                    # Utilities such as email
+│   ├── Dockerfile
+│   ├── package.json
+│   └── server.js
+│
+├── frontend/
+│   ├── public/                   # Public assets
+│   ├── src/
+│   │   ├── components/           # Reusable UI components
+│   │   ├── pages/                # User/Admin pages
+│   │   ├── services/             # API integration
+│   │   └── assets/               # NovaPay assets
+│   ├── Dockerfile
+│   ├── package.json
+│   └── vite.config.js
+│
+├── kubernetes/                   # Kubernetes deployments/services
+│
+├── pipeline/
+│   ├── helm/                     # Helm chart
+│   ├── policies/                 # Rego/Kyverno policies
+│   ├── scripts/                  # Deploy/health-check/rollback scripts
+│   └── terraform/                # AWS/EKS infrastructure
+│
+├── dashboards/                   # Grafana dashboard assets
+├── docs/                         # Engineering documentation
+├── evidence/                     # Project evidence and screenshots
+├── docker-compose.yml
+├── NovaPay-Transactions.xlsx
+└── README.md
 ```
 
 ---
 
 ## 🛠️ Technology Stack
 
-| Category | Technology |
+| Area | Technologies |
 |---|---|
-| Frontend | React.js, Vite, JavaScript, CSS |
+| Frontend | React, Vite, JavaScript, CSS |
 | Backend | Node.js, Express.js |
 | Database | MongoDB, Mongoose |
-| Authentication | JWT |
+| Authentication | JWT, role-based authorization |
 | Source Control | Git, GitHub |
 | CI/CD | GitHub Actions |
-| Containerization | Docker, Docker Compose |
+| Containers | Docker, Docker Compose |
 | Registry | Docker Hub |
-| Security | Trivy |
-| Orchestration | Kubernetes |
-| Local Kubernetes | Minikube |
-| Runner | GitHub Self-Hosted Runner |
-| **Object Storage** | **Amazon S3** |
-| **CDN** | **Amazon CloudFront** |
-| **Load Balancing** | **Application Load Balancer (ALB)** |
-| **Elasticity** | **Auto Scaling Group** |
-| Cloud | AWS EC2, S3, CloudFront, ALB, Auto Scaling |
-| OS | Ubuntu / Linux |
+| Security | Trivy, Rego, Kyverno |
+| Orchestration | Kubernetes, Minikube |
+| Packaging | Helm |
+| IaC | Terraform |
+| Cloud | AWS, EC2, VPC, IAM, EKS |
+| Observability | Grafana assets + operational documentation |
+| Runner | GitHub Actions self-hosted runner |
 
 ---
 
-## 🧩 Tech stack at a glance
+## 🚀 Local Development
 
-<p>
-<img src="https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB" alt="React"/>
-<img src="https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=nodedotjs&logoColor=white" alt="Node.js"/>
-<img src="https://img.shields.io/badge/Express.js-000000?style=for-the-badge&logo=express&logoColor=white" alt="Express.js"/>
-<img src="https://img.shields.io/badge/MongoDB-47A248?style=for-the-badge&logo=mongodb&logoColor=white" alt="MongoDB"/>
-<img src="https://img.shields.io/badge/JWT-000000?style=for-the-badge&logo=jsonwebtokens&logoColor=white" alt="JWT"/>
-</p>
-<p>
-<img src="https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=docker&logoColor=white" alt="Docker"/>
-<img src="https://img.shields.io/badge/Kubernetes-326CE5?style=for-the-badge&logo=kubernetes&logoColor=white" alt="Kubernetes"/>
-<img src="https://img.shields.io/badge/GitHub_Actions-2088FF?style=for-the-badge&logo=githubactions&logoColor=white" alt="GitHub Actions"/>
-<img src="https://img.shields.io/badge/Trivy-1904DA?style=for-the-badge&logo=trivy&logoColor=white" alt="Trivy"/>
-<img src="https://img.shields.io/badge/Docker_Hub-2496ED?style=for-the-badge&logo=docker&logoColor=white" alt="Docker Hub"/>
-</p>
-<p>
-<img src="https://img.shields.io/badge/Amazon_S3-569A31?style=for-the-badge&logo=amazons3&logoColor=white" alt="Amazon S3"/>
-<img src="https://img.shields.io/badge/CloudFront-8C4FFF?style=for-the-badge&logo=amazonaws&logoColor=white" alt="Amazon CloudFront"/>
-<img src="https://img.shields.io/badge/AWS_EC2-FF9900?style=for-the-badge&logo=amazonec2&logoColor=white" alt="AWS EC2"/>
-<img src="https://img.shields.io/badge/Load_Balancer-FF9900?style=for-the-badge&logo=amazonaws&logoColor=white" alt="ALB"/>
-<img src="https://img.shields.io/badge/Auto_Scaling-FF9900?style=for-the-badge&logo=amazonaws&logoColor=white" alt="Auto Scaling"/>
-</p>
-<p>
-<img src="https://img.shields.io/badge/Git-F05032?style=for-the-badge&logo=git&logoColor=white" alt="Git"/>
-<img src="https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=github&logoColor=white" alt="GitHub"/>
-<img src="https://img.shields.io/badge/Linux-FCC624?style=for-the-badge&logo=linux&logoColor=black" alt="Linux"/>
-</p>
-
-> Badges are pulled live from [shields.io](https://shields.io) using each
-> service's official [Simple Icons](https://simpleicons.org) slug — no logo
-> files are stored in this repo, so they always render up to date on GitHub.
-
----
-
-## 📂 Project Structure
-
-```text
-novapay-banking-devops/
-├── backend/
-│   ├── controllers/
-│   ├── models/
-│   ├── routes/
-│   ├── middleware/
-│   ├── config/
-│   └── server.js
-├── frontend/
-│   ├── src/
-│   │   ├── components/
-│   │   ├── pages/
-│   │   └── App.jsx
-│   ├── public/
-│   └── vite.config.js
-├── kubernetes/
-│   ├── frontend-deployment.yaml
-│   ├── backend-deployment.yaml
-│   └── service.yaml
-├── aws/
-│   ├── s3-bucket.tf
-│   ├── cloudfront.tf
-│   ├── alb.tf
-│   └── autoscaling-group.tf
-├── .github/
-│   └── workflows/
-│       └── ci-cd.yml
-├── docker-compose.yml
-├── Dockerfile.frontend
-├── Dockerfile.backend
-└── README.md
-```
-
----
-
-## ⚙️ Local Setup
-
-### Clone Repository
+### 1. Clone
 
 ```bash
 git clone https://github.com/nitindrathod4-alt/novapay-banking-devops.git
 cd novapay-banking-devops
 ```
 
-### Backend
+### 2. Backend
 
 ```bash
 cd backend
@@ -433,9 +322,9 @@ npm install
 npm start
 ```
 
-Backend: `http://localhost:5000`
+### 3. Frontend
 
-### Frontend
+Open another terminal:
 
 ```bash
 cd frontend
@@ -443,159 +332,81 @@ npm install
 npm run dev
 ```
 
-Frontend: `http://localhost:5173`
+> Configure the required environment variables for your local database and application services before starting the application. Do not commit secrets.
 
 ---
 
-## 🐳 Docker Compose
+## 🔑 GitHub Actions Secrets
 
-```bash
-docker compose build
-docker compose up -d
-docker ps
-docker compose down
+The workflow expects Docker Hub credentials through GitHub Secrets:
+
+```text
+DOCKERHUB_USERNAME
+DOCKERHUB_TOKEN
 ```
 
----
-
-## 🔐 Application Security
-
-- JWT Authentication
-- Role-Based Access Control
-- User/Admin Authorization
-- Protected Backend Routes
-- Password Protection
-- Secure API Access
-- KYC Verification
-- Trivy Container Security Scanning
-- HTTPS/TLS termination at CloudFront
-- Private subnets for backend & database behind ALB
+Never hard-code passwords, tokens, AWS credentials or database credentials in source code.
 
 ---
 
-## 🔌 API Modules
+## 🧪 Operational Commands
 
-### Authentication
-- User Login
-- User Registration
-- JWT Token Generation
+```bash
+# Git
+ git status
+ git log --oneline -10
 
-### Transactions
-- Deposit
-- Withdraw
-- Transfer
-- Transaction History
+# Docker
+ docker ps
+ docker images
 
-### User Management
-- Create User
-- Update User
-- Delete User
-- User Profile
+# Kubernetes
+ kubectl get pods
+ kubectl get svc
+ kubectl rollout status deployment/novapay-backend
+ kubectl rollout status deployment/novapay-frontend
 
-### KYC
-- KYC Submission
-- Document Upload
-- KYC Verification
-- KYC Rejection
+# Terraform
+ terraform init
+ terraform fmt
+ terraform validate
+ terraform plan
+```
 
-### Support
-- Create Ticket
-- Admin Reply
-- Ticket Resolution
-- Ticket Status Tracking
-
-### Payments
-- Mobile Recharge
-- Electricity Bill Payment
-- Receipt Generation
+Run infrastructure commands only from the appropriate Terraform directory and AWS environment.
 
 ---
 
-## 📊 Admin Monitoring
+## 📸 Evidence & Documentation
 
-The Admin Panel provides monitoring and management for:
+The repository keeps implementation evidence and engineering notes separate from application source code:
 
-- Users
-- Transactions
-- Deposits
-- Withdrawals
-- KYC Requests
-- Support Tickets
-- User Activities
-- Analytics
+- `docs/` — architecture, deployment, compliance, migration, rollback and observability documentation
+- `evidence/` — screenshots, presentation material, reflections and self-assessment
+- `dashboards/` — Grafana dashboard assets
+
+This makes the repository easier for recruiters and engineers to review without mixing documentation with runtime code.
 
 ---
 
-## 🎯 Skills Demonstrated
+## 💼 Why this project matters for a DevOps role
 
-- Linux
-- AWS EC2, S3, CloudFront, ALB, Auto Scaling
-- Git & GitHub
-- GitHub Actions
-- CI/CD Pipeline Design
-- DevSecOps
-- Docker & Docker Compose
-- Docker Hub
-- Trivy
-- Kubernetes & Minikube
-- Self-Hosted GitHub Runner
-- Container Deployment
-- Automated Rollout Verification
-- Highly Available, Auto-Scaling Cloud Architecture Design
+NovaPay demonstrates an end-to-end engineering workflow:
 
----
+**Code → Validate → Containerize → Security Scan → Publish → Deploy → Verify → Operate**
 
-## 🚀 Future Enhancements
-
-- Full AWS EKS Deployment
-- Terraform Infrastructure Automation (IaC for S3, CloudFront, ALB, ASG)
-- Helm Charts
-- Prometheus Monitoring
-- Grafana Dashboards
-- SonarQube Integration
-- ArgoCD GitOps
-- Kubernetes Ingress
-- Horizontal Pod Autoscaling
-- Production Secret Management (AWS Secrets Manager)
-- CloudWatch Monitoring & Alarms
-- Multi-AZ RDS/DocumentDB migration for higher database availability
+The project combines application engineering with practical DevOps responsibilities across CI/CD, containers, Kubernetes, infrastructure as code, security policies, cloud infrastructure and operational documentation.
 
 ---
 
 ## 👨‍💻 Author
 
-### Nitin Rathod
+**Nitin Rathod**
 
-**AWS Cloud & DevOps Engineer**
-
-GitHub: [https://github.com/nitindrathod4-alt](https://github.com/nitindrathod4-alt)
-
-LinkedIn: [https://www.linkedin.com/in/nitin-rathod-2495b320a](https://www.linkedin.com/in/nitin-rathod-2495b320a)
+Cloud & DevOps Engineering | AWS | Kubernetes | Docker | Terraform | GitHub Actions | Linux
 
 ---
 
-## ⭐ Project Status
+## 📌 Project Status
 
-**✅ Completed**
-
-NovaPay is a full-stack digital banking application backed by a scalable
-AWS architecture (S3 + CloudFront + ALB + Auto Scaling) and an automated
-DevSecOps CI/CD pipeline.
-
-```text
-Build → Secure → Package → Deploy → Verify → Scale
-```
-
----
-
-## 💡 Project Goal
-
-**Full Stack Development + AWS Cloud Architecture + Docker + DevSecOps + CI/CD + Kubernetes**
-
-### 🚀 NovaPay
-
-**Build → Secure → Package → Deploy → Scale**
-
----
-
-*If you find this project useful, consider giving it a ⭐ on GitHub!*
+This repository is maintained as a DevOps portfolio/project implementation. Infrastructure and deployment descriptions should be interpreted according to the files and workflows currently present in the repository; cloud resources are not implied to be continuously running.
