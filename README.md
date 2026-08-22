@@ -1,64 +1,95 @@
 # 🏦 NovaPay — Digital Banking & DevSecOps Platform
 
-> **A full-stack digital banking application turned into an end-to-end DevOps engineering case study.**
->
-> NovaPay combines React, Node.js/Express and MongoDB with GitHub Actions, Docker, Trivy, Kubernetes, Helm, Terraform and AWS-oriented infrastructure.
+> A full-stack digital banking application transformed into an end-to-end DevOps / DevSecOps project.
 
 ![Status](https://img.shields.io/badge/status-active-brightgreen)
 ![Frontend](https://img.shields.io/badge/frontend-React%20%2B%20Vite-61DAFB)
 ![Backend](https://img.shields.io/badge/backend-Node.js%20%2B%20Express-339933)
 ![CI/CD](https://img.shields.io/badge/CI%2FCD-GitHub%20Actions-2088FF)
+![Docker](https://img.shields.io/badge/container-Docker-2496ED)
+![Kubernetes](https://img.shields.io/badge/orchestration-Kubernetes-326CE5)
+![Terraform](https://img.shields.io/badge/IaC-Terraform-844FBA)
 ![Security](https://img.shields.io/badge/security-Trivy-1904DA)
 ![Cloud](https://img.shields.io/badge/cloud-AWS-FF9900)
-![Containers](https://img.shields.io/badge/containers-Docker-2496ED)
-![Orchestration](https://img.shields.io/badge/orchestration-Kubernetes-326CE5)
+
+---
+
+## 📸 Project Preview
+
+> **🖼️ IMAGE PLACEHOLDER — Add NovaPay dashboard screenshot here**
+>
+> `![NovaPay Dashboard](evidence/screenshots/novapay-dashboard.png)`
+
+> **🖼️ IMAGE PLACEHOLDER — Add GitHub Actions pipeline screenshot here**
+>
+> `![CI/CD Pipeline](evidence/screenshots/github-actions-success.png)`
+
+> **🖼️ IMAGE PLACEHOLDER — Add Kubernetes screenshot here**
+>
+> `![Kubernetes](evidence/screenshots/kubernetes.png)`
+
+> **🖼️ IMAGE PLACEHOLDER — Add AWS/EKS screenshot here**
+>
+> `![AWS EKS](evidence/screenshots/aws-eks.png)`
 
 ---
 
 ## 📌 Executive Summary
 
-**NovaPay** is a digital banking application with separate user and admin workflows. The project goes beyond application development by demonstrating how an application can be **validated, containerized, security-scanned, published, deployed and operated** through a DevOps workflow.
+NovaPay is a digital banking application with user and admin workflows. The project demonstrates an engineering lifecycle from source control through CI/CD, container security, image publishing, Kubernetes deployment and operational verification.
 
-**Engineering flow:**
+### 🔄 End-to-End Flow
 
-`Code → Validate → Build → Security Scan → Publish → Deploy → Verify → Operate`
-
-The repository is designed as a practical portfolio project for demonstrating cloud, DevOps, DevSecOps, containerization, Kubernetes and infrastructure-as-code skills.
+```text
+Developer
+   ↓
+GitHub
+   ↓
+GitHub Actions
+   ↓
+Build + Validate
+   ↓
+Docker Build
+   ↓
+Trivy Security Scan
+   ↓
+Docker Hub
+   ↓
+Self-hosted Runner
+   ↓
+Kubernetes / Minikube
+   ↓
+Rollout Verification
+   ↓
+Operations / Monitoring
+```
 
 ---
 
 ## 🧭 Quick Navigation
 
-- [What is NovaPay?](#-what-is-novapay)
 - [Application Features](#-application-features)
-- [Architecture](#️-architecture)
+- [Architecture](#-architecture)
 - [DevOps Capability Matrix](#-devops-capability-matrix)
-- [CI/CD Pipeline](#-devsecops-cicd-pipeline)
-- [Containerization](#-containerization)
+- [DevSecOps CI/CD](#-devsecops-cicd-pipeline)
+- [Docker](#-containerization)
 - [Kubernetes](#️-kubernetes)
 - [AWS & Terraform](#️-aws--infrastructure-as-code)
 - [Security](#-security--policy)
 - [Observability](#-observability--operations)
-- [Real-World Troubleshooting](#-real-world-troubleshooting)
+- [Troubleshooting](#-real-world-troubleshooting)
+- [Deployment Documentation](#-deployment-documentation)
 - [Repository Structure](#-repository-structure)
-- [Technology Stack](#️-technology-stack)
+- [Technology Stack](#-technology-stack)
 - [Local Development](#-local-development)
 - [Interview Guide](#-interview-guide)
-- [Author](#-author)
+- [Recruiter Snapshot](#-recruiter-snapshot)
 
 ---
 
-## 🎯 What is NovaPay?
+# ✨ Application Features
 
-NovaPay includes authentication, account operations, money movement, KYC, support tickets, bill payment, recharge, receipts, statements and administrative analytics.
-
-The DevOps implementation uses GitHub Actions for CI/CD, Docker for containerization, Trivy for image scanning, Docker Hub for image publishing and a self-hosted runner for Kubernetes deployment. Terraform, Helm and policy files extend the project into infrastructure and platform engineering.
-
----
-
-## ✨ Application Features
-
-### 👤 User
+## 👤 User
 
 - Registration and JWT authentication
 - Account dashboard and balance
@@ -72,9 +103,9 @@ The DevOps implementation uses GitHub Actions for CI/CD, Docker for containeriza
 - Electricity bill payment
 - Receipts and statements
 - Password management
-- Travel/booking workflow
+- Travel / booking workflow
 
-### 🛡️ Admin
+## 🛡️ Admin
 
 - Admin dashboard
 - User management
@@ -87,7 +118,7 @@ The DevOps implementation uses GitHub Actions for CI/CD, Docker for containeriza
 
 ---
 
-## 🏗️ Architecture
+# 🏗️ Architecture
 
 ```text
                          ┌─────────────────────┐
@@ -111,108 +142,105 @@ The DevOps implementation uses GitHub Actions for CI/CD, Docker for containeriza
                          │ MongoDB + Mongoose  │
                          └─────────────────────┘
 
-                 DEVOPS / DEVSECOPS DELIVERY PATH
+                  DEVSECOPS DELIVERY PATH
 
  GitHub → GitHub Actions → Build → Trivy → Docker Hub
-                                      │
-                                      ▼
+                                      ↓
                               Self-hosted Runner
-                                      │
-                                      ▼
+                                      ↓
                            Kubernetes / Minikube
-                                      │
-                                      ▼
+                                      ↓
                             Rollout Verification
 ```
 
-The repository also contains Terraform definitions for AWS networking, IAM, security groups and EKS, plus Helm templates, Kubernetes manifests, deployment scripts and policy definitions.
+### 🖼️ Architecture Evidence
+
+`![NovaPay Architecture](evidence/screenshots/architecture.png)`
 
 ---
 
-## 📊 DevOps Capability Matrix
+# 📊 DevOps Capability Matrix
 
-| Capability | Implementation in NovaPay |
+| Capability | Implementation |
 |---|---|
-| **Source Control** | Git + GitHub |
-| **CI/CD** | GitHub Actions |
-| **Containerization** | Docker + Docker Compose |
-| **Container Registry** | Docker Hub |
-| **Security Scanning** | Trivy |
-| **Policy as Code** | Rego + Kyverno |
-| **Orchestration** | Kubernetes + Minikube |
-| **Packaging** | Helm |
-| **Infrastructure as Code** | Terraform |
-| **Cloud** | AWS / EKS-oriented infrastructure |
-| **Observability** | Grafana dashboard assets + operational docs |
-| **Deployment Automation** | Self-hosted runner + deployment scripts |
-| **Image Traceability** | Commit-SHA image tags |
+| Source Control | Git + GitHub |
+| CI/CD | GitHub Actions |
+| Containerization | Docker + Docker Compose |
+| Container Registry | Docker Hub |
+| Security Scanning | Trivy |
+| Policy as Code | Rego + Kyverno |
+| Orchestration | Kubernetes + Minikube |
+| Packaging | Helm |
+| Infrastructure as Code | Terraform |
+| Cloud | AWS / EKS |
+| Observability | Grafana assets + operational docs |
+| Deployment Automation | Self-hosted Runner |
+| Image Traceability | Commit-SHA tags |
 
 ---
 
-## 🔄 DevSecOps CI/CD Pipeline
+# 🔄 DevSecOps CI/CD Pipeline
+
+### Pipeline stages
 
 ```text
-Developer Push / Pull Request
-            │
-            ▼
-      Frontend CI
-   npm ci + npm run build
-            │
-            ▼
-       Backend CI
-   npm ci + syntax checks
-            │
-            ▼
-      Docker Build
-   Frontend + Backend
-            │
-            ▼
-       Trivy Scan
-     HIGH / CRITICAL
-            │
-            ▼
-      Docker Hub Push
-            │
-            ▼
-     Self-hosted Runner
-            │
-            ▼
-      Kubernetes Deploy
-   Image update + restart
-            │
-            ▼
-     Rollout Verification
-            │
-            ▼
-       Pods / Services
+Push / Pull Request
+        ↓
+Frontend CI
+npm ci + npm run build
+        ↓
+Backend CI
+npm ci + syntax validation
+        ↓
+Docker Build
+Frontend + Backend
+        ↓
+Trivy Scan
+        ↓
+Docker Hub Push
+        ↓
+Self-hosted Runner
+        ↓
+Kubernetes Deploy
+        ↓
+Rollout Verification
+        ↓
+Pods / Services Health
 ```
 
-### Pipeline implemented in `.github/workflows/ci-cd.yml`
+Implemented through `.github/workflows/ci-cd.yml`.
 
-- Frontend build with Node.js 20
-- Backend dependency installation and syntax validation
-- Docker image builds for frontend and backend
-- Trivy vulnerability scans
-- Docker Hub authentication using GitHub Secrets
-- Commit-SHA image tags for traceability
+### Pipeline capabilities
+
+- Frontend build with Node.js
+- Backend dependency installation and validation
+- Docker image builds
+- Trivy vulnerability scanning
+- Docker Hub authentication through GitHub Secrets
+- Commit-SHA image tags
 - Kubernetes image updates
-- Deployment restart and rollout verification
+- Deployment restart
+- Rollout verification
 - Pod and service verification
 
-> **Security accuracy:** the current Trivy workflow uses `exit-code: 0`, so scan findings are reported without automatically failing the job. This README documents the current implementation rather than claiming Trivy is a blocking gate.
+> **Security note:** the current Trivy workflow reports findings without automatically failing the job when configured with `exit-code: 0`.
+
+### 🖼️ Pipeline Evidence
+
+`![GitHub Actions](evidence/screenshots/github-actions-success.png)`
 
 ---
 
-## 🐳 Containerization
+# 🐳 Containerization
 
-Two application images are built by CI:
+NovaPay packages the frontend and backend as Docker containers.
 
 ```text
-nitindrathod/novapay-frontend:<commit-sha>
-nitindrathod/novapay-backend:<commit-sha>
+Frontend → Docker Image
+Backend  → Docker Image
 ```
 
-Run locally with Docker Compose:
+### Docker Compose
 
 ```bash
 docker compose build
@@ -221,98 +249,170 @@ docker compose ps
 docker compose down
 ```
 
-**Why commit-SHA tags?** They provide a direct relationship between a deployed image and the source revision that produced it, improving traceability during deployments and troubleshooting.
+### Image Traceability
+
+```text
+novapay-frontend:<commit-sha>
+novapay-backend:<commit-sha>
+```
+
+Commit-based tags make deployed images traceable to the source revision that produced them.
+
+### 🖼️ Docker Evidence
+
+`![Docker Images](evidence/screenshots/docker-images.png)`
 
 ---
 
-## ☸️ Kubernetes
+# ☸️ Kubernetes
 
-The repository contains Kubernetes manifests for the application and a Helm chart under `pipeline/helm`.
+Kubernetes is used for container orchestration and deployment management.
 
-Useful commands:
+Repository areas:
+
+```text
+kubernetes/
+pipeline/helm/
+```
+
+### Common commands
 
 ```bash
 kubectl get nodes
 kubectl get pods
 kubectl get deployments
 kubectl get services
+kubectl get events --sort-by=.lastTimestamp
+```
+
+### Rollout verification
+
+```bash
 kubectl rollout status deployment/novapay-backend
 kubectl rollout status deployment/novapay-frontend
 ```
 
-For Minikube:
+### Minikube
 
 ```bash
 minikube start --driver=docker
 minikube status
 ```
 
-The CI/CD workflow updates running deployments with commit-specific images and waits for rollout completion.
+### Troubleshooting
+
+```bash
+kubectl describe pod <pod-name>
+kubectl logs <pod-name>
+kubectl get svc
+kubectl get endpoints
+```
+
+### 🖼️ Kubernetes Evidence
+
+`![Kubernetes](evidence/screenshots/kubernetes.png)`
 
 ---
 
-## ☁️ AWS & Infrastructure as Code
+# ☁️ AWS & Infrastructure as Code
 
-Terraform configuration is maintained under `pipeline/terraform` and includes infrastructure for:
+Terraform configuration is maintained under:
+
+```text
+pipeline/terraform/
+```
+
+Infrastructure areas include:
 
 - VPC networking
 - Security groups
 - IAM
 - EKS
-- Terraform provider/version configuration
-- Variables and outputs
+- Provider configuration
+- Variables
+- Outputs
 
-The project demonstrates the relationship between **application delivery, Kubernetes platform operations and cloud infrastructure automation**.
+### Terraform workflow
+
+```bash
+terraform init
+terraform fmt
+terraform validate
+terraform plan
+terraform apply
+```
+
+### 🖼️ AWS / EKS Evidence
+
+`![AWS EKS](evidence/screenshots/aws-eks.png)`
 
 ---
 
-## 🔐 Security & Policy
+# 🔐 Security & Policy
 
-The DevOps implementation includes:
+Security is integrated into the delivery lifecycle.
 
-- Trivy container image scanning
-- Kubernetes policy definitions
-- Kyverno label policy
-- Rego policies for privileged containers
-- Rego policy for resource requirements
-- Rego policy for image tag controls
-- JWT-based application authentication
-- Role-based user/admin authorization
+### Security technologies
+
+- Trivy container scanning
+- Rego policies
+- Kyverno policies
+- JWT authentication
+- Role-based authorization
 - Protected backend routes
 
-### Secret handling
+### Policy areas
 
-Docker Hub credentials are expected through GitHub Secrets. Application credentials and database connection values should remain in environment-specific configuration and must never be committed to source control.
+- Privileged container controls
+- Resource requirements
+- Image tag controls
+- Kubernetes labels
+
+### 🔑 Secret handling
+
+Use GitHub Secrets and environment variables for sensitive values.
+
+Never commit:
+
+```text
+Passwords
+Tokens
+AWS credentials
+MongoDB credentials
+Private keys
+```
 
 ---
 
-## 📊 Observability & Operations
+# 📊 Observability & Operations
 
-The repository includes an observability area with Grafana dashboard assets and operational documentation covering:
+The project includes observability and operational documentation covering:
 
-- Pipeline architecture
-- Deployment strategies
-- Compliance gates
+- Grafana dashboard assets
+- Pipeline monitoring
+- Deployment operations
+- Rollback
+- Runbooks
 - Database migration
 - Environment promotion
-- Rollback specification
-- Runbook/playbook
-- Observability
+- Compliance gates
 
-Evidence screenshots are maintained separately under `evidence/screenshots`.
+### 🖼️ Grafana Evidence
+
+`![Grafana Dashboard](evidence/screenshots/grafana-dashboard.png)`
 
 ---
 
-## 🧯 Real-World Troubleshooting
+# 🧯 Real-World Troubleshooting
 
-A strong DevOps project is not only about successful deployment; it is also about recovering when something fails.
+A DevOps implementation must also demonstrate recovery from failures.
 
-### Recommended incident workflow
+### Incident workflow
 
 ```text
 DETECT
   ↓
-COLLECT EVENTS / LOGS
+COLLECT LOGS / EVENTS
   ↓
 IDENTIFY ROOT CAUSE
   ↓
@@ -325,7 +425,7 @@ VERIFY ROLLOUT
 DOCUMENT PREVENTION
 ```
 
-### Example investigation commands
+### Kubernetes investigation
 
 ```bash
 kubectl get pods
@@ -336,51 +436,116 @@ kubectl get svc
 kubectl get endpoints
 ```
 
-This workflow helps investigate common Kubernetes failures such as image pull problems, container crashes, service routing issues and unhealthy deployments without guessing at the root cause.
+Useful for investigating common conditions such as:
+
+- `ImagePullBackOff`
+- `CrashLoopBackOff`
+- Pod startup failures
+- Service routing issues
+- Deployment rollout failures
 
 ---
 
-## 📂 Repository Structure
+# 📚 Deployment Documentation
+
+The complete click-to-click deployment procedure should remain in the dedicated runbook so the README stays recruiter-friendly.
+
+## 📖 Complete Deployment Runbook
+
+**[Complete Deployment Runbook](docs/COMPLETE_DEPLOYMENT_RUNBOOK.md)**
+
+The runbook covers:
+
+- Required tools and installation
+- Local setup
+- Docker / Docker Compose
+- Trivy
+- AWS CLI
+- Terraform
+- EKS
+- kubectl
+- Kubernetes
+- Helm
+- GitHub Actions
+- GitHub Secrets
+- MongoDB configuration
+- MongoDB Atlas connection
+- Health checks
+- Rollback
+- Troubleshooting
+- Final verification
+
+## 📋 Deployment Checklist
+
+**[Deployment Checklist](docs/DEPLOYMENT_CHECKLIST.md)**
+
+---
+
+# 📸 Evidence / Screenshot Locations
+
+Keep project evidence under:
+
+```text
+evidence/screenshots/
+```
+
+Recommended files:
+
+```text
+evidence/screenshots/
+├── novapay-dashboard.png
+├── github-actions-success.png
+├── docker-images.png
+├── kubernetes.png
+├── aws-eks.png
+├── grafana-dashboard.png
+└── architecture.png
+```
+
+> These paths are intentionally shown as placeholders until the real screenshots are committed.
+
+---
+
+# 📂 Repository Structure
 
 ```text
 novapay-banking-devops/
 │
-├── .github/workflows/
-│   └── ci-cd.yml                 # GitHub Actions pipeline
+├── .github/
+│   └── workflows/
+│       └── ci-cd.yml
 │
 ├── backend/
-│   ├── config/                   # Database configuration
-│   ├── controllers/              # Business/API controllers
-│   ├── middleware/               # Auth, admin and upload middleware
-│   ├── models/                   # MongoDB models
-│   ├── routes/                   # API routes
-│   ├── utils/                    # Utilities such as email
+│   ├── config/
+│   ├── controllers/
+│   ├── middleware/
+│   ├── models/
+│   ├── routes/
+│   ├── utils/
 │   ├── Dockerfile
 │   ├── package.json
 │   └── server.js
 │
 ├── frontend/
-│   ├── public/                   # Public assets
+│   ├── public/
 │   ├── src/
-│   │   ├── components/           # Reusable UI components
-│   │   ├── pages/                # User/Admin pages
-│   │   ├── services/             # API integration
-│   │   └── assets/               # NovaPay assets
+│   │   ├── components/
+│   │   ├── pages/
+│   │   ├── services/
+│   │   └── assets/
 │   ├── Dockerfile
 │   ├── package.json
 │   └── vite.config.js
 │
-├── kubernetes/                   # Kubernetes deployments/services
-│
+├── kubernetes/
 ├── pipeline/
-│   ├── helm/                     # Helm chart
-│   ├── policies/                 # Rego/Kyverno policies
-│   ├── scripts/                  # Deploy/health-check/rollback scripts
-│   └── terraform/                # AWS/EKS infrastructure
-│
-├── dashboards/                   # Grafana dashboard assets
-├── docs/                         # Engineering documentation
-├── evidence/                     # Project evidence and screenshots
+│   ├── helm/
+│   ├── policies/
+│   ├── scripts/
+│   └── terraform/
+├── dashboards/
+├── docs/
+├── evidence/
 ├── docker-compose.yml
 ├── NovaPay-Transactions.xlsx
 └── README.md
@@ -388,14 +553,14 @@ novapay-banking-devops/
 
 ---
 
-## 🛠️ Technology Stack
+# 🛠️ Technology Stack
 
 | Area | Technologies |
 |---|---|
 | Frontend | React, Vite, JavaScript, CSS |
 | Backend | Node.js, Express.js |
 | Database | MongoDB, Mongoose |
-| Authentication | JWT, role-based authorization |
+| Authentication | JWT, RBAC |
 | Source Control | Git, GitHub |
 | CI/CD | GitHub Actions |
 | Containers | Docker, Docker Compose |
@@ -404,22 +569,22 @@ novapay-banking-devops/
 | Orchestration | Kubernetes, Minikube |
 | Packaging | Helm |
 | IaC | Terraform |
-| Cloud | AWS, EC2, VPC, IAM, EKS |
-| Observability | Grafana assets + operational documentation |
-| Runner | GitHub Actions self-hosted runner |
+| Cloud | AWS, VPC, IAM, EKS |
+| Observability | Grafana |
+| Runner | GitHub Actions Self-hosted Runner |
 
 ---
 
-## 🚀 Local Development
+# 🚀 Local Development
 
-### 1. Clone
+## 1. Clone
 
 ```bash
 git clone https://github.com/nitindrathod4-alt/novapay-banking-devops.git
 cd novapay-banking-devops
 ```
 
-### 2. Backend
+## 2. Backend
 
 ```bash
 cd backend
@@ -427,7 +592,7 @@ npm install
 npm start
 ```
 
-### 3. Frontend
+## 3. Frontend
 
 Open another terminal:
 
@@ -437,113 +602,115 @@ npm install
 npm run dev
 ```
 
-> Configure the required environment variables for your local database and application services before starting the application. Never commit secrets.
+Configure the required environment variables for your local database and services before starting the application.
 
 ---
 
-## 🔑 GitHub Actions Secrets
+# 🔑 GitHub Actions Secrets
 
-The workflow expects Docker Hub credentials through GitHub Secrets:
+Expected Docker Hub secrets:
 
 ```text
 DOCKERHUB_USERNAME
 DOCKERHUB_TOKEN
 ```
 
-Never hard-code passwords, tokens, AWS credentials or database credentials in source code.
+Never hard-code credentials in source code.
 
 ---
 
-## 🧪 Operational Commands
+# 🧪 Operational Commands
+
+### Git
 
 ```bash
-# Git
 git status
 git log --oneline -10
+```
 
-# Docker
+### Docker
+
+```bash
 docker ps
 docker images
+```
 
-# Kubernetes
+### Kubernetes
+
+```bash
 kubectl get pods
 kubectl get svc
-kubectl rollout status deployment/novapay-backend
-kubectl rollout status deployment/novapay-frontend
+kubectl get deployments
+```
 
-# Terraform
+### Terraform
+
+```bash
 terraform init
 terraform fmt
 terraform validate
 terraform plan
 ```
 
-Run infrastructure commands only from the appropriate Terraform directory and AWS environment.
+---
+
+# 💼 Why This Project Matters for a DevOps Role
+
+NovaPay demonstrates:
+
+**CI/CD · Docker · Security · Kubernetes · Terraform · AWS · Automation · Monitoring · Troubleshooting**
+
+The project connects the tools into one delivery lifecycle rather than simply listing technologies.
+
+> A code change becomes a validated container image, is security-scanned, published with traceable tagging, deployed to Kubernetes and verified through rollout/health checks.
 
 ---
 
-## 📸 Evidence & Documentation
-
-The repository keeps implementation evidence and engineering notes separate from application source code:
-
-- `docs/` — architecture, deployment, compliance, migration, rollback and observability documentation
-- `evidence/` — screenshots, presentation material, reflections and self-assessment
-- `dashboards/` — Grafana dashboard assets
-
-This separation makes the project easier for recruiters and engineers to review.
-
----
-
-## 💼 Why this project matters for a DevOps role
-
-NovaPay demonstrates an end-to-end engineering workflow across:
-
-**CI/CD · Containers · Security · Kubernetes · IaC · AWS · Automation · Operations**
-
-Instead of presenting a list of tools, the repository shows how those tools connect into one delivery lifecycle:
-
-> **A code change becomes a validated container image, passes security checks, is published with traceable tagging, is deployed to Kubernetes and is verified through rollout/health checks.**
-
----
-
-## 🧠 Interview Guide
-
-### Why use commit-SHA Docker tags?
-
-They make image versions traceable to source revisions and reduce ambiguity during deployment and rollback investigations.
+# 🧠 Interview Guide
 
 ### Why Docker?
 
-Docker packages application dependencies and runtime requirements into repeatable containers, making local and deployment environments more consistent.
+Docker provides repeatable application packaging and runtime environments.
 
 ### Why Kubernetes?
 
-Kubernetes provides workload orchestration, service discovery, rollout management and a platform for operating containerized applications.
+Kubernetes provides container orchestration, service discovery, deployment management and rollout capabilities.
 
 ### Why Terraform?
 
-Terraform allows infrastructure configuration to be version-controlled, reviewed and reproduced instead of manually creating cloud resources.
+Terraform makes infrastructure version-controlled, reviewable and reproducible.
 
 ### Why Trivy?
 
-Trivy provides container vulnerability scanning inside the delivery workflow so security findings can be surfaced before images are deployed.
+Trivy scans container images for vulnerabilities during the delivery workflow.
+
+### Why commit-SHA tags?
+
+They provide traceability between the deployed image and the source revision.
 
 ### Why a self-hosted runner?
 
-The deployment workflow can execute Kubernetes-related operations from an environment that has the required cluster connectivity and tooling.
+It allows deployment operations to execute from an environment with the required Kubernetes connectivity and tooling.
 
-### How would you investigate a failed deployment?
+### How do you troubleshoot a failed pod?
 
-Start with pod status and events, inspect logs and service/endpoints, identify the root cause, apply the smallest safe fix, then verify rollout and application health.
+```bash
+kubectl get pods
+kubectl describe pod <pod-name>
+kubectl logs <pod-name>
+kubectl get events --sort-by=.lastTimestamp
+```
+
+Then identify the root cause, apply the smallest safe fix and verify the rollout.
 
 ---
 
-## 📋 Recruiter Snapshot
+# 📋 Recruiter Snapshot
 
 **Project:** NovaPay Digital Banking & DevSecOps Platform  
-**Role demonstrated:** Cloud / DevOps Engineering  
-**Core technologies:** AWS · Kubernetes · Docker · Terraform · GitHub Actions · Trivy · Linux  
-**Engineering focus:** CI/CD · DevSecOps · Infrastructure as Code · Containerization · Deployment Automation · Operations
+**Role:** Cloud / DevOps Engineering  
+**Core Technologies:** AWS · Kubernetes · Docker · Terraform · GitHub Actions · Trivy · Helm · MongoDB · Linux  
+**Focus:** CI/CD · DevSecOps · Infrastructure as Code · Containerization · Deployment Automation · Cloud · Operations
 
 ### Resume-ready summary
 
@@ -551,17 +718,13 @@ Start with pod status and events, inspect logs and service/endpoints, identify t
 
 ---
 
-## 📌 Project Status
+# 📌 Project Status
 
-This repository is maintained as a DevOps portfolio/project implementation. Infrastructure and deployment descriptions should be interpreted according to the files and workflows currently present in the repository; cloud resources are not implied to be continuously running.
+This repository is maintained as a DevOps portfolio/project implementation. Infrastructure and deployment descriptions should be interpreted according to the files and workflows currently present in the repository.
 
 ---
 
-## 👨‍💻 Author
+# 👨‍💻 Author
 
 **Nitin Rathod**  
-Cloud & DevOps Engineering | AWS | Kubernetes | Docker | Terraform | GitHub Actions | Linux
-
----
-
-⭐ **If you are reviewing this repository as a recruiter or interviewer, start with the Architecture, CI/CD Pipeline, DevOps Capability Matrix and Interview Guide sections.**
+Cloud & DevOps Engineering
