@@ -16,21 +16,17 @@
 
 ## 📸 Project Preview
 
-> **🖼️ IMAGE PLACEHOLDER — Add NovaPay dashboard screenshot here**
->
-> `![NovaPay Dashboard](evidence/screenshots/novapay-dashboard.png)`
+### GitHub Actions / CI-CD
+![GitHub Actions](evidence/screenshots/github-actions.png)
 
-> **🖼️ IMAGE PLACEHOLDER — Add GitHub Actions pipeline screenshot here**
->
-> `![CI/CD Pipeline](evidence/screenshots/github-actions-success.png)`
+### Pipeline Success
+![Pipeline Success](evidence/screenshots/pipeline-success.png)
 
-> **🖼️ IMAGE PLACEHOLDER — Add Kubernetes screenshot here**
->
-> `![Kubernetes](evidence/screenshots/kubernetes.png)`
+### Grafana Dashboard
+![Grafana Dashboard](evidence/screenshots/grafana-dashboard.png)
 
-> **🖼️ IMAGE PLACEHOLDER — Add AWS/EKS screenshot here**
->
-> `![AWS EKS](evidence/screenshots/aws-eks.png)`
+### Project Structure
+![Project Structure](evidence/screenshots/project-structure.png)
 
 ---
 
