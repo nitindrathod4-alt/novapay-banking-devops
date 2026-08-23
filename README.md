@@ -14,19 +14,41 @@
 
 ---
 
-## 📸 Project Preview
+### 🏦 NovaPay Banking Application
 
-### GitHub Actions / CI-CD
+#### 🔐 Login Page
+![NovaPay Login](evidence/screenshots/login-page.png)
+
+#### 🏠 Banking Dashboard
+![NovaPay Dashboard](evidence/screenshots/novapay-dashboard.png)
+
+#### 💸 Money Transfer
+![Money Transfer](evidence/screenshots/money-transfer.png)
+
+#### 💰 Deposit & Withdraw
+![Deposit and Withdraw](evidence/screenshots/deposit-withdraw.png)
+
+#### 📜 Transaction History
+![Transaction History](evidence/screenshots/transaction-history.png)
+
+#### 👤 Profile & KYC
+![Profile and KYC](evidence/screenshots/profile-kyc.png)
+
+---
+
+### ⚙️ GitHub Actions CI/CD
+
 ![GitHub Actions](evidence/screenshots/github-actions.png)
 
-### Pipeline Success
 ![Pipeline Success](evidence/screenshots/pipeline-success.png)
 
-### Grafana Dashboard
-![Grafana Dashboard](evidence/screenshots/grafana-dashboard.png)
+---
 
-### Project Structure
-![Project Structure](evidence/screenshots/project-structure.png)
+### ☸️ Minikube / Kubernetes
+
+![Minikube](evidence/screenshots/minikube.png)
+
+![Kubernetes](evidence/screenshots/kubernetes.png)
 
 ---
 
