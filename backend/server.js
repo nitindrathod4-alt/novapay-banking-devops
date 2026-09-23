@@ -7,8 +7,6 @@ const connectDB = require("./config/db");
 
 const app = express();
 
-connectDB();
-
 app.use(cors());
 app.use(express.json());
 
@@ -51,16 +49,49 @@ app.get("/", (req, res) => {
 });
 
 // Health Check
-app.get("/api/health", (req, res) => {
-  res.json({
-    status: "UP",
-    message: "NovaPay Backend is Healthy",
-    time: new Date(),
+app.get("/api/health", async (req, res) => {
+  try {
+    await connectDB();
+
+    res.json({
+      status: "UP",
+      message: "NovaPay Backend is Healthy",
+      time: new Date(),
+    });
+  } catch (error) {
+    res.status(500).json({
+      status: "DOWN",
+      message: "Database connection failed",
+    });
+  }
+});
+
+// Connect DB for API requests
+let dbConnected = false;
+
+app.use(async (req, res, next) => {
+  try {
+    if (!dbConnected) {
+      await connectDB();
+      dbConnected = true;
+    }
+    next();
+  } catch (error) {
+    console.error("MongoDB Connection Error:", error.message);
+    res.status(500).json({
+      message: "Database connection failed",
+    });
+  }
+});
+
+// Export app for Vercel
+module.exports = app;
+
+// Local development
+if (require.main === module) {
+  const PORT = process.env.PORT || 5000;
+
+  app.listen(PORT, "0.0.0.0", () => {
+    console.log(`🚀 Server running on port ${PORT}`);
   });
-});
-
-const PORT = process.env.PORT || 5000;
-
-app.listen(PORT, "0.0.0.0", () => {
-  console.log(`🚀 Server running on port ${PORT}`);
-});
+}
