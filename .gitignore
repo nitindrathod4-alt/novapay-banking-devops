@@ -30,3 +30,5 @@ build/
 *.broken-*
 *.failed-*
 *.current-broken
+.vercel
+.env*
